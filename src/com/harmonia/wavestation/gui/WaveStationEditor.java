@@ -1,9 +1,16 @@
-package com.harmonia.wavestation;
+package com.harmonia.wavestation.gui;
 
 import javax.sound.midi.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.harmonia.midi.MidiInputReceiver;
+import com.harmonia.midi.MidiManager;
+import com.harmonia.midi.SysexDumpCollector;
+import com.harmonia.wavestation.PatchFileManager;
+import com.harmonia.wavestation.WavestationSR;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;

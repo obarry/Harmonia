@@ -1,4 +1,4 @@
-package com.harmonia.wavestation;
+package com.harmonia.midi;
 
 import java.io.ByteArrayOutputStream;
 

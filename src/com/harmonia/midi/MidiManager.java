@@ -1,4 +1,4 @@
-package com.harmonia.wavestation;
+package com.harmonia.midi;
 
 import javax.sound.midi.*;
 import java.util.ArrayList;
