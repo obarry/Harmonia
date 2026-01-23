@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class WavestationSR {
+	
+    private static final byte KORG_ID = 0x42;
+    private static final byte WAVESTATION_MODEL_ID = 0x28;
+
     private final Receiver outReceiver;
     private final int deviceId; // typical 0x30 for global channel 1
 
@@ -79,6 +83,65 @@ public class WavestationSR {
                sysex[0] == (byte)0xF0 &&
                sysex[1] == (byte)0x42 &&
                sysex[sysex.length - 1] == (byte)0xF7;
+    }
+
+    /**
+     * Demande un dump complet de banque (128 programmes)
+     * bankId :
+     * 0 = RAM 1
+     * 1 = RAM 2
+     * 2 = ROM 1
+     * 3 = ROM 2
+     */
+    public void requestBankDump(int bankId) throws Exception {
+        byte[] sysex = new byte[] {
+            (byte) 0xF0,
+            KORG_ID,
+            (byte) (0x30 | deviceId),
+            WAVESTATION_MODEL_ID,
+            0x10,                  // Request Data
+            0x01,                  // Bank dump
+            (byte) (bankId & 0x7F),
+            (byte) 0xF7
+        };
+        sendSysex(sysex);
+    }
+
+    /**
+     * Envoie une banque complète au Wavestation
+     * (le SysEx doit être EXACTEMENT celui d’un bank dump)
+     */
+    public void sendFullBank(byte[] sysex) throws Exception {
+        if (!isValidWavestationBank(sysex)) {
+            throw new IllegalArgumentException("SysEx banque Wavestation invalide");
+        }
+
+        SysexMessage msg = new SysexMessage();
+        msg.setMessage(sysex, sysex.length);
+        outReceiver.send(msg, -1);
+    }
+
+    /**
+     * Vérifie si un SysEx correspond à une banque Wavestation
+     */
+    public boolean isValidWavestationBank(byte[] sysex) {
+        return sysex != null
+            && sysex.length > 10000   // banque = très longue
+            && (sysex[0] & 0xFF) == 0xF0
+            && (sysex[1] & 0xFF) == KORG_ID
+            && (sysex[3] & 0xFF) == WAVESTATION_MODEL_ID
+            && (sysex[sysex.length - 1] & 0xFF) == 0xF7;
+    }
+
+    /* ============================================================
+     * ================== LOW LEVEL ================================
+     * ============================================================
+     */
+
+    private void sendSysex(byte[] sysex) throws Exception {
+        SysexMessage msg = new SysexMessage();
+        msg.setMessage(sysex, sysex.length);
+        outReceiver.send(msg, -1);
     }
 
 }

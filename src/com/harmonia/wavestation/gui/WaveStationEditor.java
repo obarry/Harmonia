@@ -30,6 +30,11 @@ public class WaveStationEditor {
     private JButton btnExportPatch;
     private JButton btnImportPatch;
     private JSpinner programSpinner;
+    
+    private JComboBox<String> bankCombo;
+    private JButton btnExportBank;
+    private JButton btnImportBank;
+
 
 
     private MidiManager midiManager = new MidiManager();
@@ -111,9 +116,32 @@ public class WaveStationEditor {
         btnExportPatch.addActionListener(e -> exportPatch(0));  // MISSING CONNECTION TO SELECTED PROGRAM
         btnImportPatch.addActionListener(e -> importPatch());
 
-
         controls.add(btnExportPatch);
         controls.add(btnImportPatch);
+
+     // --- Bank selector ---
+        controls.add(Box.createVerticalStrut(10));
+        controls.add(new JLabel("Bank"));
+
+        bankCombo = new JComboBox<>(new String[] {
+            "RAM 1",
+            "RAM 2",
+            "ROM 1",
+            "ROM 2"
+        });
+        controls.add(bankCombo);
+
+        // --- Bank Export / Import ---
+        controls.add(Box.createVerticalStrut(10));
+
+        btnExportBank = new JButton("Export Bank (.syx)");
+        btnImportBank = new JButton("Import Bank (.syx)");
+
+        btnExportBank.addActionListener(e -> exportBank());
+        btnImportBank.addActionListener(e -> importBank());
+
+        controls.add(btnExportBank);
+        controls.add(btnImportBank);
 
 
         frame.getContentPane().add(top, BorderLayout.NORTH);
@@ -138,7 +166,7 @@ public class WaveStationEditor {
         int inIdx = inCombo.getSelectedIndex();
         int outIdx = outCombo.getSelectedIndex();
         if (inIdx < 0 || outIdx < 0) {
-            JOptionPane.showMessageDialog(frame, "SÈlectionne d'abord des ports MIDI IN et OUT");
+            JOptionPane.showMessageDialog(frame, "S√©lectionne d'abord des ports MIDI IN et OUT");
             return;
         }
 
@@ -153,7 +181,7 @@ public class WaveStationEditor {
 
             // listen to sysEx to allow saving
 //            midiReceiver.addSysexListener(data -> {
-//                appendLog("=== SysEx reÁu, " + data.length + " bytes ===");
+//                appendLog("=== SysEx re√ßu, " + data.length + " bytes ===");
 //                // store last sysex in memory (for saving)
 //                lastSysex = data;
 //            });
@@ -175,9 +203,9 @@ public class WaveStationEditor {
         if (outReceiver == null) return;
         try {
             WavestationSR ws = new WavestationSR(outReceiver, deviceId);
-            // ici on envoie un message de paramËtre gÈnÈrique (adapter au vrai format Korg)
-            ws.sendParameterChange(0x10, val); // NOTE: ‡ adapter aux vrais IDs
-            appendLog("EnvoyÈ SysEx param cutoff (val=" + val + ")");
+            // ici on envoie un message de param√®tre g√©n√©rique (adapter au vrai format Korg)
+            ws.sendParameterChange(0x10, val); // NOTE: √† adapter aux vrais IDs
+            appendLog("Envoy√© SysEx param cutoff (val=" + val + ")");
         } catch (Exception ex) {
             appendLog("Erreur envoi param: " + ex.getMessage());
         }
@@ -191,7 +219,7 @@ public class WaveStationEditor {
         try {
             WavestationSR ws = new WavestationSR(outReceiver, deviceId);
             ws.requestGlobalDump();
-            appendLog("Global dump request envoyÈ");
+            appendLog("Global dump request envoy√©");
         } catch (Exception ex) {
             appendLog("Erreur Global Dump: " + ex.getMessage());
         }
@@ -202,13 +230,13 @@ public class WaveStationEditor {
             appendLog("Ouvre d'abord le port MIDI OUT");
             return;
         }
-        String s = JOptionPane.showInputDialog(frame, "NumÈro de programme (0..127):", "0");
+        String s = JOptionPane.showInputDialog(frame, "Num√©ro de programme (0..127):", "0");
         if (s == null) return;
         try {
             int num = Integer.parseInt(s);
             WavestationSR ws = new WavestationSR(outReceiver, deviceId);
             ws.requestProgramDump(num);
-            appendLog("Request Program " + num + " envoyÈ");
+            appendLog("Request Program " + num + " envoy√©");
         } catch (Exception ex) {
             appendLog("Erreur Request Program: " + ex.getMessage());
         }
@@ -218,7 +246,7 @@ public class WaveStationEditor {
 
     private void onSaveSyx() {
         if (lastSysex == null) {
-            appendLog("Aucun SysEx reÁu encore ‡ sauvegarder");
+            appendLog("Aucun SysEx re√ßu encore √† sauvegarder");
             return;
         }
         JFileChooser chooser = new JFileChooser();
@@ -228,7 +256,7 @@ public class WaveStationEditor {
             File f = chooser.getSelectedFile();
             try {
                 WavestationSR.saveSysexToFile(lastSysex, f.getAbsolutePath());
-                appendLog("SauvegardÈ : " + f.getAbsolutePath());
+                appendLog("Sauvegard√© : " + f.getAbsolutePath());
             } catch (IOException e) {
                 appendLog("Erreur save sysex: " + e.getMessage());
             }
@@ -255,7 +283,7 @@ public class WaveStationEditor {
             WavestationSR ws = new WavestationSR(outReceiver, deviceId);
             ws.requestProgramDump(program);
 
-            // attendre rÈception
+            // attendre r√©ception
             Thread.sleep(1000);
 
             if (!dumpCollector.isComplete()) {
@@ -269,7 +297,7 @@ public class WaveStationEditor {
                     chooser.getSelectedFile(),
                     dumpCollector.getFullDump()
                 );
-                appendLog("Patch exportÈ avec succËs");
+                appendLog("Patch export√© avec succ√®s");
             }
 
         } catch (Exception e) {
@@ -293,13 +321,82 @@ public class WaveStationEditor {
             }
 
             ws.sendFullPatch(sysex);
-            appendLog("Patch importÈ avec succËs");
+            appendLog("Patch import√© avec succ√®s");
 
         } catch (Exception e) {
             appendLog("Erreur import: " + e.getMessage());
         }
     }
 
+    private int getSelectedBankId() {
+        return bankCombo.getSelectedIndex(); // 0..3
+    }
+
+    private void exportBank() {
+        if (outReceiver == null) {
+            appendLog("Ouvre d'abord le port MIDI OUT");
+            return;
+        }
+
+        int bankId = getSelectedBankId();
+        appendLog("Export de la banque " + bankCombo.getSelectedItem());
+
+        try {
+            dumpCollector.start();
+
+            WavestationSR ws = new WavestationSR(outReceiver, deviceId);
+            ws.requestBankDump(bankId);
+
+            // Banque = long ‚Üí attendre plus longtemps
+            Thread.sleep(4000);
+
+            if (!dumpCollector.isComplete()) {
+                appendLog("Dump de banque incomplet !");
+                return;
+            }
+
+            JFileChooser chooser = new JFileChooser();
+            if (chooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                PatchFileManager.save(
+                    chooser.getSelectedFile(),
+                    dumpCollector.getFullDump()
+                );
+                appendLog("Banque export√©e avec succ√®s");
+            }
+
+        } catch (Exception e) {
+            appendLog("Erreur export banque: " + e.getMessage());
+        } finally {
+            dumpCollector.stop();
+        }
+    }
+
+    private void importBank() {
+        if (outReceiver == null) {
+            appendLog("Ouvre d'abord le port MIDI OUT");
+            return;
+        }
+
+        try {
+            JFileChooser chooser = new JFileChooser();
+            if (chooser.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) return;
+
+            byte[] sysex = PatchFileManager.load(chooser.getSelectedFile());
+
+            WavestationSR ws = new WavestationSR(outReceiver, deviceId);
+
+            if (!ws.isValidWavestationBank(sysex)) {
+                appendLog("Fichier SYX banque invalide");
+                return;
+            }
+
+            ws.sendFullBank(sysex);
+            appendLog("Banque import√©e avec succ√®s");
+
+        } catch (Exception e) {
+            appendLog("Erreur import banque: " + e.getMessage());
+        }
+    }
 
 
     public static void main(String[] args) {
