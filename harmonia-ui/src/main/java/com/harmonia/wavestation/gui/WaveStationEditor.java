@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.harmonia.midi.MidiInputReceiver;
 import com.harmonia.midi.MidiManager;
 import com.harmonia.midi.SysexDumpCollector;
@@ -416,6 +417,8 @@ public class WaveStationEditor {
 
 
     public static void main(String[] args) {
+        // Dark FlatLaf theme (temporary; the Harmonia theme comes with phase 5)
+        FlatDarkLaf.setup();
         SwingUtilities.invokeLater(() -> new WaveStationEditor());
     }
 }

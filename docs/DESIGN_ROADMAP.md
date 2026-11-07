@@ -335,24 +335,24 @@ flowchart LR
 
 ### Phase 0 – Remise à plat *(v0.0.1)*
 
-- [ ] Décider du sort des modifications non commitées (essentiellement des commentaires), puis committer ou annuler.
+- [x] Décider du sort des modifications non commitées (essentiellement des commentaires), puis committer ou annuler.
 - [x] `.gitignore` racine (`bin/`, `target/`, fichiers IDE, `docs/reference/`) ; `bin/` n'est plus suivi.
 - [x] Ranger les manuels PDF dans `docs/reference/`, en local seulement.
 - [x] Passer tout le projet en **UTF-8** et réparer les accents.
 - [x] `README.md` (présentation, captures, prérequis), `LICENSE` (Apache 2.0), mention de non-affiliation à Korg.
 - [x] Renommer le projet Eclipse `KorgWavestationEditor` → `Harmonia`.
-- [ ] Choisir la version Java : une **LTS** (21 ou 25), alignée sur Aventura, plutôt que Java 23.
+- [x] Choisir la version Java : **Java 21 LTS** (propriété `maven.compiler.release` du POM parent).
 
 ### Phase 1 – Passage à Maven *(v0.1)* ← moment opportun
 
 On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf, JUnit) et avant de multiplier les classes. Après, le déplacement des fichiers coûte plus cher.
 
-- [ ] Structure standard `src/main/java`, `src/test/java`, `src/main/resources`.
-- [ ] POM parent multi-modules : `harmonia-midi`, `harmonia-wavestation`, `harmonia-app`, `harmonia-ui`. Option plus simple : un module unique au départ, découpé plus tard.
-- [ ] Dépendances : FlatLaf (+ `flatlaf-extras` pour les icônes SVG), JUnit 5 ; plus tard éventuellement MigLayout.
-- [ ] Plugins : compiler (`release`), surefire, `exec`/`jar` exécutable, puis `jpackage` en Phase 9.
-- [ ] Import « Existing Maven Project » dans Eclipse (m2e), comme pour Aventura.
-- [ ] **GitHub Actions** : `mvn verify` à chaque push.
+- [x] Structure standard `src/main/java`, `src/test/java`, `src/main/resources`.
+- [x] POM parent multi-modules : `harmonia-midi`, `harmonia-wavestation`, `harmonia-app`, `harmonia-ui`.
+- [x] Dépendances : FlatLaf (+ `flatlaf-extras` pour les icônes SVG), JUnit 5 ; plus tard éventuellement MigLayout.
+- [x] Plugins : compiler (`release`), surefire, enforcer, `exec` ; `jpackage` en Phase 9.
+- [ ] Import « Existing Maven Project » dans Eclipse (m2e), comme pour Aventura. *(à faire de ton côté)*
+- [x] **GitHub Actions** : `mvn verify` à chaque push (`.github/workflows/build.yml`).
 
 ### Phase 2 – Couche MIDI fiable *(v0.2)*
 

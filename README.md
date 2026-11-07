@@ -10,12 +10,12 @@ Harmonia permet de piloter tous les réglages du Wavestation SR depuis l'ordinat
 
 ## État du projet
 
-🚧 **En cours de refonte.** Le code actuel est une preuve de concept (Swing, sans dépendance). La feuille de route complète est dans [`docs/DESIGN_ROADMAP.md`](docs/DESIGN_ROADMAP.md).
+🚧 **En cours de refonte.** Le code actuel est une preuve de concept (Swing + FlatLaf). La feuille de route complète est dans [`docs/DESIGN_ROADMAP.md`](docs/DESIGN_ROADMAP.md).
 
 | Phase | Contenu | État |
 |-------|---------|------|
-| P0 | Remise à plat du dépôt | ✅ en cours |
-| P1 | Passage à Maven + CI GitHub Actions | ⏳ |
+| P0 | Remise à plat du dépôt | ✅ |
+| P1 | Passage à Maven + CI GitHub Actions | ✅ en cours |
 | P2 | Couche MIDI fiable (SysEx, file d'envoi, détection) | ⏳ |
 | P3 | Modèle et codecs Wavestation | ⏳ |
 | P4 | Librarian (banques, fichiers `.syx`) | ⏳ |
@@ -27,13 +27,27 @@ Harmonia permet de piloter tous les réglages du Wavestation SR depuis l'ordinat
 
 ## Prérequis
 
-- Java (JDK) récent
+- JDK 21 ou plus récent, Maven 3.6.3 ou plus récent
 - Un KORG Wavestation SR relié à l'ordinateur par une interface MIDI (IN et OUT)
 - Sur le SR : canal de base connu, **MIDI › Param** sur `RECEIVE` ou `RECV & TRANS`, **Memory Protect** désactivé pour écrire en RAM
 
-## Lancer la preuve de concept
+## Construire et lancer
 
-Ouvrir le projet dans Eclipse puis exécuter `com.harmonia.wavestation.gui.WaveStationEditor`.
+```
+mvn install
+mvn -pl harmonia-ui exec:java
+```
+
+Dans Eclipse : *File › Import › Maven › Existing Maven Projects*, sélectionner le dossier racine (les 5 projets sont importés), puis lancer `com.harmonia.wavestation.gui.WaveStationEditor` du module `harmonia-ui`.
+
+## Modules
+
+| Module | Rôle |
+|--------|------|
+| `harmonia-midi` | Transport MIDI : ports, réception, SysEx |
+| `harmonia-wavestation` | Profil Wavestation SR : modèle, codecs SysEx, fichiers `.syx` |
+| `harmonia-app` | Services applicatifs : session, undo, bibliothèque |
+| `harmonia-ui` | Interface Swing + FlatLaf |
 
 ## Documentation
 
