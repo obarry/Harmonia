@@ -18,6 +18,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.harmonia.ui.EditorSection;
@@ -74,7 +75,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         KnobFactory knobs = new KnobFactory(this::onKnobFocus, this::onKnobChange);
-        patchEditor = new PatchEditorPanel(knobs);
+        patchEditor = new PatchEditorPanel(knobs, this::onEditorParameter);
         registerEditors();
 
         setContentPane(buildContent());
@@ -88,7 +89,7 @@ public class MainWindow extends JFrame {
 
         showSection(EditorSection.PATCH);
         showPage("WAVES");
-        librarian.selectNumber(patchNumber);
+        SwingUtilities.invokeLater(() -> librarian.selectNumber(patchNumber));
         setMinimumSize(new Dimension(1280, 820));
         setSize(1600, 1000);
         setLocationRelativeTo(null);
@@ -292,6 +293,24 @@ public class MainWindow extends JFrame {
             showPage(p.page());
         }
         updateLcd(knob);
+    }
+
+    /** Changes made with the graphical editors (vector pad). */
+    private void onEditorParameter(MockParameter p, String value, String lcdText) {
+        if (section == EditorSection.PATCH && !p.page().equals(currentPage.get(section))) {
+            showPage(p.page());
+        }
+        frontPanel.getLcd().setLine2(lcdText);
+        if (p != MockParameter.MIX_POINT) {
+            modified = true;
+            frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, true);
+            updateStatus();
+        }
+        if (navigationBar.isLiveEdit()) {
+            monitor.logCoalesced(p.officialName(), Direction.OUT,
+                    parameterChange(p.number(), value) + "  " + p.officialName());
+            frontPanel.getMidiLed().flash();
+        }
     }
 
     private void onKnobChange(Knob knob) {
