@@ -356,13 +356,17 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 
 ### Phase 2 – Couche MIDI fiable *(v0.2)*
 
-- [ ] `MidiPortService` : énumération filtrée IN/OUT, mémorisation des ports, reconnexion.
-- [ ] **Détection automatique** du SR par *Device Inquiry* (`F0 7E 0n 06 01 F7`), qui donne aussi la version du système.
-- [ ] `SysexAssembler` : reconstitution des messages découpés (continuations `F7`), timeouts.
-- [ ] `SysexSender` : file cadencée, fusion des paramètres, pauses configurables.
-- [ ] `RequestResponse` : `CompletableFuture<byte[]>`, timeout calculé sur la taille, progression, gestion des accusés `21`–`24`.
-- [ ] **Moniteur MIDI** (panneau dédié, décodage des messages Wavestation) et **MIDI Thru** clavier → SR.
-- [ ] Assistant de connexion : canal de base, MIDI Param, Memory Protect.
+- [x] `MidiPorts` / `MidiConnection` : énumération filtrée IN/OUT, ouverture des ports, mémorisation (`ConnectionSettings`, préférences Java), reconnexion au démarrage (`DeviceSession`).
+- [x] **Détection automatique** du SR par *Device Inquiry* (`DeviceIdentity`), qui donne aussi le canal et la version du système.
+- [x] `SysexAssembler` : reconstitution des messages découpés (continuations `F7`), timeouts. Corrige aussi le double `F7` de la preuve de concept.
+- [x] `MidiSendQueue` : file cadencée (40 ms après chaque SysEx), fusion des valeurs d'un même paramètre, voie prioritaire pour les notes.
+- [x] `SysexRequests` + `WavestationDevice` : requêtes avec `CompletableFuture`, timeout calculé sur la taille, accusés `21`–`24`, contrôle du checksum.
+- [x] `WavestationSysex`, `MessageType`, `WavestationBank` : construction et décodage de tous les messages de l'annexe 4.
+- [x] **Moniteur MIDI** réel (décodage des messages Wavestation) et **MIDI Thru** clavier → SR (rechanalisé sur le canal du SR).
+- [x] Interface : dialogue de connexion (ports, clavier maître, canal, détection), envoi des paramètres en temps réel, Get / Send / Write, clavier virtuel.
+- [ ] **Validation sur l'appareil** (à faire avec le SR) : détection, Get d'un patch, renvoi, écriture en RAM, paramètres en temps réel, ordre des banques en SysEx.
+- [ ] Assistant de connexion : vérification de MIDI Param et de Memory Protect (lecture du System Setup, phase 3).
+- [ ] Suppression des classes de la preuve de concept (marquées `@Deprecated`) une fois l'appareil validé.
 
 ### Phase 3 – Modèle et codecs Wavestation *(v0.3)*
 

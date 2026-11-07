@@ -4,6 +4,12 @@ import javax.sound.midi.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Proof of concept (2026-01), kept for the former {@code WaveStationEditor} window only.
+ *
+ * @deprecated replaced by MidiPorts and MidiConnection (phase 2); removed once the new UI is connected to the device.
+ */
+@Deprecated(forRemoval = true)
 public class MidiManager {
     private MidiDevice inputDevice;
     private MidiDevice outputDevice;

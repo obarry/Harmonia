@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("removal")
 class SysexDumpCollectorTest {
 
     private static final byte[] SYSEX = { (byte) 0xF0, 0x42, 0x30, 0x28, 0x23, (byte) 0xF7 };

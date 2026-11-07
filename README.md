@@ -8,20 +8,20 @@ Harmonia lets you control every setting of the Wavestation SR from your computer
 
 ![Harmonia main window](docs/images/harmonia-screenshot.png)
 
-*Current state of the user interface (phase 5, mock data: nothing is sent to the device yet).*
+*Current state of the user interface. The sounds shown are still mock data until the Wavestation model exists (phase 3).*
 
 ## Project status
 
-🚧 **Being rebuilt.** The user interface shell is in place; the MIDI layer and the Wavestation model come next. The full roadmap is in [`docs/DESIGN_ROADMAP.md`](docs/DESIGN_ROADMAP.md) *(in French, English translation in progress)*.
+🚧 **Being rebuilt.** The user interface shell is in place and the MIDI layer can talk to the device; the Wavestation model (decoding of the sounds) comes next. The full roadmap is in [`docs/DESIGN_ROADMAP.md`](docs/DESIGN_ROADMAP.md) *(in French, English translation in progress)*.
 
 | Phase | Content | Status |
 |-------|---------|--------|
 | P0 | Repository cleanup | ✅ |
 | P1 | Maven build + GitHub Actions CI | ✅ |
-| P2 | Reliable MIDI layer (SysEx, send queue, device detection) | ⏳ |
+| P2 | Reliable MIDI layer (SysEx, send queue, device detection) | 🔨 in progress (branch `phase2-midi`) |
 | P3 | Wavestation model and codecs | ⏳ |
 | P4 | Librarian (banks, `.syx` files) | ⏳ |
-| P5 | UI shell, theme and front panel | 🔨 in progress (branch `phase5-ui-shell`) |
+| P5 | UI shell, theme and front panel | ✅ |
 | P6 | Real-time patch editor | ⏳ |
 | P7 | Performances, effects, multisets | ⏳ |
 | P8 | Wave sequences | ⏳ |
@@ -43,6 +43,25 @@ mvn -pl harmonia-ui exec:java
 In Eclipse: *File › Import › Maven › Existing Maven Projects*, select the root folder (5 projects are imported), then run `com.harmonia.ui.HarmoniaApp` from the `harmonia-ui` module.
 
 The former proof of concept is still available: `com.harmonia.wavestation.gui.WaveStationEditor`.
+
+## Connecting the Wavestation SR
+
+1. Connect the MIDI OUT of the SR to a MIDI IN of the computer, and a MIDI OUT of the computer to the MIDI IN of the SR.
+2. On the SR, in **MIDI/GLOBAL › MIDI**, set **Param** to `RECV & TRANS` (needed for real-time editing) and note the basic channel.
+3. In Harmonia, click **MIDI…**, choose the ports and click **Détecter le SR** (detect; the interface is in French for now): Harmonia asks the device to identify itself and sets the channel. Then click **Connecter**. The settings are remembered for the next start.
+4. Optionally choose your master keyboard: what you play is forwarded to the SR on its channel (MIDI thru).
+
+What works with the device today:
+
+| Action | What happens |
+|--------|--------------|
+| Turn a knob | The parameter is sent to the SR edit buffer in real time (SysEx parameter change) |
+| **Get** | Reads the selected patch from the SR (the dump is checked and shown in the MIDI monitor) |
+| **Send** | Sends the last patch read back to the SR edit buffer and waits for its acknowledgement |
+| **Write** | Stores the SR edit buffer in the selected RAM location, after confirmation |
+| On-screen keyboard | Plays notes on the SR |
+
+Without a device, Harmonia runs in demonstration mode and the MIDI monitor shows the messages that would be sent.
 
 ## Using the interface
 

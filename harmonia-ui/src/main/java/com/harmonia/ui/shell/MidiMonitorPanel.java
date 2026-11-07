@@ -3,7 +3,6 @@ package com.harmonia.ui.shell;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -82,20 +81,36 @@ public class MidiMonitorPanel extends SectionPanel {
         list.ensureIndexIsVisible(model.size() - 1);
     }
 
+    /**
+     * The panel is narrow: "hex bytes  description" is shown on two lines, the description dimmed;
+     * long information lines wrap.
+     */
+    static String twoLines(String text) {
+        String safe = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        int split = safe.indexOf("  ");
+        if (split > 0) {
+            return "<html><body style='width:200px'>" + safe.substring(0, split)
+                    + "<br><font color='#8b8f97'>" + safe.substring(split + 2).trim() + "</font></body></html>";
+        }
+        return "<html><body style='width:200px'>" + safe + "</body></html>";
+    }
+
     private static final class LineRenderer extends JPanel implements ListCellRenderer<Line> {
         private final JLabel direction = new JLabel();
         private final JLabel text = new JLabel();
 
         LineRenderer() {
-            super(new FlowLayout(FlowLayout.LEFT, 6, 2));
+            super(new BorderLayout(6, 0));
+            setBorder(BorderFactory.createEmptyBorder(3, 2, 3, 2));
             setOpaque(false);
             Font mono = HarmoniaLaf.monoFont(Font.PLAIN, 11.5f);
             direction.setFont(mono.deriveFont(Font.BOLD));
             text.setFont(mono);
             text.setForeground(new Color(0xB9BCC3));
             direction.setPreferredSize(new java.awt.Dimension(36, 16));
-            add(direction);
-            add(text);
+            direction.setVerticalAlignment(JLabel.TOP);
+            add(direction, BorderLayout.WEST);
+            add(text, BorderLayout.CENTER);
         }
 
         @Override
@@ -103,7 +118,7 @@ public class MidiMonitorPanel extends SectionPanel {
                 boolean isSelected, boolean cellHasFocus) {
             direction.setText(value.direction().label);
             direction.setForeground(value.direction().color);
-            text.setText(value.text());
+            text.setText(twoLines(value.text()));
             text.setForeground(value.direction() == Direction.INFO ? HarmoniaColors.ACCENT : new Color(0xB9BCC3));
             return this;
         }
