@@ -382,11 +382,13 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 
 ### Phase 5 – Shell UI et façade *(en parallèle, dès la fin de P1)*
 
-- [ ] Thème FlatLaf sombre personnalisé (fichier `.properties`) et palette de la charte.
-- [ ] **Façade fonctionnelle** : LCD 2 lignes, LED, 10 boutons reliés à la navigation, raccourcis clavier.
-- [ ] Fil d'Ariane (escaliers), barre de pages SR, sélecteur d'onde `A B C D All`.
-- [ ] Widgets maison : `Knob` (souris + molette + double-clic = défaut), `EnvelopeEditor`, `VectorPad`, `PianoKeyboard`, `LedIndicator`.
-- [ ] Préférences (ports, canal, dossiers).
+- [x] Thème FlatLaf sombre personnalisé (`HarmoniaLaf` + `HarmoniaLaf.properties`) et palette de la charte (`HarmoniaColors`).
+- [x] **Façade fonctionnelle** : LCD 2 lignes, LED, 10 boutons reliés à la navigation, raccourcis clavier.
+- [x] Fil d'Ariane (escaliers), barre de pages SR, sélecteur d'onde `A B C D All`.
+- [x] Widgets maison : `Knob` (souris + molette + double-clic = défaut), `LedIndicator`, `LcdDisplay`, `PanelButton`, `SectionPanel`, `PianoKeyboard`.
+- [x] Widgets graphiques : `EnvelopeEditor` (enveloppes Amp / Env 1, synchronisées avec les boutons rotatifs), `VectorPad` (Mix Env interactif : A à gauche, B en haut, C à droite, D en bas, pourcentages de mix, boucle).
+- [x] Fenêtre principale avec données factices : librarian, éditeur de patch (ondes A–D, vector mix, Amp Env, filtre, LFO 1), inspecteur, moniteur MIDI (messages simulés), clavier virtuel, barre d'état.
+- [x] Préférences (ports, canal, dossiers) : reportées à la phase 2, avec la couche MIDI.
 
 ### Phase 6 – Éditeur de Patch en temps réel *(v0.6)*
 
@@ -413,6 +415,7 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 - [ ] Global (MIDI, remap, pédales), gammes micro-tonales, Performance Map.
 - [ ] Installeurs **jpackage** (Windows `.msi`, macOS, Linux) via GitHub Releases.
 - [ ] Documentation utilisateur, captures, vidéo de démo.
+- [ ] Traduction de toute la documentation en anglais (README ✅, ce document à faire).
 
 ---
 
