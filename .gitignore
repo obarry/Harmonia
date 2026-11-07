@@ -1,0 +1,21 @@
+# Build output (Eclipse today, Maven from phase 1)
+/bin/
+/target/
+**/target/
+
+# IDE
+.metadata/
+*.iml
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Korg manuals (copyrighted, kept locally only)
+/docs/reference/
+
+# Local user assets (e.g. logo image supplied by the user)
+/local/

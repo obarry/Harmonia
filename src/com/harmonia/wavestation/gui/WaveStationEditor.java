@@ -40,6 +40,15 @@ public class WaveStationEditor {
     private MidiManager midiManager = new MidiManager();
     private MidiInputReceiver midiReceiver;
     private Receiver outReceiver;
+    /**
+     * Cached device infos (unused).
+     *
+     * This field was previously populated from MidiManager.getDeviceInfos()
+     * but the rest of the class calls MidiManager.getDeviceInfos() directly
+     * when needed. Keeping the field declaration for reference but it is
+     * not actively used; removing the assignment to avoid misleading
+     * references. If you prefer, this field can be deleted.
+     */
     private MidiDevice.Info[] infos;
     
     private SysexDumpCollector dumpCollector = new SysexDumpCollector();
@@ -50,7 +59,8 @@ public class WaveStationEditor {
 
     public WaveStationEditor() {
         initUI();
-        infos = MidiManager.getDeviceInfos();
+        // Note: device infos are retrieved on-demand by refreshDeviceLists();
+        // the former eager assignment has been removed because it was unused.
     }
 
     private void initUI() {
@@ -113,7 +123,7 @@ public class WaveStationEditor {
 
         btnExportPatch = new JButton("Export Patch (.syx)");
         btnImportPatch = new JButton("Import Patch (.syx)");
-        btnExportPatch.addActionListener(e -> exportPatch(0));  // MISSING CONNECTION TO SELECTED PROGRAM
+        btnExportPatch.addActionListener(e -> exportPatch((Integer) programSpinner.getValue()));
         btnImportPatch.addActionListener(e -> importPatch());
 
         controls.add(btnExportPatch);
@@ -179,13 +189,14 @@ public class WaveStationEditor {
                 appendLog("RECV: " + s);
             });
 
-            // listen to sysEx to allow saving
-//            midiReceiver.addSysexListener(data -> {
-//                appendLog("=== SysEx reçu, " + data.length + " bytes ===");
-//                // store last sysex in memory (for saving)
-//                lastSysex = data;
-//            });
-            midiReceiver.addSysexListener(dumpCollector::onSysexReceived);
+            // listen to SysEx to allow saving and collecting
+            midiReceiver.addSysexListener(data -> {
+                appendLog("=== SysEx received, " + data.length + " bytes ===");
+                // store last sysex in memory (for saving)
+                lastSysex = data;
+                // also forward to dump collector
+                dumpCollector.onSysexReceived(data);
+            });
 
             midiManager.openInput(inInfo, midiReceiver);
             outReceiver = midiManager.getOutputReceiver(outInfo);
@@ -278,6 +289,11 @@ public class WaveStationEditor {
     }
     
     private void exportPatch(int program) {
+        if (outReceiver == null) {
+            appendLog("Ouvre d'abord le port MIDI OUT");
+            return;
+        }
+
         try {
             dumpCollector.start();
             WavestationSR ws = new WavestationSR(outReceiver, deviceId);
@@ -400,8 +416,6 @@ public class WaveStationEditor {
 
 
     public static void main(String[] args) {
-        //SwingUtilities.invokeLater(WaveStationEditor::new);
-    	System.out.println("Starting WaveStationEditor");
-    	WaveStationEditor wse = new WaveStationEditor();
+        SwingUtilities.invokeLater(() -> new WaveStationEditor());
     }
 }

@@ -3,7 +3,7 @@ package com.harmonia.wavestation;
 import javax.sound.midi.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+// import java.util.Arrays; // not used
 
 public class WavestationSR {
 	
@@ -31,7 +31,7 @@ public class WavestationSR {
         SysexMessage msg = new SysexMessage();
         msg.setMessage(fullMessage, fullMessage.length);
         outReceiver.send(msg, -1);
-        Thread.sleep(30); // dÈlai sÈcuritÈ Korg
+        Thread.sleep(30); // d√©lai s√©curit√© Korg
     }
 
     // Exemple: Global Dump Request (Korg): F0 42 <deviceID> 3E 00 F7
@@ -40,8 +40,8 @@ public class WavestationSR {
         sendRawSysEx(wrapSysex(body));
     }
 
-    // Exemple: Request Program Dump (program number 0..127) - format dÈpend du modËle
-    // Ici je fournis un exemple gÈnÈrique ; vÈrifie le manuel Korg pour l'ID exact.
+    // Exemple: Request Program Dump (program number 0..127) - format d√©pend du mod√®le
+    // Ici je fournis un exemple g√©n√©rique ; v√©rifie le manuel Korg pour l'ID exact.
     public void requestProgramDump(int programNumber) throws Exception {
     	byte[] body = {
     			(byte) 0x42,
@@ -53,7 +53,7 @@ public class WavestationSR {
     	sendRawSysEx(wrapSysex(body));
     }
 
-    // Exemple: envoyer un paramËtre (pseudo-code) ó il faudra l'adapter au format Korg
+    // Exemple: envoyer un param√®tre (pseudo-code) ‚Äì il faudra l'adapter au format Korg
     public void sendParameterChange(int paramId, int value) throws Exception {
         // paramId & value need to be mapped to Korg-specific bytes
         byte p1 = (byte)(paramId & 0x7F);
@@ -74,7 +74,7 @@ public class WavestationSR {
         msg.setMessage(sysex, sysex.length);
         outReceiver.send(msg, -1);
 
-        // dÈlai sÈcuritÈ Korg
+        // d√©lai s√©curit√© Korg
         Thread.sleep(30);
     }
 
@@ -108,8 +108,8 @@ public class WavestationSR {
     }
 
     /**
-     * Envoie une banque complËte au Wavestation
-     * (le SysEx doit Ítre EXACTEMENT celui díun bank dump)
+     * Envoie une banque compl√®te au Wavestation
+     * (le SysEx doit √™tre EXACTEMENT celui d‚Äôun bank dump)
      */
     public void sendFullBank(byte[] sysex) throws Exception {
         if (!isValidWavestationBank(sysex)) {
@@ -122,11 +122,11 @@ public class WavestationSR {
     }
 
     /**
-     * VÈrifie si un SysEx correspond ‡ une banque Wavestation
+     * V√©rifie si un SysEx correspond √† une banque Wavestation
      */
     public boolean isValidWavestationBank(byte[] sysex) {
         return sysex != null
-            && sysex.length > 10000   // banque = trËs longue
+            && sysex.length > 10000   // banque = tr√®s longue
             && (sysex[0] & 0xFF) == 0xF0
             && (sysex[1] & 0xFF) == KORG_ID
             && (sysex[3] & 0xFF) == WAVESTATION_MODEL_ID

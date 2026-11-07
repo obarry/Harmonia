@@ -8,6 +8,15 @@ public class MidiManager {
     private MidiDevice inputDevice;
     private MidiDevice outputDevice;
     private Transmitter transmitter;
+    /**
+     * Reference to the last Receiver passed to openInput.
+     *
+     * NOTE: currently this field is not used elsewhere in the class. It is
+     * kept to preserve the original intent (holding a reference to the
+     * receiver) and for potential future use; leaving it prevents changing
+     * external behavior. If you want to remove it, also remove the
+     * assignment in openInput().
+     */
     private Receiver receiver;
 
     public static String[] listDevices() {
@@ -36,8 +45,7 @@ public class MidiManager {
         closeOutput();
         outputDevice = MidiSystem.getMidiDevice(info);
         if (!outputDevice.isOpen()) outputDevice.open();
-        // We'll obtain Receiver from device
-        //receiver = outputDevice.getReceiver(); // ADDED BY OLIVIER 16-Jan-2026
+        // We'll obtain Receiver from device when needed
     }
 
     public Receiver getOutputReceiver(MidiDevice.Info info) throws MidiUnavailableException {

@@ -7,29 +7,29 @@ public class SysexDumpCollector {
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
     private boolean collecting = false;
 
-    public void start() {
+    public synchronized void start() {
         buffer.reset();
         collecting = true;
     }
 
-    public void stop() {
+    public synchronized void stop() {
         collecting = false;
     }
 
-    public boolean isCollecting() {
+    public synchronized boolean isCollecting() {
         return collecting;
     }
 
-    public void onSysexReceived(byte[] fullSysex) {
+    public synchronized void onSysexReceived(byte[] fullSysex) {
         if (!collecting) return;
         buffer.writeBytes(fullSysex);
     }
 
-    public byte[] getFullDump() {
+    public synchronized byte[] getFullDump() {
         return buffer.toByteArray();
     }
 
-    public boolean isComplete() {
+    public synchronized boolean isComplete() {
         byte[] data = buffer.toByteArray();
         return data.length > 0 &&
                data[0] == (byte)0xF0 &&

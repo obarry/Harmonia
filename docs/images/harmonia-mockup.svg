@@ -1,0 +1,613 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo1ODdiNDVlNS1lNjI5LTRhNzQtOTA0NS00M2QyOTg4MWIwNjcAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaMaaDo2WfhMsHDa0pFaqa6MAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDoxZGQxZDUyMC01ODZiLTRlYTctOTdjNy04ZmQyNzRmNWViYzZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNocA5PO0v6aKmaE0og5anj8QAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggDng4IzfXWjQuBL4wl9i536LApoX1cgeXQ1SCNtJtG5mkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaHOtsu4mKE33bk4O+sb6cHoAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCBQcBseGzo5yWc1HxGBPZFhNOCqdMwkyeJzrxT659R5RWRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiaZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjU4N2I0NWU1LWU2MjktNGE3NC05MDQ1LTQzZDI5ODgxYjA2Ny9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmMzOWI4YWQ5LTVhYTktNDhiYy04YzQ4LTI2MWFiNmYxM2VjNHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAOeDgjN9daNC4EvjCX2LnfosCmhfVyB5dDVII20m0bmaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggGY1eBNph4f8XHHy1RGfX0uktHshZLmPxaGu4FcSK0GSiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggt6rWosrYO4ic9+Xsn8dIiQqzcU0NJYVJ6/RKijSWqw90Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQHreuS+/vnxaAwS8TNuMNZn/K45dxqdUtE0hewnQojvfd/rfKAChbyRpNOSeDvUQXcjbL0p0M+0gbV/hn/8mQas=</c2pa:manifest></metadata>
+<defs>
+<linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26272b"/><stop offset="1" stop-color="#141518"/></linearGradient>
+<linearGradient id="lcd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f3b3a"/><stop offset="1" stop-color="#0a2726"/></linearGradient>
+<radialGradient id="knob" cx="0.4" cy="0.35" r="0.8"><stop offset="0" stop-color="#4a4d55"/><stop offset="1" stop-color="#1c1d21"/></radialGradient>
+<linearGradient id="env" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2ec4b6" stop-opacity=".35"/><stop offset="1" stop-color="#2ec4b6" stop-opacity="0"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="0" y="0" width="1600" height="1040" rx="0" fill="#0e0f11" />
+<rect x="0" y="0" width="1600" height="100" rx="0" fill="url(#panel)" />
+<rect x="0" y="0" width="38" height="100" rx="0" fill="#1d1e22" />
+<ellipse cx="19" cy="22" rx="9" ry="6" fill="#0b0b0d" stroke="#3a3c42"/>
+<ellipse cx="19" cy="78" rx="9" ry="6" fill="#0b0b0d" stroke="#3a3c42"/>
+<rect x="1562" y="0" width="38" height="100" rx="0" fill="#1d1e22" />
+<ellipse cx="1581" cy="22" rx="9" ry="6" fill="#0b0b0d" stroke="#3a3c42"/>
+<ellipse cx="1581" cy="78" rx="9" ry="6" fill="#0b0b0d" stroke="#3a3c42"/>
+<line x1="38" y1="99" x2="1562" y2="99" stroke="#000"/>
+<circle cx="80" cy="44" r="17" fill="url(#knob)" stroke="#000"/><line x1="80" y1="44" x2="70" y2="33" stroke="#ddd" stroke-width="2"/>
+<text x="80" y="76" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="1">VOLUME</text>
+<circle cx="80" cy="88" r="5" fill="#0b0b0d" stroke="#44474e"/>
+<g transform="translate(150,33) rotate(0)"><rect x="-9" y="-7" width="18" height="14" rx="3" fill="#2a2c31" stroke="#3a3d44"/><path d="M-4,2 L0,-3 L4,2 Z" fill="#8b8f97"/></g>
+<g transform="translate(167,50) rotate(90)"><rect x="-9" y="-7" width="18" height="14" rx="3" fill="#2a2c31" stroke="#3a3d44"/><path d="M-4,2 L0,-3 L4,2 Z" fill="#8b8f97"/></g>
+<g transform="translate(150,67) rotate(180)"><rect x="-9" y="-7" width="18" height="14" rx="3" fill="#2a2c31" stroke="#3a3d44"/><path d="M-4,2 L0,-3 L4,2 Z" fill="#8b8f97"/></g>
+<g transform="translate(133,50) rotate(270)"><rect x="-9" y="-7" width="18" height="14" rx="3" fill="#2a2c31" stroke="#3a3d44"/><path d="M-4,2 L0,-3 L4,2 Z" fill="#8b8f97"/></g>
+<text x="150" y="92" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="1">CURSOR</text>
+<circle cx="200" cy="42" r="4" fill="#38e07b" filter="url(#glow)"/>
+<text x="200" y="60" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">MIDI</text>
+<rect x="220" y="16" width="420" height="68" rx="6" fill="#050607" />
+<rect x="226" y="22" width="408" height="56" rx="3" fill="url(#lcd)" />
+<g filter="url(#glow)">
+<text x="240" y="46" font-family="JetBrains Mono,Consolas,monospace" font-size="16" fill="#7ff5e6" text-anchor="start" font-weight="600" letter-spacing="0">PERFORM        RAM1:00</text>
+<text x="240" y="69" font-family="JetBrains Mono,Consolas,monospace" font-size="16" fill="#5fd6c8" text-anchor="start" font-weight="500" letter-spacing="0">Voyager Pad</text>
+</g>
+<circle cx="700" cy="21" r="3" fill="#38e07b" filter="url(#glow)"/>
+<ellipse cx="700" cy="36" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="700" y="56" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">PERF</text>
+<ellipse cx="774" cy="36" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="774" y="56" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">MULTI</text>
+<circle cx="848" cy="21" r="3" fill="#38e07b" filter="url(#glow)"/>
+<ellipse cx="848" cy="36" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="848" y="56" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">EDIT</text>
+<ellipse cx="922" cy="36" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="922" y="56" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">PAGE+</text>
+<ellipse cx="996" cy="36" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="996" y="56" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">+1/YES</text>
+<ellipse cx="700" cy="78" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="700" y="98" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">BANK</text>
+<circle cx="774" cy="63" r="3" fill="#ff5a3d" filter="url(#glow)"/>
+<ellipse cx="774" cy="78" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="774" y="98" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">WRITE/CMP</text>
+<ellipse cx="848" cy="78" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="848" y="98" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">MIDI/GLB</text>
+<ellipse cx="922" cy="78" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="922" y="98" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">PAGE−</text>
+<ellipse cx="996" cy="78" rx="11" ry="9" fill="url(#knob)" stroke="#000"/>
+<text x="996" y="98" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">−1/NO</text>
+<rect x="1060" y="14" width="96" height="22" rx="4" fill="none" stroke="#5a5d66" stroke-dasharray="4 3"/>
+<text x="1108" y="29" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="1">LOGO KORG</text>
+<text x="1060" y="64" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" fill="#e9e9ea" text-anchor="start" font-weight="700" letter-spacing="3">WAVESTATION</text>
+<text x="1300" y="64" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="26" fill="#e9e9ea" text-anchor="start" font-weight="800" letter-spacing="0">SR</text>
+<text x="1060" y="84" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="start" font-weight="600" letter-spacing="2">HARMONIA · EDITOR / LIBRARIAN</text>
+<rect x="1360" y="58" width="82" height="8" rx="2" fill="#08090a" stroke="#3a3d44" />
+<text x="1360" y="48" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="start" font-weight="600" letter-spacing="1">PCM DATA</text>
+<text x="1360" y="82" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">—</text>
+<rect x="1455" y="58" width="82" height="8" rx="2" fill="#08090a" stroke="#3a3d44" />
+<text x="1455" y="48" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="8" fill="#8b8f97" text-anchor="start" font-weight="600" letter-spacing="1">PROG DATA</text>
+<text x="1455" y="82" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#2ec4b6" text-anchor="start" font-weight="600" letter-spacing="0">RAM card</text>
+<rect x="0" y="100" width="1600" height="42" rx="0" fill="#141518" />
+<text x="361.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Librarian</text>
+<text x="477.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Performance</text>
+<rect x="542" y="106" width="70" height="36" rx="6" fill="#202227" />
+<line x1="550" y1="140" x2="604" y2="140" stroke="#2ec4b6" stroke-width="2"/>
+<text x="577.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="0">Patch</text>
+<text x="665.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Wave Seq</text>
+<text x="761.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Effects</text>
+<text x="857.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Multiset</text>
+<text x="949.0" y="129" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#8b8f97" text-anchor="middle" font-weight="500" letter-spacing="0">Global</text>
+<rect x="1020" y="110" width="64" height="26" rx="5" fill="#2a2c31" stroke="#3a3d44" />
+<text x="1052.0" y="128" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">⟲ Get</text>
+<rect x="1092" y="110" width="72" height="26" rx="5" fill="#2a2c31" stroke="#3a3d44" />
+<text x="1128.0" y="128" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">Send ⟶</text>
+<rect x="1172" y="110" width="48" height="26" rx="5" fill="#2a2c31" stroke="#3a3d44" />
+<text x="1196.0" y="128" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">A/B</text>
+<rect x="1228" y="110" width="64" height="26" rx="5" fill="#3a2a1c" stroke="#3a3d44" />
+<text x="1260.0" y="128" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#ff8a3d" text-anchor="middle" font-weight="600" letter-spacing="0">Write</text>
+<rect x="1400" y="110" width="170" height="26" rx="13" fill="#10261f" stroke="#1f5c48" />
+<circle cx="1416" cy="123" r="4" fill="#38e07b"/>
+<text x="1428" y="127" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#7fe8ae" text-anchor="start" font-weight="600" letter-spacing="0">Live edit : ON</text>
+<rect x="0" y="142" width="1600" height="40" rx="0" fill="#111214" />
+<text x="20" y="167" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="600" letter-spacing="0">PERF RAM1:00 Voyager Pad</text>
+<text x="196" y="167" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#5d616a" text-anchor="start" font-weight="400" letter-spacing="0">›</text>
+<text x="212" y="167" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="600" letter-spacing="0">Part 2</text>
+<text x="262" y="167" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#5d616a" text-anchor="start" font-weight="400" letter-spacing="0">›</text>
+<text x="278" y="167" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">PATCH RAM1:12 Glass Choir</text>
+<rect x="520" y="151" width="46.0" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="543.0" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">PATCH</text>
+<rect x="571.0" y="151" width="46.0" height="20" rx="10" fill="#1f3b38" stroke="#2ec4b6" />
+<text x="594.0" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#bff7ef" text-anchor="middle" font-weight="700" letter-spacing="0">WAVES</text>
+<rect x="622.0" y="151" width="52.400000000000006" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="648.2" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">MACROS</text>
+<rect x="679.4" y="151" width="58.800000000000004" height="20" rx="10" fill="#1f3b38" stroke="#2ec4b6" />
+<text x="708.8" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#bff7ef" text-anchor="middle" font-weight="700" letter-spacing="0">AMP ENV</text>
+<rect x="743.1999999999999" y="151" width="58.800000000000004" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="772.5999999999999" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">AMP MOD</text>
+<rect x="806.9999999999999" y="151" width="52.400000000000006" height="20" rx="10" fill="#1f3b38" stroke="#2ec4b6" />
+<text x="833.1999999999999" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#bff7ef" text-anchor="middle" font-weight="700" letter-spacing="0">FILTER</text>
+<rect x="864.3999999999999" y="151" width="39.6" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="884.1999999999998" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">LFO1</text>
+<rect x="908.9999999999999" y="151" width="39.6" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="928.7999999999998" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">LFO2</text>
+<rect x="953.5999999999999" y="151" width="46.0" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="976.5999999999999" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">PITCH</text>
+<rect x="1004.5999999999999" y="151" width="39.6" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="1024.3999999999999" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">ENV1</text>
+<rect x="1049.1999999999998" y="151" width="58.800000000000004" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="1078.6" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">ENV1MOD</text>
+<rect x="1112.9999999999998" y="151" width="58.800000000000004" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="1142.3999999999999" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">A-B PAN</text>
+<rect x="1176.7999999999997" y="151" width="58.800000000000004" height="20" rx="10" fill="#1f3b38" stroke="#2ec4b6" />
+<text x="1206.1999999999998" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#bff7ef" text-anchor="middle" font-weight="700" letter-spacing="0">MIX ENV</text>
+<rect x="1240.5999999999997" y="151" width="58.800000000000004" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="1269.9999999999998" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">MIX MOD</text>
+<rect x="1304.3999999999996" y="151" width="58.800000000000004" height="20" rx="10" fill="#1b1c20" stroke="#2a2c31" />
+<text x="1333.7999999999997" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">BUS ASN</text>
+<text x="1420" y="166" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Wave</text>
+<rect x="1458" y="152" width="22" height="18" rx="4" fill="#2ec4b6" />
+<text x="1469" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#08201e" text-anchor="middle" font-weight="700" letter-spacing="0">A</text>
+<rect x="1482" y="152" width="22" height="18" rx="4" fill="#23252a" />
+<text x="1493" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#d8dade" text-anchor="middle" font-weight="700" letter-spacing="0">B</text>
+<rect x="1506" y="152" width="22" height="18" rx="4" fill="#23252a" />
+<text x="1517" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#d8dade" text-anchor="middle" font-weight="700" letter-spacing="0">C</text>
+<rect x="1530" y="152" width="22" height="18" rx="4" fill="#23252a" />
+<text x="1541" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#d8dade" text-anchor="middle" font-weight="700" letter-spacing="0">D</text>
+<rect x="1554" y="152" width="34" height="18" rx="4" fill="#23252a" />
+<text x="1571" y="165" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#d8dade" text-anchor="middle" font-weight="700" letter-spacing="0">All</text>
+<g transform="translate(0,40)">
+<rect x="8" y="150" width="292" height="700" rx="8" fill="#18191c" />
+<text x="24" y="176" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">LIBRARIAN</text>
+<rect x="24" y="190" width="62" height="22" rx="4" fill="#1f3b38" stroke="#2ec4b6" />
+<text x="55" y="205" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#bff7ef" text-anchor="middle" font-weight="600" letter-spacing="0">RAM1</text>
+<rect x="92" y="190" width="62" height="22" rx="4" fill="#23252a" />
+<text x="123" y="205" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">RAM2</text>
+<rect x="160" y="190" width="62" height="22" rx="4" fill="#23252a" />
+<text x="191" y="205" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">RAM3</text>
+<rect x="228" y="190" width="62" height="22" rx="4" fill="#23252a" />
+<text x="259" y="205" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM4</text>
+<rect x="24" y="218" width="62" height="22" rx="4" fill="#23252a" />
+<text x="55" y="233" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM5</text>
+<rect x="92" y="218" width="62" height="22" rx="4" fill="#23252a" />
+<text x="123" y="233" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM6</text>
+<rect x="160" y="218" width="62" height="22" rx="4" fill="#23252a" />
+<text x="191" y="233" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM7</text>
+<rect x="228" y="218" width="62" height="22" rx="4" fill="#23252a" />
+<text x="259" y="233" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM8</text>
+<rect x="24" y="246" width="62" height="22" rx="4" fill="#23252a" />
+<text x="55" y="261" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM9</text>
+<rect x="92" y="246" width="62" height="22" rx="4" fill="#23252a" />
+<text x="123" y="261" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM10</text>
+<rect x="160" y="246" width="62" height="22" rx="4" fill="#23252a" />
+<text x="191" y="261" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">ROM11</text>
+<rect x="228" y="246" width="62" height="22" rx="4" fill="#23252a" />
+<text x="259" y="261" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">CARD</text>
+<rect x="24" y="280" width="84" height="22" rx="11" fill="#18191c" stroke="#3a3d44" />
+<text x="66" y="295" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">Perf</text>
+<rect x="114" y="280" width="84" height="22" rx="11" fill="#2a2c31" stroke="#3a3d44" />
+<text x="156" y="295" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">Patch</text>
+<rect x="204" y="280" width="84" height="22" rx="11" fill="#18191c" stroke="#3a3d44" />
+<text x="246" y="295" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="middle" font-weight="600" letter-spacing="0">WaveSeq</text>
+<rect x="24" y="312" width="260" height="28" rx="5" fill="#0f1012" stroke="#2c2f35" />
+<text x="36" y="331" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#5d616a" text-anchor="start" font-weight="400" letter-spacing="0">🔍  Rechercher un son…</text>
+<text x="30" y="369" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">00</text>
+<text x="62" y="369" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Init Patch</text>
+<text x="30" y="400" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">01</text>
+<text x="62" y="400" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Spectral Bell</text>
+<rect x="16" y="412" width="276" height="28" rx="4" fill="#1d3532" />
+<text x="30" y="431" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#2ec4b6" text-anchor="start" font-weight="600" letter-spacing="0">02</text>
+<text x="62" y="431" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#ffffff" text-anchor="start" font-weight="500" letter-spacing="0">Glass Choir</text>
+<text x="270" y="431" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#ff8a3d" text-anchor="end" font-weight="400" letter-spacing="0">★</text>
+<text x="30" y="462" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">03</text>
+<text x="62" y="462" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Digital Sweep</text>
+<text x="30" y="493" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">04</text>
+<text x="62" y="493" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Ghostly Pad</text>
+<text x="30" y="524" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">05</text>
+<text x="62" y="524" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Hollow Wind</text>
+<text x="30" y="555" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">06</text>
+<text x="62" y="555" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Metal Pluck</text>
+<text x="30" y="586" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">07</text>
+<text x="62" y="586" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Vox Vector</text>
+<text x="270" y="586" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#ff8a3d" text-anchor="end" font-weight="400" letter-spacing="0">★</text>
+<text x="30" y="617" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">08</text>
+<text x="62" y="617" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Night Strings</text>
+<text x="30" y="648" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">09</text>
+<text x="62" y="648" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Spinning Bells</text>
+<text x="30" y="679" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">10</text>
+<text x="62" y="679" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Deep Space</text>
+<text x="30" y="710" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">11</text>
+<text x="62" y="710" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Pulse Tines</text>
+<text x="30" y="741" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">12</text>
+<text x="62" y="741" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Airy Keys</text>
+<text x="30" y="772" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">13</text>
+<text x="62" y="772" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Wavelead</text>
+<text x="30" y="803" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d616a" text-anchor="start" font-weight="600" letter-spacing="0">14</text>
+<text x="62" y="803" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#d8dade" text-anchor="start" font-weight="500" letter-spacing="0">Organ Swirl</text>
+<text x="24" y="838" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">35 patches · banque RAM1 · modifié ●</text>
+<rect x="310" y="150" width="237" height="190" rx="8" fill="#18191c" stroke="#2ec4b6" />
+<rect x="322" y="162" width="28" height="28" rx="6" fill="#2ec4b6" />
+<text x="336" y="181" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" fill="#08201e" text-anchor="middle" font-weight="800" letter-spacing="0">A</text>
+<text x="360" y="174" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="1">WAVE A</text>
+<text x="360" y="190" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">Glass 1</text>
+<polyline points="324.0,220.0 327.5,216.6 331.1,213.5 334.6,210.8 338.2,208.6 341.7,207.0 345.3,206.0 348.8,205.7 352.3,206.0 355.9,206.9 359.4,208.4 363.0,210.4 366.5,212.7 370.1,215.3 373.6,218.0 377.1,220.7 380.7,223.2 384.2,225.6 387.8,227.6 391.3,229.2 394.8,230.4 398.4,231.0 401.9,231.2 405.5,230.8 409.0,229.9 412.6,228.7 416.1,227.1 419.6,225.2 423.2,223.2 426.7,221.1 430.3,219.0 433.8,217.0 437.4,215.2 440.9,213.7 444.4,212.5 448.0,211.8 451.5,211.4 455.1,211.4 458.6,211.7 462.2,212.5 465.7,213.5 469.2,214.8 472.8,216.3 476.3,217.9 479.9,219.6 483.4,221.2 486.9,222.7 490.5,224.0 494.0,225.1 497.6,226.0 501.1,226.5 504.7,226.8 508.2,226.7 511.7,226.3 515.3,225.7 518.8,224.8 522.4,223.7 525.9,222.5 529.5,221.3 533.0,220.0" fill="none" stroke="#2ec4b6" stroke-width="1.6"/>
+<path d="M335.2,286.8 A21,21 0 1 1 364.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M335.2,286.8 A21,21 0 0 1 350.0,251.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="350" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="350" y1="272" x2="350.0" y2="259.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="350" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">COARSE</text>
+<text x="350" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+0</text>
+<path d="M400.2,286.8 A21,21 0 1 1 429.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M400.2,286.8 A21,21 0 0 1 415.0,251.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="415" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="415" y1="272" x2="415.0" y2="259.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="415" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">FINE</text>
+<text x="415" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+00</text>
+<path d="M465.2,286.8 A21,21 0 1 1 494.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M465.2,286.8 A21,21 0 1 1 500.9,273.6" fill="none" stroke="#ff8a3d" stroke-width="3" stroke-linecap="round"/>
+<circle cx="480" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="480" y1="272" x2="493.0" y2="273.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="480" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">LEVEL</text>
+<text x="480" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">84</text>
+<text x="532" y="180" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#5d616a" text-anchor="end" font-weight="700" letter-spacing="0">M</text>
+<rect x="555" y="150" width="237" height="190" rx="8" fill="#18191c" />
+<rect x="567" y="162" width="28" height="28" rx="6" fill="#2ec4b6" />
+<text x="581" y="181" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" fill="#08201e" text-anchor="middle" font-weight="800" letter-spacing="0">B</text>
+<text x="605" y="174" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="1">WAVE B</text>
+<text x="605" y="190" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">Vocal Aah</text>
+<polyline points="569.0,220.0 572.5,215.1 576.1,211.0 579.6,208.0 583.2,206.5 586.7,206.3 590.3,207.6 593.8,209.9 597.3,213.2 600.9,216.9 604.4,220.6 608.0,224.1 611.5,226.9 615.1,228.8 618.6,229.8 622.1,229.7 625.7,228.7 629.2,226.9 632.8,224.5 636.3,221.8 639.8,219.1 643.4,216.7 646.9,214.8 650.5,213.5 654.0,212.9 657.6,213.1 661.1,214.0 664.6,215.4 668.2,217.1 671.7,219.0 675.3,220.9 678.8,222.6 682.4,223.9 685.9,224.8 689.4,225.1 693.0,224.9 696.5,224.2 700.1,223.1 703.6,221.8 707.2,220.5 710.7,219.1 714.2,218.0 717.8,217.1 721.3,216.5 724.9,216.4 728.4,216.6 731.9,217.1 735.5,217.9 739.0,218.8 742.6,219.8 746.1,220.8 749.7,221.6 753.2,222.2 756.7,222.5 760.3,222.6 763.8,222.4 767.4,222.0 770.9,221.4 774.5,220.7 778.0,220.0" fill="none" stroke="#2ec4b6" stroke-width="1.6"/>
+<path d="M580.2,286.8 A21,21 0 1 1 609.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M580.2,286.8 A21,21 0 1 1 614.4,264.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="595" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="595" y1="272" x2="607.0" y2="267.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="595" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">COARSE</text>
+<text x="595" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+12</text>
+<path d="M645.2,286.8 A21,21 0 1 1 674.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M645.2,286.8 A21,21 0 0 1 658.0,251.1" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="660" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="660" y1="272" x2="658.8" y2="259.1" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="660" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">FINE</text>
+<text x="660" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">-04</text>
+<path d="M710.2,286.8 A21,21 0 1 1 739.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M710.2,286.8 A21,21 0 0 1 738.6,256.0" fill="none" stroke="#ff8a3d" stroke-width="3" stroke-linecap="round"/>
+<circle cx="725" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="725" y1="272" x2="733.4" y2="262.1" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="725" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">LEVEL</text>
+<text x="725" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">64</text>
+<text x="777" y="180" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#5d616a" text-anchor="end" font-weight="700" letter-spacing="0">M</text>
+<rect x="800" y="150" width="237" height="190" rx="8" fill="#18191c" />
+<rect x="812" y="162" width="28" height="28" rx="6" fill="#2ec4b6" />
+<text x="826" y="181" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" fill="#08201e" text-anchor="middle" font-weight="800" letter-spacing="0">C</text>
+<text x="850" y="174" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="1">WAVE C</text>
+<text x="850" y="190" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">WS 07 Spinner</text>
+<polyline points="814.0,220.0 817.5,213.6 821.1,209.0 824.6,206.7 828.2,206.9 831.7,209.3 835.3,213.4 838.8,218.2 842.3,222.8 845.9,226.5 849.4,228.8 853.0,229.3 856.5,228.1 860.1,225.7 863.6,222.5 867.1,219.2 870.7,216.4 874.2,214.4 877.8,213.6 881.3,214.0 884.8,215.4 888.4,217.4 891.9,219.7 895.5,221.8 899.0,223.4 902.6,224.3 906.1,224.3 909.6,223.6 913.2,222.3 916.7,220.8 920.3,219.3 923.8,218.0 927.4,217.2 930.9,217.0 934.4,217.3 938.0,218.0 941.5,219.1 945.1,220.1 948.6,221.1 952.2,221.8 955.7,222.1 959.2,222.0 962.8,221.6 966.3,220.9 969.9,220.2 973.4,219.5 976.9,218.9 980.5,218.6 984.0,218.6 987.6,218.8 991.1,219.2 994.7,219.7 998.2,220.2 1001.7,220.6 1005.3,220.9 1008.8,221.0 1012.4,220.9 1015.9,220.7 1019.5,220.4 1023.0,220.0" fill="none" stroke="#2ec4b6" stroke-width="1.6"/>
+<path d="M825.2,286.8 A21,21 0 1 1 854.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M825.2,286.8 A21,21 0 0 1 840.0,251.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="840" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="840" y1="272" x2="840.0" y2="259.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="840" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">COARSE</text>
+<text x="840" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+0</text>
+<path d="M890.2,286.8 A21,21 0 1 1 919.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M890.2,286.8 A21,21 0 0 1 906.5,251.1" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="905" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="905" y1="272" x2="905.9" y2="259.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="905" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">FINE</text>
+<text x="905" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+03</text>
+<path d="M955.2,286.8 A21,21 0 1 1 984.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M955.2,286.8 A21,21 0 1 1 987.0,259.7" fill="none" stroke="#ff8a3d" stroke-width="3" stroke-linecap="round"/>
+<circle cx="970" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="970" y1="272" x2="980.5" y2="264.4" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="970" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">LEVEL</text>
+<text x="970" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">69</text>
+<text x="1022" y="180" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#5d616a" text-anchor="end" font-weight="700" letter-spacing="0">M</text>
+<rect x="1045" y="150" width="237" height="190" rx="8" fill="#18191c" />
+<rect x="1057" y="162" width="28" height="28" rx="6" fill="#33363d" />
+<text x="1071" y="181" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" fill="#8b8f97" text-anchor="middle" font-weight="800" letter-spacing="0">D</text>
+<text x="1095" y="174" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="1">WAVE D</text>
+<text x="1095" y="190" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">Breath Noise</text>
+<polyline points="1059.0,220.0 1062.5,210.2 1066.1,204.2 1069.6,203.4 1073.2,207.4 1076.7,214.7 1080.3,222.7 1083.8,229.0 1087.3,231.9 1090.9,230.9 1094.4,226.8 1098.0,221.1 1101.5,215.8 1105.1,212.6 1108.6,212.1 1112.1,214.1 1115.7,217.8 1119.2,221.5 1122.8,224.2 1126.3,225.0 1129.8,224.0 1133.4,221.8 1136.9,219.4 1140.5,217.6 1144.0,217.1 1147.6,217.9 1151.1,219.4 1154.6,220.9 1158.2,221.7 1161.7,221.6 1165.3,220.7 1168.8,219.4 1172.4,218.4 1175.9,218.2 1179.4,218.9 1183.0,220.2 1186.5,221.5 1190.1,222.4 1193.6,222.3 1197.2,221.2 1200.7,219.5 1204.2,217.9 1207.8,217.0 1211.3,217.2 1214.9,218.5 1218.4,220.5 1221.9,222.4 1225.5,223.4 1229.0,223.2 1232.6,221.8 1236.1,219.7 1239.7,217.6 1243.2,216.4 1246.7,216.5 1250.3,217.9 1253.8,220.1 1257.4,222.3 1260.9,223.6 1264.5,223.7 1268.0,222.3" fill="none" stroke="#555" stroke-width="1.6"/>
+<path d="M1070.2,286.8 A21,21 0 1 1 1099.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M1070.2,286.8 A21,21 0 0 1 1065.6,264.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1085" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1085" y1="272" x2="1073.0" y2="267.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1085" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">COARSE</text>
+<text x="1085" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">-12</text>
+<path d="M1135.2,286.8 A21,21 0 1 1 1164.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M1135.2,286.8 A21,21 0 0 1 1150.0,251.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1150" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1150" y1="272" x2="1150.0" y2="259.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1150" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">FINE</text>
+<text x="1150" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+00</text>
+<path d="M1200.2,286.8 A21,21 0 1 1 1229.8,286.8" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M1200.2,286.8 A21,21 0 0 1 1205.5,253.3" fill="none" stroke="#ff8a3d" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1215" cy="272" r="16" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1215" y1="272" x2="1209.1" y2="260.4" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1215" y="308" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">LEVEL</text>
+<text x="1215" y="321" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">39</text>
+<text x="1267" y="180" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#5d616a" text-anchor="end" font-weight="700" letter-spacing="0">M</text>
+<rect x="310" y="350" width="330" height="500" rx="8" fill="#18191c" />
+<text x="326" y="376" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">VECTOR MIX</text>
+<text x="624" y="376" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#2ec4b6" text-anchor="end" font-weight="600" letter-spacing="0">Loop 1→3 ×∞</text>
+<text x="475" y="710" font-family="JetBrains Mono,Consolas,monospace" font-size="10" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">Point 1 · AC −50  BD +60   →   A 42%  B 8%  C 12%  D 38%</text>
+<polygon points="475,410 605,540 475,670 345,540" fill="#121316" stroke="#3a3d44"/>
+<line x1="475" y1="410" x2="475" y2="670" stroke="#25272c"/><line x1="345" y1="540" x2="605" y2="540" stroke="#25272c"/>
+<text x="475" y="400" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#2ec4b6" text-anchor="middle" font-weight="800" letter-spacing="0">A</text>
+<text x="617" y="544" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#2ec4b6" text-anchor="middle" font-weight="800" letter-spacing="0">B</text>
+<text x="475" y="690" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#2ec4b6" text-anchor="middle" font-weight="800" letter-spacing="0">C</text>
+<text x="333" y="544" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#2ec4b6" text-anchor="middle" font-weight="800" letter-spacing="0">D</text>
+<polyline points="475,540 425,480 545,520 495,615 435,570" fill="none" stroke="#ff8a3d" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="475" cy="540" r="8" fill="#1a1b1e" stroke="#ff8a3d" stroke-width="2"/>
+<text x="475" y="544" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">0</text>
+<circle cx="425" cy="480" r="8" fill="#1a1b1e" stroke="#ff8a3d" stroke-width="2"/>
+<text x="425" y="484" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">1</text>
+<circle cx="545" cy="520" r="8" fill="#1a1b1e" stroke="#ff8a3d" stroke-width="2"/>
+<text x="545" y="524" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">2</text>
+<circle cx="495" cy="615" r="8" fill="#1a1b1e" stroke="#ff8a3d" stroke-width="2"/>
+<text x="495" y="619" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">3</text>
+<circle cx="435" cy="570" r="8" fill="#1a1b1e" stroke="#ff8a3d" stroke-width="2"/>
+<text x="435" y="574" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">4</text>
+<circle cx="503" cy="505" r="5" fill="#fff" filter="url(#glow)"/>
+<path d="M342.6,783.4 A19,19 0 1 1 369.4,783.4" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M342.6,783.4 A19,19 0 0 1 340.6,758.8" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="356" cy="770" r="14" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="356" y1="770" x2="347.1" y2="763.5" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="356" y="804" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">RATE 1</text>
+<text x="356" y="817" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">24</text>
+<path d="M414.6,783.4 A19,19 0 1 1 441.4,783.4" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M414.6,783.4 A19,19 0 0 1 432.4,751.5" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="428" cy="770" r="14" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="428" y1="770" x2="430.6" y2="759.3" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="428" y="804" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">RATE 2</text>
+<text x="428" y="817" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">48</text>
+<path d="M486.6,783.4 A19,19 0 1 1 513.4,783.4" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M486.6,783.4 A19,19 0 0 1 491.4,753.1" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="500" cy="770" r="14" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="500" y1="770" x2="495.0" y2="760.2" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="500" y="804" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">RATE 3</text>
+<text x="500" y="817" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">35</text>
+<path d="M558.6,783.4 A19,19 0 1 1 585.4,783.4" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M558.6,783.4 A19,19 0 1 1 587.4,758.8" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="572" cy="770" r="14" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="572" y1="770" x2="580.9" y2="763.5" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="572" y="804" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">RATE 4</text>
+<text x="572" y="817" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">63</text>
+<rect x="650" y="350" width="640" height="240" rx="8" fill="#18191c" />
+<rect x="664" y="362" width="74" height="22" rx="11" fill="#2a2c31" stroke="#3a3d44" />
+<text x="701" y="377" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="700" letter-spacing="0">AMP ENV</text>
+<rect x="744" y="362" width="74" height="22" rx="11" fill="#18191c" />
+<text x="781" y="377" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">ENV 1</text>
+<rect x="824" y="362" width="74" height="22" rx="11" fill="#18191c" />
+<text x="861" y="377" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">LFO 1</text>
+<rect x="904" y="362" width="74" height="22" rx="11" fill="#18191c" />
+<text x="941" y="377" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">LFO 2</text>
+<text x="1276" y="378" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#2ec4b6" text-anchor="end" font-weight="600" letter-spacing="0">Wave A ▾</text>
+<line x1="770" y1="400" x2="770" y2="520" stroke="#202227"/>
+<line x1="870" y1="400" x2="870" y2="520" stroke="#202227"/>
+<line x1="970" y1="400" x2="970" y2="520" stroke="#202227"/>
+<line x1="1070" y1="400" x2="1070" y2="520" stroke="#202227"/>
+<line x1="1170" y1="400" x2="1170" y2="520" stroke="#202227"/>
+<path d="M670,520 L730,400 L840,435 L1090,445 L1270,520 L1270,520 Z" fill="url(#env)"/>
+<polyline points="670,520 730,400 840,435 1090,445 1270,520" fill="none" stroke="#2ec4b6" stroke-width="2"/>
+<circle cx="730" cy="400" r="5" fill="#2ec4b6"/>
+<circle cx="840" cy="435" r="5" fill="#2ec4b6"/>
+<circle cx="1090" cy="445" r="5" fill="#2ec4b6"/>
+<path d="M697.3,562.7 A18,18 0 1 1 722.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M697.3,562.7 A18,18 0 0 1 693.4,543.1" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="710" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="710" y1="550" x2="700.8" y2="546.2" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="710" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">ATTACK</text>
+<text x="710" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">12</text>
+<path d="M797.3,562.7 A18,18 0 1 1 822.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M797.3,562.7 A18,18 0 0 1 805.8,532.5" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="810" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="810" y1="550" x2="807.7" y2="540.3" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="810" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">DECAY</text>
+<text x="810" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">38</text>
+<path d="M897.3,562.7 A18,18 0 1 1 922.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M897.3,562.7 A18,18 0 0 1 919.6,534.8" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="910" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="910" y1="550" x2="915.4" y2="541.6" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="910" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">SUSTAIN</text>
+<text x="910" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">61</text>
+<path d="M997.3,562.7 A18,18 0 1 1 1022.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M997.3,562.7 A18,18 0 0 1 1014.2,532.5" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1010" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1010" y1="550" x2="1012.3" y2="540.3" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1010" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">RELEASE</text>
+<text x="1010" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">47</text>
+<path d="M1097.3,562.7 A18,18 0 1 1 1122.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M1097.3,562.7 A18,18 0 0 1 1101.8,534.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1110" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1110" y1="550" x2="1105.5" y2="541.1" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1110" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">VEL→AMP</text>
+<text x="1110" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+40</text>
+<path d="M1197.3,562.7 A18,18 0 1 1 1222.7,562.7" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M1197.3,562.7 A18,18 0 0 1 1210.0,532.0" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1210" cy="550" r="13" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="1210" y1="550" x2="1210.0" y2="540.0" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="1210" y="583" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">KBD→TIME</text>
+<text x="1210" y="596" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">0</text>
+<rect x="650" y="600" width="640" height="250" rx="8" fill="#18191c" />
+<text x="666" y="626" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">FILTER</text>
+<text x="990" y="626" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">PITCH &amp; MOD</text>
+<path d="M680.9,694.1 A27,27 0 1 1 719.1,694.1" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M680.9,694.1 A27,27 0 1 1 723.2,661.3" fill="none" stroke="#ff8a3d" stroke-width="3" stroke-linecap="round"/>
+<circle cx="700" cy="675" r="22" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="700" y1="675" x2="716.4" y2="665.3" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="700" y="717" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">CUTOFF</text>
+<text x="700" y="730" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">72</text>
+<path d="M813.7,691.3 A23,23 0 1 1 846.3,691.3" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M813.7,691.3 A23,23 0 0 1 840.4,654.5" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="830" cy="675" r="18" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="830" y1="675" x2="836.8" y2="661.6" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="830" y="713" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">KBD TRACK</text>
+<text x="830" y="726" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+25</text>
+<path d="M683.7,786.3 A23,23 0 1 1 716.3,786.3" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M683.7,786.3 A23,23 0 0 1 705.4,747.6" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="700" cy="770" r="18" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="700" y1="770" x2="703.5" y2="755.4" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="700" y="808" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">ENV1→CUT</text>
+<text x="700" y="821" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">+18</text>
+<path d="M813.7,786.3 A23,23 0 1 1 846.3,786.3" fill="none" stroke="#33363d" stroke-width="3" stroke-linecap="round"/>
+<path d="M813.7,786.3 A23,23 0 0 1 824.6,747.6" fill="none" stroke="#2ec4b6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="830" cy="770" r="18" fill="url(#knob)" stroke="#0b0c0e"/>
+<line x1="830" y1="770" x2="826.5" y2="755.4" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+<text x="830" y="808" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="middle" font-weight="400" letter-spacing="0">VEL→CUT</text>
+<text x="830" y="821" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">-08</text>
+<line x1="970" y1="640" x2="970" y2="830" stroke="#2a2c31"/>
+<rect x="990" y="652" width="284" height="34" rx="5" fill="#1d1f23" />
+<text x="1002" y="667" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="start" font-weight="600" letter-spacing="0">LFO1 → Pitch</text>
+<text x="1002" y="680" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">via Mod Wheel</text>
+<rect x="1170" y="664" width="80" height="8" rx="4" fill="#2a2c31" />
+<rect x="1210" y="664" width="12.0" height="8" rx="4" fill="#2ec4b6" />
+<text x="1266" y="673" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">+12</text>
+<rect x="990" y="694" width="284" height="34" rx="5" fill="#1d1f23" />
+<text x="1002" y="709" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="start" font-weight="600" letter-spacing="0">ENV1 → Pitch</text>
+<text x="1002" y="722" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">via —</text>
+<rect x="1170" y="706" width="80" height="8" rx="4" fill="#2a2c31" />
+<rect x="1210" y="706" width="3.0" height="8" rx="4" fill="#2ec4b6" />
+<text x="1266" y="715" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">+03</text>
+<rect x="990" y="736" width="284" height="34" rx="5" fill="#1d1f23" />
+<text x="1002" y="751" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="start" font-weight="600" letter-spacing="0">LFO2 → Amp</text>
+<text x="1002" y="764" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">via Aftertouch</text>
+<rect x="1170" y="748" width="80" height="8" rx="4" fill="#2a2c31" />
+<rect x="1210" y="748" width="20.0" height="8" rx="4" fill="#2ec4b6" />
+<text x="1266" y="757" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">+20</text>
+<rect x="990" y="778" width="284" height="34" rx="5" fill="#1d1f23" />
+<text x="1002" y="793" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#d8dade" text-anchor="start" font-weight="600" letter-spacing="0">Pan</text>
+<text x="1002" y="806" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">via Linear Keyboard</text>
+<rect x="1170" y="790" width="80" height="8" rx="4" fill="#2a2c31" />
+<rect x="1210" y="790" width="30.0" height="8" rx="4" fill="#2ec4b6" />
+<text x="1266" y="799" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">+30</text>
+<rect x="1300" y="150" width="292" height="330" rx="8" fill="#18191c" />
+<text x="1316" y="176" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">INSPECTEUR</text>
+<text x="1316" y="206" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#fff" text-anchor="start" font-weight="600" letter-spacing="0">Filter Cutoff · Wave A</text>
+<text x="1316" y="226" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Param #93 · FILTER_MOD_CUTOFF</text>
+<rect x="1316" y="240" width="260" height="46" rx="5" fill="#0f1012" />
+<text x="1446" y="272" font-family="JetBrains Mono,Consolas,monospace" font-size="26" fill="#ff8a3d" text-anchor="middle" font-weight="700" letter-spacing="0">72</text>
+<rect x="1316" y="298" width="260" height="6" rx="3" fill="#2a2c31" />
+<rect x="1316" y="298" width="147" height="6" rx="3" fill="#ff8a3d" />
+<text x="1316" y="330" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Original</text>
+<text x="1576" y="330" font-family="JetBrains Mono,Consolas,monospace" font-size="12" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">68</text>
+<text x="1316" y="352" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Version B</text>
+<text x="1576" y="352" font-family="JetBrains Mono,Consolas,monospace" font-size="12" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">80</text>
+<text x="1316" y="374" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Plage</text>
+<text x="1576" y="374" font-family="JetBrains Mono,Consolas,monospace" font-size="12" fill="#d8dade" text-anchor="end" font-weight="600" letter-spacing="0">0 … 99</text>
+<rect x="1316" y="410" width="125" height="28" rx="5" fill="#2a2c31" stroke="#3a3d44" />
+<text x="1378" y="429" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">↺ Original</text>
+<rect x="1451" y="410" width="125" height="28" rx="5" fill="#2a2c31" stroke="#3a3d44" />
+<text x="1513" y="429" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="middle" font-weight="600" letter-spacing="0">⚄ Randomiser</text>
+<text x="1316" y="462" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Historique : 14 modifications · Ctrl+Z</text>
+<rect x="1300" y="490" width="292" height="360" rx="8" fill="#0b0c0e" stroke="#22252a" />
+<text x="1316" y="516" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">MONITEUR MIDI</text>
+<text x="1576" y="516" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#ff5a5a" text-anchor="end" font-weight="700" letter-spacing="0">● REC</text>
+<text x="1316" y="544" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#ffb020" text-anchor="start" font-weight="700" letter-spacing="0">OUT</text>
+<text x="1360" y="544" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">41 5D 00 "+70" 00</text>
+<text x="1316" y="572" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#ffb020" text-anchor="start" font-weight="700" letter-spacing="0">OUT</text>
+<text x="1360" y="572" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">41 5D 00 "+72" 00</text>
+<text x="1316" y="600" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#38e07b" text-anchor="start" font-weight="700" letter-spacing="0">IN </text>
+<text x="1360" y="600" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">90 3C 64  Note C4</text>
+<text x="1316" y="628" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#5d9cff" text-anchor="start" font-weight="700" letter-spacing="0">THRU</text>
+<text x="1360" y="628" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">90 3C 64 → SR</text>
+<text x="1316" y="656" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#38e07b" text-anchor="start" font-weight="700" letter-spacing="0">IN </text>
+<text x="1360" y="656" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">B0 01 2A  ModWh</text>
+<text x="1316" y="684" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#ffb020" text-anchor="start" font-weight="700" letter-spacing="0">OUT</text>
+<text x="1360" y="684" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">F0 42 30 28 10 00 0C</text>
+<text x="1316" y="712" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#2ec4b6" text-anchor="start" font-weight="700" letter-spacing="0">IN </text>
+<text x="1360" y="712" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">F0 42 30 28 40 … 861 o</text>
+<text x="1316" y="740" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#7fe8ae" text-anchor="start" font-weight="700" letter-spacing="0"></text>
+<text x="1360" y="740" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">  ✓ checksum OK</text>
+<text x="1316" y="768" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#38e07b" text-anchor="start" font-weight="700" letter-spacing="0">IN </text>
+<text x="1360" y="768" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">80 3C 00  Note off</text>
+<text x="1316" y="796" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#2ec4b6" text-anchor="start" font-weight="700" letter-spacing="0">IN </text>
+<text x="1360" y="796" font-family="JetBrains Mono,Consolas,monospace" font-size="11" fill="#b9bcc3" text-anchor="start" font-weight="400" letter-spacing="0">F0 42 30 28 23  Load OK</text>
+<rect x="8" y="860" width="1584" height="92" rx="8" fill="#18191c" />
+<text x="24" y="882" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" fill="#8b8f97" text-anchor="start" font-weight="700" letter-spacing="2">CLAVIER</text>
+<text x="24" y="900" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="start" font-weight="400" letter-spacing="0">Oct C3</text>
+<text x="24" y="918" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" fill="#d8dade" text-anchor="start" font-weight="400" letter-spacing="0">Vel 100</text>
+<rect x="110.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="133.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="157.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="180.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="204.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="227.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="251.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="274.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="298.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="321.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="345.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="368.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="392.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="415.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="439.0" y="870" width="22.0" height="74" rx="3" fill="#2ec4b6"/>
+<rect x="462.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="486.0" y="870" width="22.0" height="74" rx="3" fill="#2ec4b6"/>
+<rect x="509.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="533.0" y="870" width="22.0" height="74" rx="3" fill="#2ec4b6"/>
+<rect x="556.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="580.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="603.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="627.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="650.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="674.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="697.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="721.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="744.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="768.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="791.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="815.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="838.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="862.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="885.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="909.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="932.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="956.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="979.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1003.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1026.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1050.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1073.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1097.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1120.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1144.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1167.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1191.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1214.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1238.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1261.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1285.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1308.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1332.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1355.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1379.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1402.5" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="1426.0" y="870" width="22.0" height="74" rx="3" fill="#e9e9eb"/>
+<rect x="125.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="148.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="195.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="219.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="242.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="289.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="313.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="360.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="383.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="407.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="454.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="477.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="524.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="548.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="571.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="618.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="642.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="689.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="712.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="736.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="783.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="806.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="853.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="877.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="900.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="947.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="971.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1018.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1041.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1065.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1112.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1135.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1182.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1206.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1229.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1276.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1300.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1347.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1370.8" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1394.3" y="870" width="15.3" height="46" rx="2" fill="#141518"/>
+<rect x="1480" y="872" width="38" height="70" rx="5" fill="#1d1f23" />
+<text x="1499" y="936" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">PB</text>
+<rect x="1490" y="896" width="18" height="8" rx="2" fill="#2ec4b6" />
+<rect x="1530" y="872" width="38" height="70" rx="5" fill="#1d1f23" />
+<text x="1549" y="936" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" fill="#8b8f97" text-anchor="middle" font-weight="700" letter-spacing="0">MOD</text>
+<rect x="1540" y="910" width="18" height="8" rx="2" fill="#2ec4b6" />
+<rect x="0" y="960" width="1600" height="40" rx="0" fill="#0a0b0c" />
+<circle cx="22" cy="980" r="5" fill="#38e07b"/>
+<text x="36" y="985" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="start" font-weight="400" letter-spacing="0">Connecté · Wavestation SR (canal 1) · IN: UM-ONE  OUT: UM-ONE · Thru clavier ON</text>
+<text x="1580" y="985" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#8b8f97" text-anchor="end" font-weight="400" letter-spacing="0">File SysEx : 0 msg · 40 ms/param · Patch RAM1:12 modifié ●</text>
+</g>
+</svg>
