@@ -29,7 +29,7 @@
     </dependencies>
 
     <properties>
-        <harmonia.mainClass>com.harmonia.wavestation.gui.WaveStationEditor</harmonia.mainClass>
+        <harmonia.mainClass>com.harmonia.ui.HarmoniaApp</harmonia.mainClass>
     </properties>
 
     <build>

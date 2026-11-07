@@ -15,11 +15,11 @@ Harmonia permet de piloter tous les réglages du Wavestation SR depuis l'ordinat
 | Phase | Contenu | État |
 |-------|---------|------|
 | P0 | Remise à plat du dépôt | ✅ |
-| P1 | Passage à Maven + CI GitHub Actions | ✅ en cours |
+| P1 | Passage à Maven + CI GitHub Actions | ✅ |
 | P2 | Couche MIDI fiable (SysEx, file d'envoi, détection) | ⏳ |
 | P3 | Modèle et codecs Wavestation | ⏳ |
 | P4 | Librarian (banques, fichiers `.syx`) | ⏳ |
-| P5 | Shell UI, thème et façade | ⏳ |
+| P5 | Shell UI, thème et façade | 🔨 en cours (branche `phase5-ui-shell`) |
 | P6 | Éditeur de patch en temps réel | ⏳ |
 | P7 | Performances, effets, multisets | ⏳ |
 | P8 | Wave sequences | ⏳ |
@@ -38,7 +38,28 @@ mvn install
 mvn -pl harmonia-ui exec:java
 ```
 
-Dans Eclipse : *File › Import › Maven › Existing Maven Projects*, sélectionner le dossier racine (les 5 projets sont importés), puis lancer `com.harmonia.wavestation.gui.WaveStationEditor` du module `harmonia-ui`.
+Dans Eclipse : *File › Import › Maven › Existing Maven Projects*, sélectionner le dossier racine (les 5 projets sont importés), puis lancer `com.harmonia.ui.HarmoniaApp` du module `harmonia-ui`.
+
+L'ancienne preuve de concept reste disponible : `com.harmonia.wavestation.gui.WaveStationEditor`.
+
+## Raccourcis
+
+La façade dessinée en haut de la fenêtre est fonctionnelle : ses boutons agissent comme sur l'appareil.
+
+| Action | Bouton de façade | Clavier |
+|--------|------------------|---------|
+| Changer de section | PERF, MULTI, MIDI/GLOBAL | Ctrl+1 … Ctrl+7 |
+| Page suivante / précédente | PAGE+ / PAGE− | Ctrl+PgDn / Ctrl+PgUp |
+| Descendre d'un niveau (performance → patch → wave sequence) | EDIT | Ctrl+E |
+| Valeur +1 / −1 (ou son suivant / précédent) | +1/YES, −1/NO | Flèches sur le bouton rotatif sélectionné |
+| Banque suivante | BANK | Ctrl+B |
+| Écrire | WRITE/COMPARE | Ctrl+Shift+W |
+| Onde suivante / précédente | Curseurs haut / bas | — |
+| Paramètre suivant / précédent | Curseurs gauche / droite | Tab / Shift+Tab |
+
+Boutons rotatifs : glisser vers le haut ou le bas (Shift = pas fin), molette, double-clic = valeur par défaut, PgUp/PgDn = ±10.
+
+**Logo** : Harmonia n'embarque pas le logo Korg. Pour l'afficher sur la façade, placez votre propre image dans `~/.harmonia/logo.png` (sous Windows : `C:\Users\<vous>\.harmonia\logo.png`).
 
 ## Modules
 

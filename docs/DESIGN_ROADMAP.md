@@ -382,10 +382,12 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 
 ### Phase 5 – Shell UI et façade *(en parallèle, dès la fin de P1)*
 
-- [ ] Thème FlatLaf sombre personnalisé (fichier `.properties`) et palette de la charte.
-- [ ] **Façade fonctionnelle** : LCD 2 lignes, LED, 10 boutons reliés à la navigation, raccourcis clavier.
-- [ ] Fil d'Ariane (escaliers), barre de pages SR, sélecteur d'onde `A B C D All`.
-- [ ] Widgets maison : `Knob` (souris + molette + double-clic = défaut), `EnvelopeEditor`, `VectorPad`, `PianoKeyboard`, `LedIndicator`.
+- [x] Thème FlatLaf sombre personnalisé (`HarmoniaLaf` + `HarmoniaLaf.properties`) et palette de la charte (`HarmoniaColors`).
+- [x] **Façade fonctionnelle** : LCD 2 lignes, LED, 10 boutons reliés à la navigation, raccourcis clavier.
+- [x] Fil d'Ariane (escaliers), barre de pages SR, sélecteur d'onde `A B C D All`.
+- [x] Widgets maison : `Knob` (souris + molette + double-clic = défaut), `LedIndicator`, `LcdDisplay`, `PanelButton`, `SectionPanel`, `PianoKeyboard`.
+- [ ] Widgets graphiques : `EnvelopeEditor` (enveloppes Amp / Env 1), `VectorPad` (Mix Env interactif).
+- [x] Fenêtre principale avec données factices : librarian, éditeur de patch (ondes A–D, vector mix, Amp Env, filtre, LFO 1), inspecteur, moniteur MIDI (messages simulés), clavier virtuel, barre d'état.
 - [ ] Préférences (ports, canal, dossiers).
 
 ### Phase 6 – Éditeur de Patch en temps réel *(v0.6)*
