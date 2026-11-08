@@ -119,6 +119,16 @@ class WavestationDeviceTest {
     }
 
     @Test
+    void selectPerformanceSendsBankSelectAndProgramChange() throws Exception {
+        device.setChannel(2);
+        device.selectPerformance(WavestationBank.ROM4, 12);
+        assertTrue(queue.awaitEmpty(2000));
+        assertArrayEquals(new byte[] { (byte) 0xB2, 0x00, 0x00 }, sent.get(0));
+        assertArrayEquals(new byte[] { (byte) 0xB2, 0x20, 0x02 }, sent.get(1));
+        assertArrayEquals(new byte[] { (byte) 0xC2, 62 }, sent.get(2));
+    }
+
+    @Test
     void answerTimeoutsFollowTheDumpSize() {
         assertEquals(2 * 9545 + WavestationDevice.ANSWER_MARGIN_MS,
                 WavestationDevice.timeoutFor(MessageType.PATCH_BANK_DUMP));

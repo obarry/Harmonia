@@ -119,6 +119,17 @@ class WavestationSysexTest {
     }
 
     @Test
+    void midiBanksForProgramChanges() {
+        // Player's Guide 4.8: 6 MIDI banks of 100 programs, two internal banks each
+        assertEquals(0, WavestationBank.RAM2.midiBank());
+        assertEquals(50, WavestationBank.RAM2.programOffset());
+        assertEquals(1, WavestationBank.CARD.midiBank());
+        assertEquals(WavestationBank.ROM4, WavestationBank.fromMidi(2, 63).orElseThrow());
+        assertEquals(WavestationBank.ROM9, WavestationBank.fromMidi(5, 12).orElseThrow());
+        assertTrue(WavestationBank.fromMidi(6, 0).isEmpty());
+    }
+
+    @Test
     void bankNumbering() {
         assertEquals(0, WavestationBank.RAM1.sysexNumber());
         assertEquals(2, WavestationBank.ROM11.sysexNumber());

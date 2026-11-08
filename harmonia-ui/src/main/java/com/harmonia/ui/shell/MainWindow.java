@@ -26,18 +26,24 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.harmonia.app.DeviceSession;
+import com.harmonia.app.SoundLibrary;
 import com.harmonia.midi.MidiBytes;
 import com.harmonia.midi.MidiConnection;
 import com.harmonia.ui.EditorSection;
 import com.harmonia.ui.editor.EditorView;
 import com.harmonia.ui.editor.KnobFactory;
 import com.harmonia.ui.editor.PatchEditorPanel;
+import com.harmonia.ui.editor.PerformanceEditorPanel;
 import com.harmonia.ui.editor.PlaceholderEditor;
 import com.harmonia.ui.mock.MockParameter;
 import com.harmonia.ui.shell.MidiMonitorPanel.Direction;
 import com.harmonia.ui.widget.Knob;
 import com.harmonia.ui.widget.PianoKeyboard;
 import com.harmonia.wavestation.device.WavestationDevice;
+import com.harmonia.wavestation.model.Dumps;
+import com.harmonia.wavestation.model.Part;
+import com.harmonia.wavestation.model.Patch;
+import com.harmonia.wavestation.model.Performance;
 import com.harmonia.wavestation.sysex.MessageType;
 import com.harmonia.wavestation.sysex.WavestationBank;
 import com.harmonia.wavestation.sysex.WavestationSysex;
@@ -57,18 +63,22 @@ public class MainWindow extends JFrame {
     private final FrontPanel frontPanel = new FrontPanel(this::onFrontPanel);
     private final NavigationBar navigationBar = new NavigationBar(this::showSection, this::onAction);
     private final PageBar pageBar = new PageBar(this::showPage, this::onWave);
-    private final LibrarianPanel librarian = new LibrarianPanel(this::onLibrarianSelection);
+    private final LibrarianPanel librarian = new LibrarianPanel(this::onLibrarianSelection, this::readBank);
     private final InspectorPanel inspector = new InspectorPanel();
     private final MidiMonitorPanel monitor = new MidiMonitorPanel();
     private final KeyboardPanel keyboardPanel = new KeyboardPanel();
     private final StatusBar statusBar = new StatusBar();
     private final DeviceSession session = new DeviceSession();
+    private final SoundLibrary library = new SoundLibrary();
 
     private final CardLayout editorCards = new CardLayout();
     private final JPanel editorArea = new JPanel(editorCards);
     private final Map<EditorSection, EditorView> editors = new EnumMap<>(EditorSection.class);
     private final Map<EditorSection, String> currentPage = new EnumMap<>(EditorSection.class);
     private final PatchEditorPanel patchEditor;
+    private final PerformanceEditorPanel performanceEditor;
+    /** True while values read from the device are shown: knob changes must not be sent back. */
+    private boolean loading;
 
     private EditorSection section = EditorSection.PATCH;
     private Knob lastKnob;
@@ -83,6 +93,7 @@ public class MainWindow extends JFrame {
     private String patchBank = "RAM1";
     private int patchNumber = 2;
     private String patchName = "Glass Choir";
+    private int currentPart = 1;
 
     public MainWindow() {
         super("Harmonia — KORG Wavestation SR");
@@ -90,6 +101,12 @@ public class MainWindow extends JFrame {
 
         KnobFactory knobs = new KnobFactory(this::onKnobFocus, this::onKnobChange);
         patchEditor = new PatchEditorPanel(knobs, this::onEditorParameter);
+        performanceEditor = new PerformanceEditorPanel(this::partPatchName, this::openPart);
+        librarian.setNameSource(this::namesFromLibrary);
+        library.addListener(bank -> SwingUtilities.invokeLater(() -> {
+            librarian.refresh();
+            performanceEditor.refresh();
+        }));
         registerEditors();
 
         setContentPane(buildContent());
@@ -105,7 +122,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void message(MidiConnection.Direction direction, byte[] message) {
-                SwingUtilities.invokeLater(() -> logMidi(direction, message));
+                SwingUtilities.invokeLater(() -> {
+                    logMidi(direction, message);
+                    if (direction == MidiConnection.Direction.IN) {
+                        followDevice(message);
+                    }
+                });
             }
 
             @Override
@@ -175,10 +197,7 @@ public class MainWindow extends JFrame {
                 "Vue complète des banques : lecture et envoi des banques entières, comparaison, copie entre banques, "
                         + "bibliothèque locale de fichiers .syx et sauvegarde complète de l'appareil.",
                 "phase 4"));
-        editors.put(EditorSection.PERFORMANCE, new PlaceholderEditor(EditorSection.PERFORMANCE,
-                "Les 8 parts de la performance côte à côte (patch, niveau, sortie, transposition, désaccord, délai, "
-                        + "mode) et la vue graphique des zones clavier et vélocité (splits et layers).",
-                "phase 7"));
+        editors.put(EditorSection.PERFORMANCE, performanceEditor);
         editors.put(EditorSection.PATCH, patchEditor);
         editors.put(EditorSection.WAVE_SEQ, new PlaceholderEditor(EditorSection.WAVE_SEQ,
                 "Éditeur timeline des wave sequences : un bloc par pas (durée, crossfade, niveau), boucle visuelle, "
@@ -288,11 +307,13 @@ public class MainWindow extends JFrame {
                 performanceBank = entry.bank();
                 performanceNumber = entry.number();
                 performanceName = entry.name();
+                loadPerformance();
             }
             case PATCH -> {
                 patchBank = entry.bank();
                 patchNumber = entry.number();
                 patchName = entry.name();
+                loadPatch();
             }
             case WAVESEQ -> {
                 // wave sequence editor: phase 8
@@ -302,6 +323,148 @@ public class MainWindow extends JFrame {
         frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, false);
         updateBreadcrumb();
         updateLcd(null);
+    }
+
+    // ------------------------------------------------------------------ sounds read from the device
+
+    private Optional<List<String>> namesFromLibrary(String bankLabel, LibrarianPanel.Kind kind) {
+        Optional<WavestationBank> bank = WavestationBank.fromLabel(bankLabel);
+        if (bank.isEmpty()) {
+            return Optional.empty();
+        }
+        return switch (kind) {
+            case PERF -> library.performanceNames(bank.get());
+            case PATCH -> library.patchNames(bank.get());
+            case WAVESEQ -> library.waveSequenceNames(bank.get());
+        };
+    }
+
+    /** "Lire la banque": performances, patches and wave sequences of a bank. */
+    private void readBank(String bankLabel) {
+        WavestationBank bank = WavestationBank.fromLabel(bankLabel).orElseThrow();
+        if (device().isEmpty()) {
+            monitor.log(Direction.INFO, "Connectez le SR (bouton MIDI…) pour lire une banque");
+            return;
+        }
+        librarian.setReadEnabled(false);
+        librarian.setStatus("Lecture de " + bankLabel + "\u2026 (environ 20 s)");
+        library.readBank(device().get(), bank).whenComplete((ok, error) -> SwingUtilities.invokeLater(() -> {
+            librarian.setReadEnabled(true);
+            librarian.setStatus(null);
+            if (error != null) {
+                reportError("Lecture de " + bankLabel, error);
+            } else {
+                monitor.log(Direction.INFO, "Banque " + bankLabel + " lue : 50 performances, 35 patchs, 32 wave sequences");
+            }
+        }));
+    }
+
+    /** Last Bank Select (controller 32) received from the device, for {@link #followDevice}. */
+    private int deviceMidiBank;
+    /** True while a performance chosen on the device is shown: it must not be selected again. */
+    private boolean followingDevice;
+
+    /**
+     * Follows the performance changes made on the device front panel: the SR sends Bank Select
+     * then Program Change (Player's Guide, 4.8); Harmonia shows the same performance.
+     */
+    private void followDevice(byte[] m) {
+        int ch = channel();
+        if (m.length == 3 && (m[0] & 0xFF) == (0xB0 | ch) && m[1] == 0x20) {
+            deviceMidiBank = m[2];
+        } else if (m.length == 2 && (m[0] & 0xFF) == (0xC0 | ch)) {
+            int program = m[1] & 0x7F;
+            WavestationBank.fromMidi(deviceMidiBank, program).ifPresent(bank -> {
+                followingDevice = true;
+                try {
+                    librarian.show(LibrarianPanel.Kind.PERF, bank.label(), program % WavestationBank.PERFORMANCES);
+                } finally {
+                    followingDevice = false;
+                }
+            });
+        }
+    }
+
+    /**
+     * Shows the selected performance (from the library, or read from the device) and makes the
+     * device play it (Bank Select + Program Change).
+     */
+    private void loadPerformance() {
+        WavestationBank bank = WavestationBank.fromLabel(performanceBank).orElseThrow();
+        if (device().isPresent() && !followingDevice) {
+            device().get().selectPerformance(bank, performanceNumber);
+        }
+        String reference = itemId(performanceBank, performanceNumber);
+        Optional<Performance> known = library.performance(bank, performanceNumber);
+        if (known.isPresent()) {
+            performanceEditor.showPerformance(reference, known.get());
+        } else if (device().isPresent()) {
+            library.loadPerformance(device().get(), bank, performanceNumber)
+                    .whenComplete((perf, error) -> SwingUtilities.invokeLater(() -> {
+                        if (error != null) {
+                            reportError("Lecture de la performance " + reference, error);
+                        } else if (reference.equals(itemId(performanceBank, performanceNumber))) {
+                            performanceName = perf.getName();
+                            performanceEditor.showPerformance(reference, perf);
+                            updateBreadcrumb();
+                            updateLcd(null);
+                        }
+                    }));
+        } else {
+            performanceEditor.showPerformance(reference, null);
+        }
+    }
+
+    /** Shows the selected patch in the patch editor: from the library, or read from the device. */
+    private void loadPatch() {
+        WavestationBank bank = WavestationBank.fromLabel(patchBank).orElseThrow();
+        String reference = itemId(patchBank, patchNumber);
+        Optional<Patch> known = library.patch(bank, patchNumber);
+        if (known.isPresent()) {
+            displayPatch(known.get());
+        } else if (device().isPresent()) {
+            library.loadPatch(device().get(), bank, patchNumber)
+                    .whenComplete((patch, error) -> SwingUtilities.invokeLater(() -> {
+                        if (error != null) {
+                            reportError("Lecture du patch " + reference, error);
+                        } else if (reference.equals(itemId(patchBank, patchNumber))) {
+                            displayPatch(patch);
+                        }
+                    }));
+        }
+    }
+
+    private void displayPatch(Patch patch) {
+        loading = true;
+        try {
+            patchEditor.showPatch(patch);
+        } finally {
+            loading = false;
+        }
+        patchName = patch.getName();
+        modified = false;
+        frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, false);
+        if (lastKnob != null) {
+            inspector.show(lastKnob);
+        }
+        updateBreadcrumb();
+        updateLcd(null);
+    }
+
+    private String partPatchName(Part part) {
+        return part.isUsed() ? library.patch(part.getBank(), part.getPatchNumber()).map(Patch::getName).orElse(null)
+                : null;
+    }
+
+    /** Double-click on a part: open its patch, like EDIT on the EDIT PERF page. */
+    private void openPart(Part part) {
+        patchBank = part.getBank().label();
+        patchNumber = part.getPatchNumber();
+        String name = partPatchName(part);
+        patchName = name != null ? name : "?";
+        currentPart = part.getNumber();
+        showSection(EditorSection.PATCH);
+        loadPatch();
     }
 
     private void onAction(NavigationBar.Action action) {
@@ -331,7 +494,7 @@ public class MainWindow extends JFrame {
         return WavestationBank.fromLabel(patchBank).orElse(WavestationBank.RAM1);
     }
 
-    /** Get: asks the device for the current patch and keeps the dump (shown in the monitor). */
+    /** Get: reads the current patch from the device again (shown in the editor, dump kept for Send). */
     private void getPatch() {
         WavestationBank bank = patchBank();
         if (device().isEmpty()) {
@@ -344,6 +507,9 @@ public class MainWindow extends JFrame {
             } else {
                 lastPatchDump = dump;
                 monitor.log(Direction.INFO, "Reçu : " + WavestationSysex.describe(dump));
+                Patch patch = Dumps.decodePatch(dump);
+                library.putPatch(bank, patchNumber, patch);
+                displayPatch(patch);
             }
         }));
     }
@@ -443,6 +609,10 @@ public class MainWindow extends JFrame {
                     || t == MessageType.PARAMETER_CHANGE_SR) {
                 key = d + ":param:" + ((message[5] & 0x7F) | ((message[6] & 0x7F) << 7));
             }
+        } else if (message.length == 2 && (message[0] & 0xF0) == 0xC0) {
+            text += "  Program change " + (message[1] & 0x7F);
+        } else if (message.length == 3 && (message[0] & 0xF0) == 0xB0 && (message[1] == 0x00 || message[1] == 0x20)) {
+            text += "  Bank select " + (message[1] == 0 ? "MSB " : "LSB ") + message[2];
         } else if (message.length == 3 && (message[0] & 0xE0) == 0x80) {
             boolean on = (message[0] & 0xF0) == 0x90 && message[2] != 0;
             text += "  Note " + (on ? "on " : "off ") + PianoKeyboard.noteName(message[1] & 0x7F);
@@ -465,6 +635,9 @@ public class MainWindow extends JFrame {
 
     /** Changes made with the graphical editors (vector pad). */
     private void onEditorParameter(MockParameter p, String value, String lcdText) {
+        if (loading) {
+            return;
+        }
         if (section == EditorSection.PATCH && !p.page().equals(currentPage.get(section))) {
             showPage(p.page());
         }
@@ -478,6 +651,9 @@ public class MainWindow extends JFrame {
     }
 
     private void onKnobChange(Knob knob) {
+        if (loading) {
+            return;
+        }
         if (knob != lastKnob) {
             onKnobFocus(knob);
         }
@@ -531,8 +707,8 @@ public class MainWindow extends JFrame {
         String patch = "PATCH " + itemId(patchBank, patchNumber) + " " + patchName;
         switch (section) {
             case PERFORMANCE -> pageBar.setBreadcrumb(perf);
-            case PATCH -> pageBar.setBreadcrumb(perf, "Part 1", patch, "Wave " + pageBar.getWave());
-            case WAVE_SEQ -> pageBar.setBreadcrumb(perf, "Part 1", patch, "Wave " + pageBar.getWave(), "WSEQ");
+            case PATCH -> pageBar.setBreadcrumb(perf, "Part " + currentPart, patch, "Wave " + pageBar.getWave());
+            case WAVE_SEQ -> pageBar.setBreadcrumb(perf, "Part " + currentPart, patch, "Wave " + pageBar.getWave(), "WSEQ");
             default -> pageBar.setBreadcrumb(section.title());
         }
         updateStatus();
