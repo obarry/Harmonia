@@ -29,6 +29,7 @@ import com.harmonia.ui.widget.EnvelopeEditor;
 import com.harmonia.ui.widget.Knob;
 import com.harmonia.ui.widget.SectionPanel;
 import com.harmonia.ui.widget.VectorPad;
+import com.harmonia.wavestation.model.Patch;
 
 /**
  * Patch editor: the four wave cards, the vector mix pad, the envelopes (Amp Env and Env 1),
@@ -50,6 +51,29 @@ public class PatchEditorPanel extends JPanel implements EditorView {
     private final ParameterSink sink;
     private final Map<String, List<SectionPanel>> sectionsByPage = new HashMap<>();
     private final JLabel[] waveBadges = new JLabel[4];
+    private final JLabel[] waveTitles = new JLabel[4];
+    /** Knobs bound to a field of the patch structure, filled by {@link #showPatch}. */
+    private final List<Binding> bindings = new ArrayList<>();
+    private Patch patch;
+    private String selectedWave = "A";
+
+    /**
+     * A knob bound to a field of the patch structure. A per-wave field ("Cutoff") is read in the
+     * wave selected with A B C D All; a fixed field ("A.Wave_Coarse", "Mix_Rate1") always the same.
+     */
+    private record Binding(Knob knob, String field, boolean perWave) {
+    }
+
+    /** Structure fields of the filter and LFO knobs (Reference Guide, appendix 4, 5.2). */
+    private static final Map<MockParameter, String> FIELDS = Map.of(
+            MockParameter.CUTOFF, "Cutoff",
+            MockParameter.TRACKING, "Key_Filter",
+            MockParameter.EXCITER, "Filter_Exciter",
+            MockParameter.FILTER_SRC1_AMT, "S1_Filter_Amt",
+            MockParameter.LFO1_RATE, "Lfo1_Rate",
+            MockParameter.LFO1_AMOUNT, "Lfo1_Amt",
+            MockParameter.LFO1_DELAY, "Lfo1_Delay",
+            MockParameter.LFO1_FADE, "Lfo1_Fade");
     private final VectorPad vectorPad = new VectorPad();
     private final CardLayout envelopeCards = new CardLayout();
     private final JPanel envelopeArea = new JPanel(envelopeCards);
@@ -148,6 +172,51 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         for (int i = 0; i < 4; i++) {
             setBadge(waveBadges[i], "All".equals(wave) || WAVES[i].equals(wave));
         }
+        selectedWave = "All".equals(wave) ? "A" : wave;
+        if (patch != null) {
+            showValues();
+        }
+    }
+
+    /**
+     * Shows the values of a patch read from the device: knobs, envelopes, vector pad, wave names.
+     * The knobs notify their changes as usual: the caller must not send them back to the device.
+     */
+    public void showPatch(Patch newPatch) {
+        this.patch = newPatch;
+        int count = newPatch.getWaveCount();
+        for (int i = 0; i < 4; i++) {
+            String letter = WAVES[i];
+            boolean active = count == 4 || i == 0 || (count == 2 && i == 2);
+            String source = active ? newPatch.wave(letter).describeSource() : "inutilisée";
+            waveTitles[i].setText(waveTitle(letter, source, active));
+        }
+        vectorPad.setWaveCount(count);
+        for (int point = 0; point < VectorPad.POINTS; point++) {
+            vectorPad.setPoint(point, newPatch.getMixAc(point), newPatch.getMixBd(point));
+        }
+        showValues();
+    }
+
+    public Patch getPatch() {
+        return patch;
+    }
+
+    private void showValues() {
+        for (Binding b : bindings) {
+            String field = b.perWave() ? selectedWave + "." + b.field() : b.field();
+            b.knob().setValue(patch.struct().get(field));
+        }
+    }
+
+    private static String waveTitle(String letter, String source, boolean active) {
+        return "<html><font color='#8b8f97' size='2'><b>WAVE " + letter + "</b></font><br>"
+                + "<font color='" + (active ? "#ffffff" : "#5d616a") + "'><b>" + source + "</b></font></html>";
+    }
+
+    private Knob bind(Knob knob, String field, boolean perWave) {
+        bindings.add(new Binding(knob, field, perWave));
+        return knob;
     }
 
     public VectorPad getVectorPad() {
@@ -169,8 +238,8 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         waveBadges[i] = badge;
         setBadge(badge, i == 0);
 
-        JLabel title = new JLabel("<html><font color='#8b8f97' size='2'><b>WAVE " + WAVES[i] + "</b></font><br>"
-                + "<font color='#ffffff'><b>" + WAVE_NAMES[i] + "</b></font></html>");
+        JLabel title = new JLabel(waveTitle(WAVES[i], WAVE_NAMES[i], true));
+        waveTitles[i] = title;
         JPanel head = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         head.setOpaque(false);
         head.add(badge);
@@ -180,10 +249,12 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         String w = WAVES[i];
         JPanel row = new JPanel(new GridLayout(1, 3));
         row.setOpaque(false);
-        row.add(knobs.create(new MockParameter("Coarse", "WAVE" + w + "_TUNE_COARSE", level + 1, "WAVES", -24, 24, 0)));
-        row.add(knobs.create(new MockParameter("Fine", "WAVE" + w + "_TUNE_FINE", level + 2, "WAVES", -99, 99, 0)));
-        row.add(knobs.create(new MockParameter("Level", "WAVE" + w + "_LEVEL", level, "WAVES", 0, 99, 99),
-                HarmoniaColors.WRITE));
+        row.add(bind(knobs.create(new MockParameter("Coarse", "WAVE" + w + "_TUNE_COARSE", level + 1, "WAVES",
+                -24, 24, 0)), w + ".Wave_Coarse", false));
+        row.add(bind(knobs.create(new MockParameter("Fine", "WAVE" + w + "_TUNE_FINE", level + 2, "WAVES",
+                -99, 99, 0)), w + ".Wave_Fine", false));
+        row.add(bind(knobs.create(new MockParameter("Level", "WAVE" + w + "_LEVEL", level, "WAVES", 0, 99, 99),
+                HarmoniaColors.WRITE), w + ".Indiv_Level", false));
         row.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         card.getContent().add(head, BorderLayout.NORTH);
@@ -226,7 +297,7 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         times.setOpaque(false);
         for (MockParameter p : new MockParameter[] { MockParameter.MIX_TIME_1, MockParameter.MIX_TIME_2,
                 MockParameter.MIX_TIME_3, MockParameter.MIX_TIME_4 }) {
-            times.add(knobs.create(p));
+            times.add(bind(knobs.create(p), "Mix_Rate" + p.label().substring(5), false));
         }
         s.getContent().add(vectorPad, BorderLayout.CENTER);
         s.getContent().add(times, BorderLayout.SOUTH);
@@ -287,13 +358,15 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         JPanel row = new JPanel(new GridLayout(1, levels.length + times.length));
         row.setOpaque(false);
         for (int i = 0; i < levels.length; i++) {
-            levelKnobs[i] = knobs.create(levels[i]);
+            levelKnobs[i] = bind(knobs.create(levels[i]),
+                    (type == EnvelopeEditor.Type.AMP ? "AEG_Level" : "EG_Level") + i, true);
             editor.setLevel(i, levelKnobs[i].getValue());
             int index = i;
             levelKnobs[i].addChangeListener(e -> editor.setLevel(index, levelKnobs[index].getValue()));
         }
         for (int i = 0; i < times.length; i++) {
-            timeKnobs[i] = knobs.create(times[i], HarmoniaColors.WRITE);
+            timeKnobs[i] = bind(knobs.create(times[i], HarmoniaColors.WRITE),
+                    (type == EnvelopeEditor.Type.AMP ? "AEG_Rate" : "EG_Rate") + (i + 1), true);
             editor.setTime(i, timeKnobs[i].getValue());
             int index = i;
             timeKnobs[i].addChangeListener(e -> editor.setTime(index, timeKnobs[index].getValue()));
@@ -332,7 +405,7 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         JPanel row = new JPanel(new GridLayout(1, params.length));
         row.setOpaque(false);
         for (MockParameter p : params) {
-            row.add(knobs.create(p, p == MockParameter.CUTOFF ? HarmoniaColors.WRITE : null));
+            row.add(bind(knobs.create(p, p == MockParameter.CUTOFF ? HarmoniaColors.WRITE : null), FIELDS.get(p), true));
         }
         s.getContent().add(row, BorderLayout.NORTH);
         return s;

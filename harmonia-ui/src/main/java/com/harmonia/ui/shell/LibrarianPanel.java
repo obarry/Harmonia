@@ -9,13 +9,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -65,12 +69,22 @@ public class LibrarianPanel extends SectionPanel {
     private final JTextField search = new JTextField();
     private final JLabel footer = new JLabel();
     private final List<JToggleButton> bankButtons = new java.util.ArrayList<>();
+    private final java.util.Map<Kind, JToggleButton> kindButtons = new java.util.EnumMap<>(Kind.class);
+    private final JButton readButton = new JButton("\u27F2 Lire la banque");
+    private BiFunction<String, Kind, Optional<List<String>>> nameSource = (b, k) -> Optional.empty();
+    private boolean realNames;
 
     /**
      * @param onSelect called with the kind and the entry when the user selects a sound
      */
-    public LibrarianPanel(BiConsumer<Kind, Entry> onSelect) {
+    public LibrarianPanel(BiConsumer<Kind, Entry> onSelect, Consumer<String> onReadBank) {
         super("Librarian");
+        readButton.setToolTipText("Lire les performances, patchs et wave sequences de la banque depuis l'appareil"
+                + " (environ 20 secondes)");
+        readButton.setFocusable(false);
+        readButton.putClientProperty("FlatLaf.style", "margin: 1,8,1,8; font: -1");
+        readButton.addActionListener(e -> onReadBank.accept(bank));
+        setHeaderRight(readButton);
         JPanel top = new JPanel();
         top.setOpaque(false);
         top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
@@ -159,6 +173,7 @@ public class LibrarianPanel extends SectionPanel {
                 reload();
             });
             group.add(b);
+            kindButtons.put(k, b);
             p.add(b);
         }
         p.setMaximumSize(new Dimension(Integer.MAX_VALUE, p.getPreferredSize().height));
@@ -166,11 +181,20 @@ public class LibrarianPanel extends SectionPanel {
     }
 
     private void reload() {
-        List<String> names = switch (kind) {
+        Optional<List<String>> known = nameSource.apply(bank, kind);
+        realNames = known.isPresent();
+        List<String> mock = switch (kind) {
             case PERF -> MockData.performances(bank);
             case PATCH -> MockData.patches(bank);
             case WAVESEQ -> MockData.waveSequences(bank);
         };
+        List<String> names = new java.util.ArrayList<>(mock);
+        if (realNames) {
+            List<String> real = known.get();
+            for (int i = 0; i < names.size() && i < real.size(); i++) {
+                names.set(i, real.get(i) != null ? real.get(i) : "?");
+            }
+        }
         String filter = search.getText().trim().toLowerCase(Locale.ROOT);
         model.clear();
         for (int i = 0; i < names.size(); i++) {
@@ -184,7 +208,43 @@ public class LibrarianPanel extends SectionPanel {
             case WAVESEQ -> "wave sequences";
         };
         footer.setText(names.size() + " " + what + " · banque " + bank
-                + (bank.startsWith("ROM") ? " · lecture seule" : ""));
+                + (bank.startsWith("ROM") ? " · lecture seule" : "")
+                + (realNames ? "" : " · noms factices"));
+    }
+
+    /**
+     * Where the real names come from (the sound library): for a bank label and a kind, the names
+     * read from the device, or empty if the bank has not been read yet.
+     */
+    public void setNameSource(BiFunction<String, Kind, Optional<List<String>>> source) {
+        this.nameSource = source;
+        reload();
+    }
+
+    /** Reloads the names, keeping the selection (after a bank has been read). */
+    public void refresh() {
+        int selected = list.getSelectedIndex() >= 0 ? list.getSelectedValue().number() : -1;
+        reload();
+        if (selected >= 0) {
+            selectNumber(selected);
+        }
+    }
+
+    public Kind getKind() {
+        return kind;
+    }
+
+    /** Shows a progress or error message in the footer, or the normal text with null. */
+    public void setStatus(String message) {
+        if (message == null) {
+            reload();
+        } else {
+            footer.setText(message);
+        }
+    }
+
+    public void setReadEnabled(boolean enabled) {
+        readButton.setEnabled(enabled);
     }
 
     /** Selects an entry by number (used by the BANK and +1/-1 front panel buttons). */
@@ -206,6 +266,20 @@ public class LibrarianPanel extends SectionPanel {
         int i = Math.floorMod(Math.max(0, list.getSelectedIndex()) + delta, model.size());
         list.setSelectedIndex(i);
         list.ensureIndexIsVisible(i);
+    }
+
+    /**
+     * Shows a sound chosen elsewhere (for instance on the device front panel): selects the kind,
+     * the bank and the entry, which notifies the selection listener as a click would.
+     */
+    public void show(Kind newKind, String bankLabel, int number) {
+        if (newKind != kind) {
+            kindButtons.get(newKind).doClick();
+        }
+        if (!bankLabel.equals(bank)) {
+            bankButtons.get(MockData.BANKS.indexOf(bankLabel)).doClick();
+        }
+        selectNumber(number);
     }
 
     /** Selects the next bank, like the BANK button of the device. */

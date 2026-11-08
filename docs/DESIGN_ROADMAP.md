@@ -319,6 +319,8 @@ Bank Select (CC 32) : 0 = RAM1/RAM2, 1 = ROM11/CARD, 2 = RAM3/ROM4, 3 = ROM5/ROM
 
 Chaque phase se termine par un état **utilisable** et un tag Git (`v0.x`). Les phases 2 à 4 peuvent se tester sans UI élaborée, avec des tests JUnit et la maquette existante. **La phase 5 (shell UI) démarre dès que Maven est en place (P1)**, en parallèle de P2–P4 : elle n'a besoin que de FlatLaf et d'un modèle factice ; elle sera branchée sur le vrai modèle en P6.
 
+**Ordre revu après les premiers essais avec l'appareil (novembre 2026).** Le Wavestation SR est pensé autour des performances : éditer un patch isolé n'y est pas naturel. L'éditeur de performance (P7) passe donc **avant** l'éditeur de patch en temps réel (P6) : on part de la performance courante, on voit le patch joué par chaque part, et un double-clic ouvre ce patch (comme EDIT sur l'appareil).
+
 ```mermaid
 flowchart LR
     P0[P0 Remise à plat] --> P1[P1 Maven + CI]
@@ -326,10 +328,11 @@ flowchart LR
     P2 --> P3[P3 Modèle & codecs]
     P3 --> P4[P4 Librarian<br/>v0.4]
     P1 --> P5[P5 Shell UI & façade]
-    P4 --> P6[P6 Éditeur Patch live]
-    P5 --> P6
-    P6 --> P7[P7 Performances & FX]
-    P7 --> P8[P8 Wave Sequences]
+    P3 --> P7[P7 Performances & FX]
+    P5 --> P7
+    P7 --> P6[P6 Éditeur Patch live]
+    P4 --> P6
+    P6 --> P8[P8 Wave Sequences]
     P8 --> P9[P9 Release 1.0]
 ```
 
@@ -370,11 +373,17 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 
 ### Phase 3 – Modèle et codecs Wavestation *(v0.3)*
 
-- [ ] Nybbles, checksum, en-têtes, numérotation des banques : tests unitaires.
-- [ ] Codecs des structures officielles : `performance`/`part` (§5.1), `patch`/`indiv` (§5.2), `ws_block` (§5.6), `multiset` (§5.3–5.5), `system` (§5.8–5.10), gammes (§5.7), Performance Map (§5.11–5.13).
-- [ ] **Catalogue de paramètres** (JSON en ressource) : les 484 n° officiels, avec plage, format d'affichage, page SR, listes de valeurs (ondes, sources de modulation, macros, effets).
-- [ ] Tests **aller-retour** : banque `.syx` → objets → `.syx` identique octet pour octet.
-- [ ] Listes de noms factory (performances, patchs, wave sequences) et **descriptions des Performance Notes** comme métadonnées de recherche.
+- [x] Nybbles, checksum, en-têtes, numérotation des banques : tests unitaires (phase 2).
+- [x] Structures officielles transcrites champ par champ (`Layout`, `Struct`, `Layouts`) : `patch`/`indiv` (§5.2), `performance`/`part` (§5.1), `ws_block` (§5.6). Tailles vérifiées contre les longueurs des dumps (426, 181, 8784 octets).
+- [x] Modèle typé : `Patch`, `PatchWave`, `Performance`, `Part`, `WaveSequenceBank`, banques étendues (`BankExpansion` : Part_Mode bits 6-7, Bank_Exp).
+- [x] `Dumps` : décodage et encodage des patchs, performances, banques de patchs, de performances et de wave sequences.
+- [x] Tests **aller-retour** sur des dumps synthétiques ; test automatique des vrais dumps placés dans `harmonia-wavestation/src/test/resources/syx/`.
+- [x] `SoundLibrary` : banques lues depuis l'appareil (« Lire la banque ») ou son par son.
+- [x] Interface : vrais noms dans le Librarian, vue Performance (8 parts, patch joué, zones, transposition ; double-clic = ouvrir le patch), valeurs réelles du patch dans l'éditeur (ondes, enveloppes, filtre, LFO 1, vector mix).
+- [ ] **Vérification sur l'appareil** : comparer les valeurs affichées avec l'écran du SR ; confirmer le codage de Number_Of_Waves, de Mix_X/Y (centre 127) et des liens des wave sequences.
+- [ ] Codecs restants : `multiset` (§5.3–5.5), `system` (§5.8–5.10), gammes (§5.7), Performance Map (§5.11–5.13), bloc d'effets de la performance.
+- [ ] **Catalogue de paramètres** (JSON en ressource) : les 484 n° officiels, avec plage, format d'affichage, page SR, champ de structure, listes de valeurs (ondes, sources de modulation, macros, effets).
+- [ ] Listes de noms factory (ondes PCM) et **descriptions des Performance Notes** comme métadonnées de recherche.
 
 ### Phase 4 – Librarian *(v0.4 – premier jalon vraiment utile)*
 

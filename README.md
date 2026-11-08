@@ -18,12 +18,12 @@ Harmonia lets you control every setting of the Wavestation SR from your computer
 |-------|---------|--------|
 | P0 | Repository cleanup | ✅ |
 | P1 | Maven build + GitHub Actions CI | ✅ |
-| P2 | Reliable MIDI layer (SysEx, send queue, device detection) | 🔨 in progress (branch `phase2-midi`) |
-| P3 | Wavestation model and codecs | ⏳ |
+| P2 | Reliable MIDI layer (SysEx, send queue, device detection) | ✅ |
+| P3 | Wavestation model and codecs | 🔨 in progress (branch `phase3-model`) |
 | P4 | Librarian (banks, `.syx` files) | ⏳ |
 | P5 | UI shell, theme and front panel | ✅ |
+| P7 | Performances, effects, multisets (before P6: the SR is performance-oriented) | ⏳ |
 | P6 | Real-time patch editor | ⏳ |
-| P7 | Performances, effects, multisets | ⏳ |
 | P8 | Wave sequences | ⏳ |
 | P9 | Polish and 1.0 release | ⏳ |
 
@@ -56,7 +56,10 @@ What works with the device today:
 | Action | What happens |
 |--------|--------------|
 | Turn a knob | The parameter is sent to the SR edit buffer in real time (SysEx parameter change) |
-| **Get** | Reads the selected patch from the SR (the dump is checked and shown in the MIDI monitor) |
+| Select a performance or a patch | Read from the SR and shown: the 8 parts of a performance, the values of a patch |
+| **Lire la banque** (Librarian) | Reads the performances, patches and wave sequences of the bank: real names in the list (about 20 s) |
+| Double-click a part | Opens the patch it plays, like EDIT on the device |
+| **Get** | Reads the current patch again from the SR |
 | **Send** | Sends the last patch read back to the SR edit buffer and waits for its acknowledgement |
 | **Write** | Stores the SR edit buffer in the selected RAM location, after confirmation |
 | On-screen keyboard | Plays notes on the SR |

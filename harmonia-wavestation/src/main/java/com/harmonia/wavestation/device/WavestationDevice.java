@@ -204,6 +204,25 @@ public class WavestationDevice {
 
     // ------------------------------------------------------------------ real time
 
+    /** Pause after a program change: the device needs time to load the performance. */
+    static final long PAUSE_AFTER_PROGRAM_CHANGE_MS = 300;
+
+    /**
+     * Makes the device play a performance: Bank Select (controller 0 = 0, controller 32 = MIDI
+     * bank) then Program Change, on the device channel. The SR must receive program changes and
+     * bank selects (MIDI/GLOBAL › MIDI RECEIVE).
+     */
+    public void selectPerformance(WavestationBank bank, int number) {
+        if (number < 0 || number >= WavestationBank.PERFORMANCES) {
+            throw new IllegalArgumentException("performance must be 0-49: " + number);
+        }
+        int ch = channel;
+        queue.send(new byte[] { (byte) (0xB0 | ch), 0x00, 0x00 });
+        queue.send(new byte[] { (byte) (0xB0 | ch), 0x20, (byte) bank.midiBank() });
+        queue.send(new byte[] { (byte) (0xC0 | ch), (byte) (bank.programOffset() + number) },
+                PAUSE_AFTER_PROGRAM_CHANGE_MS);
+    }
+
     /**
      * Changes a parameter of the edit buffer. Successive values of the same parameter waiting in
      * the queue are merged: only the last one is sent.
