@@ -6,21 +6,28 @@ import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.nio.charset.StandardCharsets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import com.harmonia.app.DeviceSession;
+import com.harmonia.midi.MidiBytes;
+import com.harmonia.midi.MidiConnection;
 import com.harmonia.ui.EditorSection;
 import com.harmonia.ui.editor.EditorView;
 import com.harmonia.ui.editor.KnobFactory;
@@ -30,18 +37,22 @@ import com.harmonia.ui.mock.MockParameter;
 import com.harmonia.ui.shell.MidiMonitorPanel.Direction;
 import com.harmonia.ui.widget.Knob;
 import com.harmonia.ui.widget.PianoKeyboard;
+import com.harmonia.wavestation.device.WavestationDevice;
+import com.harmonia.wavestation.sysex.MessageType;
+import com.harmonia.wavestation.sysex.WavestationBank;
+import com.harmonia.wavestation.sysex.WavestationSysex;
 
 /**
  * Main window of Harmonia: assembles the front panel, the navigation bars, the librarian, the
  * editors, the inspector, the MIDI monitor, the keyboard and the status bar, and implements the
  * navigation logic of the Wavestation SR (sections, pages, EDIT "stairways", +1/-1).
  * <p>
- * Phase 5: everything runs on mock data and nothing is sent to the device; the MIDI monitor
- * shows the messages that <i>would</i> be sent.
+ * Phase 2: when a device is connected ({@link DeviceSession}), knob changes are sent as SysEx
+ * parameter changes, notes are played on the device, Get / Send / Write talk to it and the MIDI
+ * monitor shows the real traffic. Without a device, the monitor shows the messages that
+ * <i>would</i> be sent. The sounds shown are still mock data until the model exists (phase 3).
  */
 public class MainWindow extends JFrame {
-
-    private static final int MIDI_CHANNEL = 0;
 
     private final FrontPanel frontPanel = new FrontPanel(this::onFrontPanel);
     private final NavigationBar navigationBar = new NavigationBar(this::showSection, this::onAction);
@@ -51,6 +62,7 @@ public class MainWindow extends JFrame {
     private final MidiMonitorPanel monitor = new MidiMonitorPanel();
     private final KeyboardPanel keyboardPanel = new KeyboardPanel();
     private final StatusBar statusBar = new StatusBar();
+    private final DeviceSession session = new DeviceSession();
 
     private final CardLayout editorCards = new CardLayout();
     private final JPanel editorArea = new JPanel(editorCards);
@@ -61,6 +73,8 @@ public class MainWindow extends JFrame {
     private EditorSection section = EditorSection.PATCH;
     private Knob lastKnob;
     private boolean modified;
+    /** Last patch dump received with Get, sent back with Send. */
+    private byte[] lastPatchDump;
 
     // Current items (mock), as "bank:number name"
     private String performanceBank = "RAM1";
@@ -82,10 +96,33 @@ public class MainWindow extends JFrame {
         installShortcuts();
         wireKeyboard();
 
-        statusBar.setConnection(false,
-                "Mode démonstration · aucun appareil connecté (la couche MIDI arrive en phase 2)");
-        monitor.log(Direction.INFO, "Shell UI phase 5, données factices");
-        monitor.log(Direction.INFO, "OUT simulés : rien n'est envoyé");
+        monitor.log(Direction.INFO, "Sons affichés : données factices (phase 3)");
+        session.addListener(new DeviceSession.Listener() {
+            @Override
+            public void connectionChanged(boolean connected, String description) {
+                SwingUtilities.invokeLater(() -> onConnectionChanged(connected, description));
+            }
+
+            @Override
+            public void message(MidiConnection.Direction direction, byte[] message) {
+                SwingUtilities.invokeLater(() -> logMidi(direction, message));
+            }
+
+            @Override
+            public void keyboard(byte[] message) {
+                // Light the on-screen keys played on the master keyboard
+                SwingUtilities.invokeLater(() -> keyboardPanel.getKeyboard().showMidi(message));
+            }
+        });
+        if (!session.connectWithSavedSettings()) {
+            onConnectionChanged(false, null);
+        }
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                session.close();
+            }
+        });
 
         showSection(EditorSection.PATCH);
         showPage("WAVES");
@@ -265,22 +302,153 @@ public class MainWindow extends JFrame {
         frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, false);
         updateBreadcrumb();
         updateLcd(null);
-        logOut(kind == LibrarianPanel.Kind.PERF ? 0x19 : 0x10, entry.bank(), entry.number(),
-                "Requête " + (kind == LibrarianPanel.Kind.PERF ? "performance " : "patch ") + entry.id());
     }
 
     private void onAction(NavigationBar.Action action) {
         switch (action) {
-            case GET -> logOut(0x10, patchBank, patchNumber, "Requête patch " + itemId(patchBank, patchNumber));
-            case SEND -> monitor.log(Direction.OUT, "F0 42 3" + MIDI_CHANNEL + " 28 40 … (861 o)  Dump patch");
+            case CONNECT -> new ConnectionDialog(this, session).setVisible(true);
+            case GET -> getPatch();
+            case SEND -> sendPatch();
             case COMPARE -> monitor.log(Direction.INFO, "Compare : bascule version éditée / original (phase 6)");
-            case WRITE -> {
-                logOut(0x11, patchBank, patchNumber, "Écriture patch " + itemId(patchBank, patchNumber));
+            case WRITE -> writePatch();
+        }
+    }
+
+    // ------------------------------------------------------------------ device
+
+    private void onConnectionChanged(boolean connected, String description) {
+        statusBar.setConnection(connected, connected ? description
+                : "Mode démonstration · aucun appareil connecté (bouton MIDI pour se connecter)");
+        monitor.log(Direction.INFO, connected ? "Connecté" : "Non connecté : messages OUT simulés");
+        keyboardPanel.getKeyboard().releaseAll();
+    }
+
+    private Optional<WavestationDevice> device() {
+        return session.device();
+    }
+
+    private WavestationBank patchBank() {
+        return WavestationBank.fromLabel(patchBank).orElse(WavestationBank.RAM1);
+    }
+
+    /** Get: asks the device for the current patch and keeps the dump (shown in the monitor). */
+    private void getPatch() {
+        WavestationBank bank = patchBank();
+        if (device().isEmpty()) {
+            simulated(WavestationSysex.patchRequest(channel(), bank, patchNumber));
+            return;
+        }
+        device().get().requestPatch(bank, patchNumber).whenComplete((dump, error) -> SwingUtilities.invokeLater(() -> {
+            if (error != null) {
+                reportError("Get", error);
+            } else {
+                lastPatchDump = dump;
+                monitor.log(Direction.INFO, "Reçu : " + WavestationSysex.describe(dump));
+            }
+        }));
+    }
+
+    /** Send: sends the last received patch back to the device edit buffer. */
+    private void sendPatch() {
+        if (lastPatchDump == null) {
+            monitor.log(Direction.INFO, "Rien à envoyer : faites d'abord Get");
+            return;
+        }
+        if (device().isEmpty()) {
+            simulated(lastPatchDump);
+            return;
+        }
+        device().get().sendDump(lastPatchDump).whenComplete((ok, error) -> SwingUtilities.invokeLater(() -> {
+            if (error != null) {
+                reportError("Send", error);
+            } else {
+                monitor.log(Direction.INFO, "Patch chargé dans le tampon d'édition (Data Load Complete)");
+            }
+        }));
+    }
+
+    /** Write: stores the device edit buffer in the current memory location, after confirmation. */
+    private void writePatch() {
+        WavestationBank bank = patchBank();
+        String target = itemId(patchBank, patchNumber);
+        if (device().isEmpty()) {
+            simulated(WavestationSysex.patchWrite(channel(), bank, patchNumber));
+            return;
+        }
+        if (!bank.isWritable()) {
+            monitor.log(Direction.INFO, bank.label() + " est une banque ROM : choisissez RAM1-3 ou la carte");
+            return;
+        }
+        int answer = JOptionPane.showConfirmDialog(this,
+                "Écrire le tampon d'édition de l'appareil dans " + target + " ?\nLe patch actuellement en "
+                        + target + " sera remplacé.",
+                "Write", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (answer != JOptionPane.OK_OPTION) {
+            return;
+        }
+        device().get().writePatch(bank, patchNumber).whenComplete((ok, error) -> SwingUtilities.invokeLater(() -> {
+            if (error != null) {
+                reportError("Write", error);
+            } else {
+                monitor.log(Direction.INFO, "Écrit dans " + target + " (Write Complete)");
                 modified = false;
                 frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, false);
                 updateStatus();
             }
+        }));
+    }
+
+    private void reportError(String action, Throwable error) {
+        Throwable cause = error instanceof CompletionException && error.getCause() != null ? error.getCause() : error;
+        String text = cause instanceof java.util.concurrent.TimeoutException ? "pas de réponse de l'appareil"
+                : cause.getMessage();
+        monitor.log(Direction.INFO, action + " : échec, " + text);
+    }
+
+    private int channel() {
+        return session.getSettings().channel();
+    }
+
+    /** Sends a parameter change, or shows it as simulated when no device is connected. */
+    private void sendParameter(MockParameter p, String value) {
+        if (!navigationBar.isLiveEdit()) {
+            return;
         }
+        if (device().isPresent()) {
+            device().get().setParameter(p.number(), value); // logged by the session listener
+        } else {
+            byte[] m = WavestationSysex.parameterChange(channel(), p.number(), value);
+            monitor.logCoalesced("param:" + p.number(), Direction.OUT,
+                    MidiBytes.toHex(m) + "  " + p.officialName() + " (simulé)");
+            frontPanel.getMidiLed().flash();
+        }
+    }
+
+    private void simulated(byte[] message) {
+        monitor.log(Direction.OUT, MidiBytes.toHex(message, 12) + "  " + WavestationSysex.describe(message)
+                + " (simulé)");
+        frontPanel.getMidiLed().flash();
+    }
+
+    /** Shows a message of the real MIDI traffic in the monitor. */
+    private void logMidi(MidiConnection.Direction direction, byte[] message) {
+        Direction d = direction == MidiConnection.Direction.IN ? Direction.IN : Direction.OUT;
+        String text = MidiBytes.toHex(message, 12);
+        String key = null;
+        Optional<MessageType> type = WavestationSysex.type(message);
+        if (type.isPresent()) {
+            text += "  " + WavestationSysex.describe(message);
+            MessageType t = type.get();
+            if (t == MessageType.PARAMETER_CHANGE || t == MessageType.PARAMETER_CHANGE_EXPANDED
+                    || t == MessageType.PARAMETER_CHANGE_SR) {
+                key = d + ":param:" + ((message[5] & 0x7F) | ((message[6] & 0x7F) << 7));
+            }
+        } else if (message.length == 3 && (message[0] & 0xE0) == 0x80) {
+            boolean on = (message[0] & 0xF0) == 0x90 && message[2] != 0;
+            text += "  Note " + (on ? "on " : "off ") + PianoKeyboard.noteName(message[1] & 0x7F);
+        }
+        monitor.logCoalesced(key, d, text);
+        frontPanel.getMidiLed().flash();
     }
 
     // ------------------------------------------------------------------ knobs
@@ -306,11 +474,7 @@ public class MainWindow extends JFrame {
             frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, true);
             updateStatus();
         }
-        if (navigationBar.isLiveEdit()) {
-            monitor.logCoalesced(p.officialName(), Direction.OUT,
-                    parameterChange(p.number(), value) + "  " + p.officialName());
-            frontPanel.getMidiLed().flash();
-        }
+        sendParameter(p, value);
     }
 
     private void onKnobChange(Knob knob) {
@@ -324,24 +488,9 @@ public class MainWindow extends JFrame {
         updateStatus();
 
         MockParameter p = (MockParameter) knob.getClientProperty(MockParameter.class);
-        if (p != null && navigationBar.isLiveEdit()) {
-            monitor.logCoalesced(p.officialName(), Direction.OUT, parameterChange(p.number(), knob.getValueText())
-                    + "  " + p.officialName());
-            frontPanel.getMidiLed().flash();
+        if (p != null) {
+            sendParameter(p, knob.getValueText());
         }
-    }
-
-    /**
-     * Parameter change message (Reference Guide, appendix 4, 2.1.17): function 41, 42 or 43
-     * according to the number, number on two 7-bit bytes, value as ASCII text.
-     */
-    static String parameterChange(int number, String value) {
-        int function = number >= 407 ? 0x43 : number >= 380 ? 0x42 : 0x41;
-        StringBuilder sb = new StringBuilder(String.format("%02X %02X %02X", function, number & 0x7F, number >> 7));
-        for (byte b : value.getBytes(StandardCharsets.US_ASCII)) {
-            sb.append(String.format(" %02X", b == ' ' ? 0x7F : b));
-        }
-        return sb.append(" 00").toString();
     }
 
     // ------------------------------------------------------------------ display
@@ -401,45 +550,38 @@ public class MainWindow extends JFrame {
 
     /** Short form used on the device LCD: "1:12" for RAM1, "C:03" for the card. */
     private static String shortId(String bank, int number) {
-        String b = bank.equals("CARD") ? "C" : bank.replaceAll("\\D", "");
+        String b = WavestationBank.fromLabel(bank).map(WavestationBank::shortLabel).orElse(bank);
         return b + ":" + String.format("%02d", number);
     }
 
-    private void logOut(int function, String bank, int number, String comment) {
-        monitor.log(Direction.OUT, String.format("F0 42 3%X 28 %02X %02X %02X F7  %s", MIDI_CHANNEL, function,
-                sysexBank(bank), number, comment));
-        frontPanel.getMidiLed().flash();
-    }
-
-    /** Bank number used in SysEx messages (see DESIGN_ROADMAP.md, section 5.2). */
-    static int sysexBank(String bank) {
-        return switch (bank) {
-            case "RAM1" -> 0;
-            case "RAM2" -> 1;
-            case "ROM11" -> 2;
-            case "CARD" -> 3;
-            case "RAM3" -> 4;
-            default -> Integer.parseInt(bank.substring(3)) + 1; // ROM4..ROM10 -> 5..11
-        };
-    }
 
     // ------------------------------------------------------------------ keyboard
 
+    /** On-screen keyboard: notes go to the device, or are shown as simulated. */
     private void wireKeyboard() {
         keyboardPanel.getKeyboard().addNoteListener(new PianoKeyboard.NoteListener() {
             @Override
             public void noteOn(int note, int velocity) {
-                monitor.log(Direction.OUT, String.format("9%X %02X %02X  Note on %s", MIDI_CHANNEL, note, velocity,
-                        PianoKeyboard.noteName(note)));
-                frontPanel.getMidiLed().flash();
+                play(new byte[] { (byte) (0x90 | channel()), (byte) note, (byte) velocity });
             }
 
             @Override
             public void noteOff(int note) {
-                monitor.log(Direction.OUT, String.format("8%X %02X 00  Note off %s", MIDI_CHANNEL, note,
-                        PianoKeyboard.noteName(note)));
+                play(new byte[] { (byte) (0x80 | channel()), (byte) note, 0 });
             }
         });
+    }
+
+    private void play(byte[] message) {
+        Optional<MidiConnection> connection = session.connection();
+        if (connection.isPresent()) {
+            connection.get().getQueue().sendNow(message); // logged by the session listener
+        } else {
+            boolean on = (message[0] & 0xF0) == 0x90;
+            monitor.log(Direction.OUT, MidiBytes.toHex(message) + "  Note " + (on ? "on " : "off ")
+                    + PianoKeyboard.noteName(message[1]) + " (simulé)");
+            frontPanel.getMidiLed().flash();
+        }
     }
 
     /**

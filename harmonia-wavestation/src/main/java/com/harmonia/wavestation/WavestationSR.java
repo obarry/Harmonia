@@ -5,6 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 // import java.util.Arrays; // not used
 
+/**
+ * Proof of concept (2026-01), kept for the former {@code WaveStationEditor} window only.
+ *
+ * @deprecated replaced by WavestationSysex and WavestationDevice (phase 2); removed once the new UI is connected to the device.
+ */
+@Deprecated(forRemoval = true)
 public class WavestationSR {
 	
     private static final byte KORG_ID = 0x42;

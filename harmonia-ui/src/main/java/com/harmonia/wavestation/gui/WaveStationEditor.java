@@ -17,6 +17,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
+@SuppressWarnings("removal") // proof of concept, uses the classes replaced in phase 2
 public class WaveStationEditor {
     private JFrame frame;
     private JComboBox<String> inCombo;

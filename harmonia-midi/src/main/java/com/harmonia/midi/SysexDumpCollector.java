@@ -2,6 +2,12 @@ package com.harmonia.midi;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Proof of concept (2026-01), kept for the former {@code WaveStationEditor} window only.
+ *
+ * @deprecated replaced by SysexAssembler and SysexRequests (phase 2); removed once the new UI is connected to the device.
+ */
+@Deprecated(forRemoval = true)
 public class SysexDumpCollector {
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();

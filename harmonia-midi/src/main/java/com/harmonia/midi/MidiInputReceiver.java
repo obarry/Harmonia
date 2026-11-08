@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
 
+/**
+ * Proof of concept (2026-01), kept for the former {@code WaveStationEditor} window only.
+ *
+ * @deprecated replaced by MidiConnection and SysexAssembler (phase 2); removed once the new UI is connected to the device.
+ */
+@Deprecated(forRemoval = true)
 public class MidiInputReceiver implements Receiver {
     private final List<RawSysexListener> sysexListeners = new ArrayList<>();
     private final MessageListener uiListener;

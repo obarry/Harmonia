@@ -24,7 +24,7 @@ public class NavigationBar extends JPanel {
 
     /** Actions on the device, at the right of the tabs. */
     public enum Action {
-        GET, SEND, COMPARE, WRITE
+        CONNECT, GET, SEND, COMPARE, WRITE
     }
 
     private final Map<EditorSection, JToggleButton> tabs = new EnumMap<>(EditorSection.class);
@@ -53,8 +53,10 @@ public class NavigationBar extends JPanel {
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 7));
         actions.setOpaque(false);
+        actions.add(actionButton("MIDI\u2026", "Connexion à l'appareil : ports, canal, clavier maître", Action.CONNECT,
+                onAction));
         actions.add(actionButton("⟲ Get", "Lire le son depuis l'appareil", Action.GET, onAction));
-        actions.add(actionButton("Send ⟶", "Envoyer le son dans le tampon d'édition de l'appareil", Action.SEND, onAction));
+        actions.add(actionButton("Send ⟶", "Renvoyer le dernier son lu dans le tampon d'édition de l'appareil", Action.SEND, onAction));
         actions.add(actionButton("A/B", "Comparer avec l'original (WRITE/COMPARE)", Action.COMPARE, onAction));
         JButton write = actionButton("Write", "Écrire le son dans la mémoire de l'appareil", Action.WRITE, onAction);
         write.setForeground(HarmoniaColors.WRITE);
