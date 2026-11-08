@@ -46,6 +46,7 @@ public class MidiConnection implements AutoCloseable {
     private final SysexAssembler assembler;
     private final List<MessageListener> messageListeners = new CopyOnWriteArrayList<>();
     private final List<Consumer<byte[]>> sysexListeners = new CopyOnWriteArrayList<>();
+    private final List<Consumer<byte[]>> keyboardListeners = new CopyOnWriteArrayList<>();
 
     private MidiDevice keyboardDevice;
     private Transmitter keyboardTransmitter;
@@ -96,6 +97,14 @@ public class MidiConnection implements AutoCloseable {
     }
 
     /**
+     * Receives the channel messages played on the master keyboard (as played, before
+     * re-channelling): used to light the keys of the on-screen keyboard.
+     */
+    public void addKeyboardListener(Consumer<byte[]> l) {
+        keyboardListeners.add(l);
+    }
+
+    /**
      * Forwards a MIDI keyboard to the device (MIDI thru). Only channel messages are forwarded.
      *
      * @param keyboard   keyboard input port, or null to stop
@@ -126,6 +135,9 @@ public class MidiConnection implements AutoCloseable {
     private void keyboardReceived(byte[] message) {
         if (MidiBytes.isChannelMessage(message)) {
             queue.sendNow(rechannel(message, thruChannel));
+            for (Consumer<byte[]> l : keyboardListeners) {
+                l.accept(message);
+            }
         }
     }
 

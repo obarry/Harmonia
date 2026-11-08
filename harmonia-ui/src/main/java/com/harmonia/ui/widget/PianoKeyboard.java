@@ -100,6 +100,41 @@ public class PianoKeyboard extends JComponent {
         }
     }
 
+    /** Releases every lit key (e.g. All Notes Off, or when the keyboard is disconnected). */
+    public void releaseAll() {
+        active.clear();
+        repaint();
+    }
+
+    public boolean isNoteActive(int note) {
+        return note >= 0 && note < 128 && active.get(note);
+    }
+
+    /**
+     * Lights or releases keys from a MIDI message played elsewhere (master keyboard): note on,
+     * note off (or note on with velocity 0), All Sound Off / All Notes Off controllers.
+     *
+     * @return true if the message changed the display
+     */
+    public boolean showMidi(byte[] m) {
+        if (m == null || m.length < 3) {
+            return false;
+        }
+        int type = m[0] & 0xF0;
+        int data1 = m[1] & 0x7F;
+        int data2 = m[2] & 0x7F;
+        if (type == 0x90 && data2 > 0) {
+            setNoteActive(data1, true);
+        } else if (type == 0x80 || type == 0x90) {
+            setNoteActive(data1, false);
+        } else if (type == 0xB0 && (data1 == 120 || data1 == 123)) {
+            releaseAll();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     /** Note name, e.g. 60 -> "C4" (Korg/Yamaha convention: middle C = C4). */
     public static String noteName(int note) {
         String[] names = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };

@@ -27,6 +27,10 @@ public class DeviceSession implements AutoCloseable {
 
         /** A message was sent to or received from the device. */
         void message(MidiConnection.Direction direction, byte[] message);
+
+        /** A channel message was played on the master keyboard (note, controller...). */
+        default void keyboard(byte[] message) {
+        }
     }
 
     private final List<Listener> listeners = new CopyOnWriteArrayList<>();
@@ -82,6 +86,7 @@ public class DeviceSession implements AutoCloseable {
         WavestationDevice d = new WavestationDevice(c.getQueue(), requests, newSettings.channel());
         c.addSysexListener(d::onSysex);
         c.addMessageListener((direction, message) -> listeners.forEach(l -> l.message(direction, message)));
+        c.addKeyboardListener(message -> listeners.forEach(l -> l.keyboard(message)));
         connection = c;
         device = d;
         settings = newSettings;

@@ -101,7 +101,7 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         c.gridx = 1;
         c.gridheight = 1;
         c.weightx = 0.64;
-        c.weighty = 0.6;
+        c.weighty = 1;      // the envelope takes all the extra height
         add(envelopes, c);
         register(AMP, envelopes);
         register("AMP MOD", envelopes);
@@ -118,7 +118,7 @@ public class PatchEditorPanel extends JPanel implements EditorView {
         row.add(filter);
         row.add(lfo);
         c.gridy = 2;
-        c.weighty = 0.4;
+        c.weighty = 0;      // fixed height: knobs aligned with the mix envelope knobs
         add(row, c);
         register("FILTER", filter);
         register("LFO1", lfo);

@@ -107,6 +107,12 @@ public class MainWindow extends JFrame {
             public void message(MidiConnection.Direction direction, byte[] message) {
                 SwingUtilities.invokeLater(() -> logMidi(direction, message));
             }
+
+            @Override
+            public void keyboard(byte[] message) {
+                // Light the on-screen keys played on the master keyboard
+                SwingUtilities.invokeLater(() -> keyboardPanel.getKeyboard().showMidi(message));
+            }
         });
         if (!session.connectWithSavedSettings()) {
             onConnectionChanged(false, null);
@@ -314,6 +320,7 @@ public class MainWindow extends JFrame {
         statusBar.setConnection(connected, connected ? description
                 : "Mode démonstration · aucun appareil connecté (bouton MIDI pour se connecter)");
         monitor.log(Direction.INFO, connected ? "Connecté" : "Non connecté : messages OUT simulés");
+        keyboardPanel.getKeyboard().releaseAll();
     }
 
     private Optional<WavestationDevice> device() {
