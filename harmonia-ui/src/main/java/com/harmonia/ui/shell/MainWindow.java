@@ -42,8 +42,10 @@ import com.harmonia.ui.widget.PianoKeyboard;
 import com.harmonia.wavestation.device.WavestationDevice;
 import com.harmonia.wavestation.model.Dumps;
 import com.harmonia.wavestation.model.Part;
+import com.harmonia.wavestation.model.PartField;
 import com.harmonia.wavestation.model.Patch;
 import com.harmonia.wavestation.model.Performance;
+import com.harmonia.wavestation.param.Parameter;
 import com.harmonia.wavestation.sysex.MessageType;
 import com.harmonia.wavestation.sysex.WavestationBank;
 import com.harmonia.wavestation.sysex.WavestationSysex;
@@ -102,6 +104,18 @@ public class MainWindow extends JFrame {
         KnobFactory knobs = new KnobFactory(this::onKnobFocus, this::onKnobChange);
         patchEditor = new PatchEditorPanel(knobs, this::onEditorParameter);
         performanceEditor = new PerformanceEditorPanel(this::partPatchName, this::openPart);
+        performanceEditor.setPartListener(new PerformanceEditorPanel.PartListener() {
+            @Override
+            public void partChanged(Part part, PartField field, int value) {
+                onPartChanged(part, field, value);
+            }
+
+            @Override
+            public void partSelected(Part part) {
+                currentPart = part.getNumber();
+                updateBreadcrumb();
+            }
+        });
         librarian.setNameSource(this::namesFromLibrary);
         library.addListener(bank -> SwingUtilities.invokeLater(() -> {
             librarian.refresh();
@@ -130,7 +144,11 @@ public class MainWindow extends JFrame {
             public void message(MidiConnection.Direction direction, byte[] message) {
                 logMidi(direction, message);
                 if (direction == MidiConnection.Direction.IN && isPerformanceChange(message)) {
+                    device().ifPresent(WavestationDevice::forgetEditContext);
                     SwingUtilities.invokeLater(() -> followDevice(message));
+                } else if (direction == MidiConnection.Direction.IN && changesEditContext(message)) {
+                    // part or wave chosen on the device front panel: select ours again before editing
+                    device().ifPresent(WavestationDevice::forgetEditContext);
                 }
             }
 
@@ -581,19 +599,64 @@ public class MainWindow extends JFrame {
         return session.getSettings().channel();
     }
 
-    /** Sends a parameter change, or shows it as simulated when no device is connected. */
+    /**
+     * Sends a parameter change, or shows it as simulated when no device is connected. Patch
+     * parameters apply to the current part (the one whose patch is open): the device selects it
+     * first (CURRENT_PART).
+     */
     private void sendParameter(MockParameter p, String value) {
         if (!navigationBar.isLiveEdit()) {
             return;
         }
+        Parameter parameter = Parameter.of(p.number());
         if (device().isPresent()) {
-            device().get().setParameter(p.number(), value); // logged by the session listener
+            // logged by the session listener
+            if (parameter.scope() == Parameter.Scope.PART) {
+                device().get().setPartParameter(currentPart, parameter, value);
+            } else {
+                device().get().setParameter(p.number(), value);
+            }
         } else {
             byte[] m = WavestationSysex.parameterChange(channel(), p.number(), value);
             monitor.logCoalesced("param:" + p.number(), Direction.OUT,
-                    MidiBytes.toHex(m) + "  " + p.officialName() + " (simulé)");
+                    MidiBytes.toHex(m) + "  " + p.officialName() + scopeText(parameter) + " (simulé)");
             frontPanel.getMidiLed().flash();
         }
+    }
+
+    private String scopeText(Parameter parameter) {
+        return parameter.scope() == Parameter.Scope.PART ? " · part " + currentPart : "";
+    }
+
+    /** A part setting changed in the performance editor: sent to the device in real time. */
+    private void onPartChanged(Part part, PartField field, int value) {
+        currentPart = part.getNumber();
+        modified = true;
+        frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, true);
+        updateStatus();
+        frontPanel.getLcd().setLine2(("P" + part.getNumber() + " " + field.label() + ":" + field.format(value)));
+        if (!navigationBar.isLiveEdit()) {
+            return;
+        }
+        if (device().isPresent()) {
+            device().get().setPartParameter(part.getNumber(), field.parameter(), value);
+        } else {
+            byte[] m = WavestationSysex.parameterChange(channel(), field.parameter().number(),
+                    WavestationSysex.signed(value));
+            monitor.logCoalesced("param:" + field.parameter().number() + "@" + part.getNumber(), Direction.OUT,
+                    MidiBytes.toHex(m) + "  " + field.parameter().officialName() + " · part " + part.getNumber()
+                            + " (simulé)");
+            frontPanel.getMidiLed().flash();
+        }
+    }
+
+    /** Parameter change received for CURRENT_PART or CURRENT_WAVE (front panel of the device). */
+    private static boolean changesEditContext(byte[] m) {
+        if (m.length < 8 || (m[0] & 0xFF) != 0xF0 || m[1] != 0x42 || m[3] != 0x28 || m[4] != 0x41) {
+            return false;
+        }
+        int number = m[5] | m[6] << 7;
+        return number == Parameter.CURRENT_PART.number() || number == Parameter.CURRENT_WAVE.number();
     }
 
     private void simulated(byte[] message) {

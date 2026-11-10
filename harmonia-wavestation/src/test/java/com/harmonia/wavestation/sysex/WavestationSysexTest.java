@@ -60,7 +60,7 @@ class WavestationSysexTest {
     void spacesAreSentAs7F() {
         byte[] m = WavestationSysex.parameterChange(0, 3, "A B");
         assertEquals(0x7F, m[8]);
-        assertEquals("Parameter change #3 = A B", WavestationSysex.describe(m));
+        assertEquals("PROG_NAME = A B", WavestationSysex.describe(m));
     }
 
     @Test

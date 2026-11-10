@@ -61,7 +61,12 @@ public final class Performance {
         return getParts().stream().filter(Part::isUsed).toList();
     }
 
-    /** Raw effects block (21 bytes): decoded in phase 7. */
+    /** Effects: the two effects, their placement and mix settings. */
+    public PerformanceEffects getEffects() {
+        return new PerformanceEffects(getEffectsBlock());
+    }
+
+    /** Raw effects block (21 bytes). */
     public byte[] getEffectsBlock() {
         byte[] fx = new byte[21];
         for (int i = 0; i < fx.length; i++) {
