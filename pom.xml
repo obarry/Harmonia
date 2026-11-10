@@ -27,6 +27,7 @@
         <module>harmonia-wavestation</module>
         <module>harmonia-app</module>
         <module>harmonia-ui</module>
+        <module>harmonia-devicetest</module>
     </modules>
 
     <properties>
