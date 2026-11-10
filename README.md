@@ -53,8 +53,9 @@ What works with the device today:
 
 | Action | What happens |
 |--------|--------------|
-| Turn a knob | The parameter is sent to the SR edit buffer in real time (SysEx parameter change) |
-| Select a performance or a patch | Read from the SR and shown: the 8 parts of a performance, the values of a patch |
+| Turn a knob | The parameter is sent to the SR edit buffer in real time (SysEx parameter change), for the part whose patch is open |
+| Select a performance or a patch | Read from the SR and shown: the 8 parts and the effects of a performance, the values of a patch |
+| Edit a part (Performance page) | Level, effect bus, transposition, detune, delay, key and velocity zones, voice and play modes: sent to the SR in real time (the part is selected first with CURRENT_PART) |
 | **Lire la banque** (Librarian) | Reads the performances, patches and wave sequences of the bank: real names in the list (about 20 s) |
 | Double-click a part | Opens the patch it plays, like EDIT on the device |
 | **Get** | Reads the current patch again from the SR |
@@ -89,6 +90,7 @@ In Eclipse: run `com.harmonia.devicetest.DeviceTestRunner` as a Java application
 | T08 | Writing a patch to RAM (backed up and restored) |
 | T09 | Messages sent by the SR from its front panel (program changes, parameters) |
 | T10 | Master keyboard forwarded to the SR (MIDI thru) |
+| T11 | Part and wave parameters after CURRENT_PART / CURRENT_WAVE, and their numbering |
 
 ## Using the interface
 

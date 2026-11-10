@@ -26,6 +26,7 @@ import com.harmonia.devicetest.scenarios.T07SendDump;
 import com.harmonia.devicetest.scenarios.T08WritePatch;
 import com.harmonia.devicetest.scenarios.T09FollowDevice;
 import com.harmonia.devicetest.scenarios.T10KeyboardThru;
+import com.harmonia.devicetest.scenarios.T11PartParameters;
 import com.harmonia.midi.MidiConnection;
 import com.harmonia.midi.MidiPorts;
 
@@ -44,7 +45,7 @@ public final class DeviceTestRunner {
     public static List<DeviceTest> allTests() {
         return List.of(new T01Identification(), new T02SelectPerformance(), new T03PerformanceParts(),
                 new T04PatchValues(), new T05BankRoundTrip(), new T06RealTimeParameter(), new T07SendDump(),
-                new T08WritePatch(), new T09FollowDevice(), new T10KeyboardThru());
+                new T08WritePatch(), new T09FollowDevice(), new T10KeyboardThru(), new T11PartParameters());
     }
 
     private final Console console;

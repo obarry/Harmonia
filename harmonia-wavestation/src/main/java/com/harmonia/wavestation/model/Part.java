@@ -45,6 +45,16 @@ public final class Part {
         fields.set(field, value);
     }
 
+    /** Value of an editable setting, as sent in its parameter change. */
+    public int get(PartField field) {
+        return field.get(fields);
+    }
+
+    /** Changes an editable setting (clamped to its range). */
+    public void set(PartField field, int value) {
+        field.set(fields, value);
+    }
+
     /** An unused part has no valid bank (negative bank number) or no patch (number -1). */
     public boolean isUsed() {
         return getBank() != null && getPatchNumber() >= 0;

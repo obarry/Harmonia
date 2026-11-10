@@ -6,6 +6,8 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.harmonia.wavestation.param.Parameter;
+
 /**
  * Builds and decodes Wavestation SysEx messages (Reference Guide, appendix 4).
  * <p>
@@ -229,7 +231,7 @@ public final class WavestationSysex {
 
     /**
      * Short human-readable description, for the MIDI monitor, e.g.
-     * "Patch RAM1:12 (861 bytes, checksum OK)" or "Parameter change #93 = 72".
+     * "Patch RAM1:12 (861 bytes, checksum OK)" or, for a parameter change, "FILTER_MOD_CUTOFF = +72".
      */
     public static String describe(byte[] m) {
         Optional<MessageType> t = type(m);
@@ -245,7 +247,8 @@ public final class WavestationSysex {
             for (int i = 7; i < m.length - 1 && m[i] != 0; i++) {
                 value.append(m[i] == 0x7F ? ' ' : (char) m[i]);
             }
-            return sb.append(" #").append(number).append(" = ").append(value).toString();
+            String name = number < Parameter.COUNT ? Parameter.of(number).officialName() : "#" + number;
+            return name + " = " + value;
         }
         if (WITH_BANK.contains(type) && m.length > 6) {
             WavestationBank.fromSysex(m[5] & 0x7F).ifPresent(b -> sb.append(' ').append(b.label()));

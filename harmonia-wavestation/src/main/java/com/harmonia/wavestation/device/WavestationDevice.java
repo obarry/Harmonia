@@ -7,6 +7,7 @@ import com.harmonia.midi.DeviceIdentity;
 import com.harmonia.midi.MidiBytes;
 import com.harmonia.midi.MidiSendQueue;
 import com.harmonia.midi.SysexRequests;
+import com.harmonia.wavestation.param.Parameter;
 import com.harmonia.wavestation.sysex.MessageType;
 import com.harmonia.wavestation.sysex.WavestationBank;
 import com.harmonia.wavestation.sysex.WavestationSysex;
@@ -35,6 +36,16 @@ public class WavestationDevice {
     private final MidiSendQueue queue;
     private final SysexRequests requests;
     private volatile int channel;
+    /** Part selected on the device with CURRENT_PART (1-8), 0 if unknown. */
+    private int currentPart;
+    /** Wave selected on the device with CURRENT_WAVE (0-3), -1 if unknown. */
+    private int currentWave = -1;
+    /**
+     * Incremented each time the context changes on the device (part, wave, performance, dump):
+     * waiting values of a parameter are only merged within the same context, never across a
+     * change, which would send them in the wrong order.
+     */
+    private int epoch;
 
     /**
      * @param queue    output queue towards the device
@@ -158,11 +169,12 @@ public class WavestationDevice {
      * channel byte is rewritten with the device channel, since the channel is stored in the
      * dumps and the device ignores other channels.
      */
-    public CompletableFuture<Void> sendDump(byte[] dump) {
+    public synchronized CompletableFuture<Void> sendDump(byte[] dump) {
         if (!WavestationSysex.isValidDump(dump)) {
             return CompletableFuture.failedFuture(new DeviceException("not a valid Wavestation dump"));
         }
         byte[] message = WavestationSysex.withChannel(dump, channel);
+        forgetEditContext();
         CompletableFuture<byte[]> ack = requests.expect(status(MessageType.DATA_LOAD_COMPLETE, MessageType.DATA_LOAD_ERROR),
                 2 * MidiBytes.transferMillis(message.length) + ANSWER_MARGIN_MS);
         queue.send(message, PAUSE_AFTER_DUMP_MS);
@@ -212,11 +224,12 @@ public class WavestationDevice {
      * bank) then Program Change, on the device channel. The SR must receive program changes and
      * bank selects (MIDI/GLOBAL › MIDI RECEIVE).
      */
-    public void selectPerformance(WavestationBank bank, int number) {
+    public synchronized void selectPerformance(WavestationBank bank, int number) {
         if (number < 0 || number >= WavestationBank.PERFORMANCES) {
             throw new IllegalArgumentException("performance must be 0-49: " + number);
         }
         int ch = channel;
+        forgetEditContext();
         queue.send(new byte[] { (byte) (0xB0 | ch), 0x00, 0x00 });
         queue.send(new byte[] { (byte) (0xB0 | ch), 0x20, (byte) bank.midiBank() });
         queue.send(new byte[] { (byte) (0xC0 | ch), (byte) (bank.programOffset() + number) },
@@ -224,15 +237,109 @@ public class WavestationDevice {
     }
 
     /**
-     * Changes a parameter of the edit buffer. Successive values of the same parameter waiting in
-     * the queue are merged: only the last one is sent.
+     * Changes a parameter of the edit buffer, by number, without selecting any context. Successive
+     * values of the same parameter waiting in the queue are merged: only the last one is sent.
      */
-    public void setParameter(int number, String value) {
-        queue.sendCoalesced("param:" + number, WavestationSysex.parameterChange(channel, number, value));
+    public synchronized void setParameter(int number, String value) {
+        queue.sendCoalesced("param:" + number + "#" + epoch, WavestationSysex.parameterChange(channel, number, value));
     }
 
     public void setParameter(int number, int value) {
         setParameter(number, WavestationSysex.signed(value));
+    }
+
+    /** Changes a global or performance parameter ({@link Parameter.Scope#NONE}). */
+    public void setParameter(Parameter parameter, int value) {
+        requireScope(parameter, Parameter.Scope.NONE);
+        setParameter(parameter.number(), value);
+    }
+
+    /** Changes the name of the performance in the edit buffer (PROG_NAME). */
+    public void setPerformanceName(String name) {
+        setParameter(Parameter.PROG_NAME.number(), name);
+    }
+
+    /**
+     * Changes a parameter of a part, or of the patch it plays ({@link Parameter.Scope#PART}):
+     * CURRENT_PART is sent first when another part is selected on the device.
+     *
+     * @param part part 1-8
+     */
+    public void setPartParameter(int part, Parameter parameter, int value) {
+        setPartParameter(part, parameter, WavestationSysex.signed(value));
+    }
+
+    /** Same as {@link #setPartParameter(int, Parameter, int)}, with the value as text. */
+    public synchronized void setPartParameter(int part, Parameter parameter, String value) {
+        requireScope(parameter, Parameter.Scope.PART);
+        selectPart(part);
+        queue.sendCoalesced("param:" + parameter.number() + "#" + epoch,
+                WavestationSysex.parameterChange(channel, parameter.number(), value));
+    }
+
+    /**
+     * Changes a parameter of one wave of the patch played by a part ({@link Parameter.Scope#WAVE}):
+     * CURRENT_PART and CURRENT_WAVE are sent first when needed.
+     *
+     * @param part part 1-8
+     * @param wave wave 0-3 (A-D)
+     */
+    public synchronized void setWaveParameter(int part, int wave, Parameter parameter, int value) {
+        requireScope(parameter, Parameter.Scope.WAVE);
+        selectPart(part);
+        selectWave(wave);
+        queue.sendCoalesced("param:" + parameter.number() + "#" + epoch,
+                WavestationSysex.parameterChange(channel, parameter.number(), WavestationSysex.signed(value)));
+    }
+
+    /**
+     * Selects the part edited on the device (CURRENT_PART), if it is not already selected.
+     * Values 1-8, as shown on the device (to be confirmed with test T11).
+     */
+    public synchronized void selectPart(int part) {
+        if (part < 1 || part > 8) {
+            throw new IllegalArgumentException("part must be 1-8: " + part);
+        }
+        if (part != currentPart) {
+            queue.send(WavestationSysex.parameterChange(channel, Parameter.CURRENT_PART.number(),
+                    WavestationSysex.signed(part)));
+            currentPart = part;
+            currentWave = -1;
+            epoch++;
+        }
+    }
+
+    /** Selects the wave edited on the device (CURRENT_WAVE, 0-3 for A-D), if needed. */
+    public synchronized void selectWave(int wave) {
+        if (wave < 0 || wave > 3) {
+            throw new IllegalArgumentException("wave must be 0-3: " + wave);
+        }
+        if (wave != currentWave) {
+            queue.send(WavestationSysex.parameterChange(channel, Parameter.CURRENT_WAVE.number(),
+                    WavestationSysex.signed(wave)));
+            currentWave = wave;
+            epoch++;
+        }
+    }
+
+    /**
+     * Forgets the part and wave selected on the device: they are sent again before the next
+     * parameter change. Called when the edit buffer is replaced (performance change, dump), and to
+     * be called when the device itself changes them (front panel).
+     */
+    public synchronized void forgetEditContext() {
+        currentPart = 0;
+        currentWave = -1;
+        epoch++;
+    }
+
+    private static void requireScope(Parameter parameter, Parameter.Scope scope) {
+        if (parameter.scope() != scope) {
+            throw new IllegalArgumentException(parameter + " has scope " + parameter.scope() + ", not " + scope);
+        }
+        if (!parameter.isEditable()) {
+            throw new IllegalArgumentException(parameter + " cannot be changed (" + parameter.kind() + ")");
+        }
     }
 
     /** Error reported by the device or invalid data received. */

@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import com.harmonia.midi.DeviceIdentity;
 import com.harmonia.midi.MidiSendQueue;
 import com.harmonia.midi.SysexRequests;
+import com.harmonia.wavestation.param.Parameter;
 import com.harmonia.wavestation.sysex.MessageType;
 import com.harmonia.wavestation.sysex.TestDumps;
 import com.harmonia.wavestation.sysex.WavestationBank;
@@ -133,5 +134,62 @@ class WavestationDeviceTest {
         assertEquals(2 * 9545 + WavestationDevice.ANSWER_MARGIN_MS,
                 WavestationDevice.timeoutFor(MessageType.PATCH_BANK_DUMP));
         assertEquals(WavestationDevice.DEFAULT_TIMEOUT_MS, WavestationDevice.timeoutFor(MessageType.SYSTEM_SETUP_DUMP));
+    }
+
+    /** "56=+2" for a parameter change: number and value text. */
+    private static String param(byte[] m) {
+        int number = m[5] | m[6] << 7;
+        StringBuilder text = new StringBuilder();
+        for (int i = 7; m[i] != 0; i++) {
+            text.append(m[i] == 0x7F ? ' ' : (char) m[i]);
+        }
+        return number + "=" + text;
+    }
+
+    @Test
+    void partParametersSelectThePartFirstAndOnlyWhenItChanges() throws Exception {
+        device.setPartParameter(1, Parameter.PART_VOLUME, 50);
+        device.setPartParameter(1, Parameter.PART_TRANSPOSE, -12);
+        device.setPartParameter(2, Parameter.PART_VOLUME, 60);
+        device.setPartParameter(2, Parameter.FILTER_MOD_CUTOFF, 0);
+        assertTrue(queue.awaitEmpty(1000));
+        List<String> params = sent.stream().map(WavestationDeviceTest::param).toList();
+        assertEquals(List.of("56=+1", "61=+50", "67=-12", "56=+2", "61=+60", "93=0"), params);
+    }
+
+    @Test
+    void waveParametersSelectPartAndWave() throws Exception {
+        device.setWaveParameter(3, 1, Parameter.WAVE_LEVEL, 80);
+        device.setWaveParameter(3, 1, Parameter.WAVE_TUNE_FINE, -5);
+        device.setWaveParameter(3, 2, Parameter.WAVE_LEVEL, 70);
+        assertTrue(queue.awaitEmpty(1000));
+        List<String> params = sent.stream().map(WavestationDeviceTest::param).toList();
+        assertEquals(List.of("56=+3", "79=+1", "413=+80", "415=-5", "79=+2", "413=+70"), params);
+    }
+
+    @Test
+    void contextIsSentAgainAfterAPerformanceChange() throws Exception {
+        device.setPartParameter(1, Parameter.PART_VOLUME, 50);
+        device.selectPerformance(WavestationBank.RAM1, 0);
+        device.setPartParameter(1, Parameter.PART_VOLUME, 40);
+        assertTrue(queue.awaitEmpty(2000));
+        List<String> params = sent.stream().filter(m -> (m[0] & 0xFF) == 0xF0).map(WavestationDeviceTest::param)
+                .toList();
+        assertEquals(List.of("56=+1", "61=+50", "56=+1", "61=+40"), params);
+    }
+
+    @Test
+    void scopeIsChecked() {
+        assertThrows(IllegalArgumentException.class, () -> device.setPartParameter(1, Parameter.MASTER_TUNE, 0));
+        assertThrows(IllegalArgumentException.class, () -> device.setParameter(Parameter.PART_VOLUME, 0));
+        assertThrows(IllegalArgumentException.class, () -> device.setPartParameter(9, Parameter.PART_VOLUME, 0));
+        assertThrows(IllegalArgumentException.class, () -> device.setPartParameter(1, Parameter.PART_PATCH_NAME, 0));
+    }
+
+    @Test
+    void performanceNameIsSentAsText() throws Exception {
+        device.setPerformanceName("Ski Jam");
+        assertTrue(queue.awaitEmpty(1000));
+        assertEquals("3=Ski Jam", param(sent.get(0)));
     }
 }
