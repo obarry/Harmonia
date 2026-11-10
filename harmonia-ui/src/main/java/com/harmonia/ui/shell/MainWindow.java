@@ -113,6 +113,7 @@ public class MainWindow extends JFrame {
         installShortcuts();
         wireKeyboard();
 
+        monitor.setOnActivity(() -> frontPanel.getMidiLed().flash());
         monitor.log(Direction.INFO, "Sons affichés : données factices (phase 3)");
         session.addListener(new DeviceSession.Listener() {
             @Override
@@ -120,20 +121,25 @@ public class MainWindow extends JFrame {
                 SwingUtilities.invokeLater(() -> onConnectionChanged(connected, description));
             }
 
+            /*
+             * Called on MIDI threads, possibly hundreds of times per second when playing fast:
+             * the monitor batches the lines itself, and the Swing thread is only used for the
+             * few messages that change the display (performance changes, keys).
+             */
             @Override
             public void message(MidiConnection.Direction direction, byte[] message) {
-                SwingUtilities.invokeLater(() -> {
-                    logMidi(direction, message);
-                    if (direction == MidiConnection.Direction.IN) {
-                        followDevice(message);
-                    }
-                });
+                logMidi(direction, message);
+                if (direction == MidiConnection.Direction.IN && isPerformanceChange(message)) {
+                    SwingUtilities.invokeLater(() -> followDevice(message));
+                }
             }
 
             @Override
             public void keyboard(byte[] message) {
-                // Light the on-screen keys played on the master keyboard
-                SwingUtilities.invokeLater(() -> keyboardPanel.getKeyboard().showMidi(message));
+                // Light the on-screen keys played on the master keyboard (notes only)
+                if (PianoKeyboard.affectsKeys(message)) {
+                    SwingUtilities.invokeLater(() -> keyboardPanel.getKeyboard().showMidi(message));
+                }
             }
         });
         if (!session.connectWithSavedSettings()) {
@@ -596,29 +602,48 @@ public class MainWindow extends JFrame {
         frontPanel.getMidiLed().flash();
     }
 
-    /** Shows a message of the real MIDI traffic in the monitor. */
+    /** Bank Select LSB or Program Change: what the device sends when its performance changes. */
+    private static boolean isPerformanceChange(byte[] m) {
+        return (m.length == 2 && (m[0] & 0xF0) == 0xC0) || (m.length == 3 && (m[0] & 0xF0) == 0xB0 && m[1] == 0x20);
+    }
+
+    /**
+     * Shows a message of the real MIDI traffic in the monitor. Any thread. Streams of the same
+     * kind (a parameter being turned, aftertouch, pitch bend, a controller) update a single line.
+     */
     private void logMidi(MidiConnection.Direction direction, byte[] message) {
         Direction d = direction == MidiConnection.Direction.IN ? Direction.IN : Direction.OUT;
         String text = MidiBytes.toHex(message, 12);
+        String detail = "";
         String key = null;
-        Optional<MessageType> type = WavestationSysex.type(message);
-        if (type.isPresent()) {
-            text += "  " + WavestationSysex.describe(message);
-            MessageType t = type.get();
+        int status = message[0] & 0xFF;
+        int type = status & 0xF0;
+        Optional<MessageType> sysex = WavestationSysex.type(message);
+        if (sysex.isPresent()) {
+            detail = WavestationSysex.describe(message);
+            MessageType t = sysex.get();
             if (t == MessageType.PARAMETER_CHANGE || t == MessageType.PARAMETER_CHANGE_EXPANDED
                     || t == MessageType.PARAMETER_CHANGE_SR) {
                 key = d + ":param:" + ((message[5] & 0x7F) | ((message[6] & 0x7F) << 7));
             }
-        } else if (message.length == 2 && (message[0] & 0xF0) == 0xC0) {
-            text += "  Program change " + (message[1] & 0x7F);
-        } else if (message.length == 3 && (message[0] & 0xF0) == 0xB0 && (message[1] == 0x00 || message[1] == 0x20)) {
-            text += "  Bank select " + (message[1] == 0 ? "MSB " : "LSB ") + message[2];
-        } else if (message.length == 3 && (message[0] & 0xE0) == 0x80) {
-            boolean on = (message[0] & 0xF0) == 0x90 && message[2] != 0;
-            text += "  Note " + (on ? "on " : "off ") + PianoKeyboard.noteName(message[1] & 0x7F);
+        } else if (message.length == 2 && type == 0xC0) {
+            detail = "Program change " + (message[1] & 0x7F);
+        } else if (message.length == 3 && type == 0xB0 && (message[1] == 0x00 || message[1] == 0x20)) {
+            detail = "Bank select " + (message[1] == 0 ? "MSB " : "LSB ") + message[2];
+        } else if (message.length == 3 && (type == 0x80 || type == 0x90)) {
+            boolean on = type == 0x90 && message[2] != 0;
+            detail = "Note " + (on ? "on " : "off ") + PianoKeyboard.noteName(message[1] & 0x7F);
+        } else if (message.length == 3 && type == 0xB0) {
+            detail = "Contrôleur " + message[1] + " = " + message[2];
+            key = d + ":cc:" + status + ":" + message[1];
+        } else if (type == 0xD0 || type == 0xA0) {
+            detail = "Aftertouch";
+            key = d + ":at:" + status;
+        } else if (type == 0xE0) {
+            detail = "Pitch bend";
+            key = d + ":pb:" + status;
         }
-        monitor.logCoalesced(key, d, text);
-        frontPanel.getMidiLed().flash();
+        monitor.post(d, text, detail, key);
     }
 
     // ------------------------------------------------------------------ knobs

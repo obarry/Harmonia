@@ -42,8 +42,6 @@ mvn -pl harmonia-ui exec:java
 
 In Eclipse: *File › Import › Maven › Existing Maven Projects*, select the root folder (5 projects are imported), then run `com.harmonia.ui.HarmoniaApp` from the `harmonia-ui` module.
 
-The former proof of concept is still available: `com.harmonia.wavestation.gui.WaveStationEditor`.
-
 ## Connecting the Wavestation SR
 
 1. Connect the MIDI OUT of the SR to a MIDI IN of the computer, and a MIDI OUT of the computer to the MIDI IN of the SR.
@@ -65,6 +63,32 @@ What works with the device today:
 | On-screen keyboard | Plays notes on the SR |
 
 Without a device, Harmonia runs in demonstration mode and the MIDI monitor shows the messages that would be sent.
+
+## Testing with the device
+
+`harmonia-devicetest` is an interactive console tool that checks Harmonia against a real Wavestation SR. Harmonia sends and reads; you follow the instructions on the device and answer the questions (o / n / ?). Each session produces a Markdown report in `device-tests/<date>/`, with the dumps received and the photos of the device screen you choose to add.
+
+```
+mvn install
+mvn -q -pl harmonia-devicetest exec:java                      # all tests
+mvn -q -pl harmonia-devicetest exec:java -Dexec.args="--only T02,T04"
+mvn -q -pl harmonia-devicetest exec:java -Dexec.args="--list"
+```
+
+In Eclipse: run `com.harmonia.devicetest.DeviceTestRunner` as a Java application (if accents are garbled in the console, add the VM argument `-Dstdout.encoding=UTF-8`).
+
+| Test | Checks |
+|------|--------|
+| T01 | Device Inquiry: channel and system version |
+| T02 | Selecting performances (Bank Select + Program Change) and the SysEx bank numbering |
+| T03 | Parts of a performance (patch, bank, zones) against the EDIT PERF page |
+| T04 | Patch values (structure, waves, vector mix points) against the PATCH, WAVES and MIX ENV pages |
+| T05 | Whole bank dumps: checksums, decoding, byte-identical re-encoding |
+| T06 | Real-time parameter change (filter cutoff) |
+| T07 | Sending a patch to the edit buffer, Data Load Complete acknowledgement |
+| T08 | Writing a patch to RAM (backed up and restored) |
+| T09 | Messages sent by the SR from its front panel (program changes, parameters) |
+| T10 | Master keyboard forwarded to the SR (MIDI thru) |
 
 ## Using the interface
 
@@ -95,6 +119,7 @@ The front panel drawn at the top of the window is functional: its buttons work a
 | `harmonia-wavestation` | Wavestation SR profile: model, SysEx codecs, `.syx` files |
 | `harmonia-app` | Application services: session, undo, library |
 | `harmonia-ui` | Swing + FlatLaf user interface |
+| `harmonia-devicetest` | Interactive console tests with a real Wavestation SR |
 
 ## Documentation
 

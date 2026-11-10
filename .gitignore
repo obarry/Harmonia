@@ -23,3 +23,9 @@ desktop.ini
 
 # Local user assets (e.g. logo image supplied by the user)
 /local/
+
+# Files sent by Claude in the desktop app
+/Claude outputs/
+
+# Device test sessions (reports, dumps and photos; commit a report selectively if useful)
+/device-tests/
