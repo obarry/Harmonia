@@ -110,6 +110,15 @@ public class PianoKeyboard extends JComponent {
         return note >= 0 && note < 128 && active.get(note);
     }
 
+    /** True for the messages that {@link #showMidi} displays: notes, All Notes / Sound Off. */
+    public static boolean affectsKeys(byte[] m) {
+        if (m == null || m.length < 3) {
+            return false;
+        }
+        int type = m[0] & 0xF0;
+        return type == 0x80 || type == 0x90 || (type == 0xB0 && (m[1] == 120 || m[1] == 123));
+    }
+
     /**
      * Lights or releases keys from a MIDI message played elsewhere (master keyboard): note on,
      * note off (or note on with velocity 0), All Sound Off / All Notes Off controllers.
