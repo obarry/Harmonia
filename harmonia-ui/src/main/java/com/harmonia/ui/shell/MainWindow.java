@@ -26,6 +26,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.harmonia.app.DeviceSession;
+import com.harmonia.app.LibraryStore;
+import com.harmonia.app.LibrarySync;
 import com.harmonia.app.SoundLibrary;
 import com.harmonia.midi.MidiBytes;
 import com.harmonia.midi.MidiConnection;
@@ -65,13 +67,18 @@ public class MainWindow extends JFrame {
     private final FrontPanel frontPanel = new FrontPanel(this::onFrontPanel);
     private final NavigationBar navigationBar = new NavigationBar(this::showSection, this::onAction);
     private final PageBar pageBar = new PageBar(this::showPage, this::onWave);
-    private final LibrarianPanel librarian = new LibrarianPanel(this::onLibrarianSelection, this::readBank);
+    private final LibrarianPanel librarian = new LibrarianPanel(this::onLibrarianSelection, this::readBank,
+            this::readAllBanks);
     private final InspectorPanel inspector = new InspectorPanel();
     private final MidiMonitorPanel monitor = new MidiMonitorPanel();
     private final KeyboardPanel keyboardPanel = new KeyboardPanel();
     private final StatusBar statusBar = new StatusBar();
     private final DeviceSession session = new DeviceSession();
     private final SoundLibrary library = new SoundLibrary();
+    /** Copy of the device memory saved between sessions. */
+    private final LibraryStore store = LibraryStore.defaultStore();
+    /** Background reading of banks in progress, or null. */
+    private LibrarySync sync;
 
     private final CardLayout editorCards = new CardLayout();
     private final JPanel editorArea = new JPanel(editorCards);
@@ -124,6 +131,7 @@ public class MainWindow extends JFrame {
         registerEditors();
 
         setContentPane(buildContent());
+        loadStore();
         installShortcuts();
         wireKeyboard();
 
@@ -166,6 +174,10 @@ public class MainWindow extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                if (sync != null) {
+                    sync.cancel();
+                }
+                saveStore();
                 session.close();
             }
         });
@@ -363,24 +375,126 @@ public class MainWindow extends JFrame {
         };
     }
 
-    /** "Lire la banque": performances, patches and wave sequences of a bank. */
+    // ------------------------------------------------------------------ copy of the device memory
+
+    /**
+     * Startup: the banks saved at the end of the previous session are loaded, so that every sound
+     * is known at once, without asking the device.
+     */
+    private void loadStore() {
+        int banks = store.load(library).size();
+        if (banks > 0) {
+            monitor.log(Direction.INFO, banks + " banques chargées depuis la copie locale du SR (" + store.folder() + ")");
+        }
+    }
+
+    /** End of session: everything known is saved (banks read entirely are already saved). */
+    private void saveStore() {
+        for (WavestationBank bank : WavestationBank.values()) {
+            try {
+                store.save(library, bank);
+            } catch (RuntimeException e) {
+                // the bank will be read again from the device next time
+            }
+        }
+    }
+
+    /** "Relire": reads a bank again from the device, in the background. */
     private void readBank(String bankLabel) {
-        WavestationBank bank = WavestationBank.fromLabel(bankLabel).orElseThrow();
+        startSync(List.of(WavestationBank.fromLabel(bankLabel).orElseThrow()), "Relecture de " + bankLabel);
+    }
+
+    /** "Tout relire": the device may have been changed without Harmonia; every bank is read again. */
+    private void readAllBanks() {
         if (device().isEmpty()) {
-            monitor.log(Direction.INFO, "Connectez le SR (bouton MIDI…) pour lire une banque");
+            monitor.log(Direction.INFO, "Connectez le SR (bouton MIDI…) pour relire ses banques");
             return;
         }
+        int answer = JOptionPane.showConfirmDialog(this, "Relire toutes les banques du SR (environ "
+                + LibrarySync.estimatedSeconds(LibrarySync.ORDER.size()) / 60 + " minutes, en arrière-plan) ?\n"
+                + "Utile si le SR a été modifié sans Harmonia. Vous pouvez continuer à travailler pendant ce temps.",
+                "Tout relire", JOptionPane.OK_CANCEL_OPTION);
+        if (answer == JOptionPane.OK_OPTION) {
+            store.invalidate();
+            startSync(LibrarySync.ORDER, "Relecture de toutes les banques");
+        }
+    }
+
+    /** At connection: reads in the background the banks that are not known yet (first use). */
+    private void syncMissingBanks() {
+        List<WavestationBank> missing = LibrarySync.missing(library, store);
+        if (!missing.isEmpty()) {
+            startSync(missing, "Première lecture de la mémoire du SR : " + missing.size() + " banques, environ "
+                    + Math.max(1, LibrarySync.estimatedSeconds(missing.size()) / 60) + " min");
+        }
+    }
+
+    /** Reads banks in the background, with a discreet progress text in the status bar. */
+    private void startSync(List<WavestationBank> banks, String title) {
+        if (device().isEmpty()) {
+            monitor.log(Direction.INFO, "Connectez le SR (bouton MIDI…) pour lire ses banques");
+            return;
+        }
+        if (sync != null) {
+            monitor.log(Direction.INFO, "Une lecture est déjà en cours");
+            return;
+        }
+        monitor.log(Direction.INFO, title);
         librarian.setReadEnabled(false);
-        librarian.setStatus("Lecture de " + bankLabel + "\u2026 (environ 20 s)");
-        library.readBank(device().get(), bank).whenComplete((ok, error) -> SwingUtilities.invokeLater(() -> {
-            librarian.setReadEnabled(true);
-            librarian.setStatus(null);
-            if (error != null) {
-                reportError("Lecture de " + bankLabel, error);
-            } else {
-                monitor.log(Direction.INFO, "Banque " + bankLabel + " lue : 50 performances, 35 patchs, 32 wave sequences");
+        LibrarySync job = new LibrarySync(device().get(), library, store);
+        sync = job;
+        statusBar.startActivity("sync", "Lecture du SR");
+        job.run(banks, new LibrarySync.Listener() {
+            @Override
+            public void reading(WavestationBank bank, LibrarySync.Step step, int done, int total) {
+                SwingUtilities.invokeLater(() -> statusBar.startActivity("sync", "Lecture du SR : " + bank.label()
+                        + ", " + step.label() + " (" + (done + 1) + "/" + total + ")"));
             }
+
+            @Override
+            public void bankRead(WavestationBank bank) {
+                SwingUtilities.invokeLater(() -> monitor.log(Direction.INFO, "Banque " + bank.label() + " lue et enregistrée"));
+            }
+        }).thenAccept(result -> SwingUtilities.invokeLater(() -> {
+            sync = null;
+            statusBar.endActivity("sync");
+            librarian.setReadEnabled(true);
+            StringBuilder sb = new StringBuilder(result.cancelled() ? "Lecture interrompue" : "Lecture terminée");
+            sb.append(" : ").append(result.read().size()).append(" banque(s) lue(s)");
+            if (!result.absent().isEmpty()) {
+                sb.append(", pas de carte");
+            }
+            if (!result.failed().isEmpty()) {
+                sb.append(", échec pour ").append(result.failed().stream().map(WavestationBank::label).toList());
+            }
+            monitor.log(Direction.INFO, sb.toString());
         }));
+    }
+
+    /**
+     * The performance editor changes the performance it shows: it works on a copy, so that the
+     * library stays what the device memory holds until the performance is written.
+     */
+    private static Performance editableCopy(Performance perf) {
+        return new Performance(perf.toBytes());
+    }
+
+    /** After a Write: the written location is read back, so that the copy stays aligned. */
+    private void readBack(WavestationBank bank, int number, boolean patch) {
+        if (device().isEmpty()) {
+            return;
+        }
+        if (patch) {
+            device().get().requestPatch(bank, number).thenAccept(d -> {
+                library.putPatch(bank, number, Dumps.decodePatch(d));
+                store.save(library, bank);
+            });
+        } else {
+            device().get().requestPerformance(bank, number).thenAccept(d -> {
+                library.putPerformance(bank, number, Dumps.decodePerformance(d));
+                store.save(library, bank);
+            });
+        }
     }
 
     /** Last Bank Select (controller 32) received from the device, for {@link #followDevice}. */
@@ -421,15 +535,18 @@ public class MainWindow extends JFrame {
         String reference = itemId(performanceBank, performanceNumber);
         Optional<Performance> known = library.performance(bank, performanceNumber);
         if (known.isPresent()) {
-            performanceEditor.showPerformance(reference, known.get());
+            performanceEditor.showPerformance(reference, editableCopy(known.get()));
         } else if (device().isPresent()) {
+            String activity = "read:" + reference;
+            statusBar.startActivity(activity, "Lecture de la performance " + reference);
             library.loadPerformance(device().get(), bank, performanceNumber)
                     .whenComplete((perf, error) -> SwingUtilities.invokeLater(() -> {
+                        statusBar.endActivity(activity);
                         if (error != null) {
                             reportError("Lecture de la performance " + reference, error);
                         } else if (reference.equals(itemId(performanceBank, performanceNumber))) {
                             performanceName = perf.getName();
-                            performanceEditor.showPerformance(reference, perf);
+                            performanceEditor.showPerformance(reference, editableCopy(perf));
                             updateBreadcrumb();
                             updateLcd(null);
                         }
@@ -447,8 +564,11 @@ public class MainWindow extends JFrame {
         if (known.isPresent()) {
             displayPatch(known.get());
         } else if (device().isPresent()) {
+            String activity = "read:" + reference;
+            statusBar.startActivity(activity, "Lecture du patch " + reference);
             library.loadPatch(device().get(), bank, patchNumber)
                     .whenComplete((patch, error) -> SwingUtilities.invokeLater(() -> {
+                        statusBar.endActivity(activity);
                         if (error != null) {
                             reportError("Lecture du patch " + reference, error);
                         } else if (reference.equals(itemId(patchBank, patchNumber))) {
@@ -508,6 +628,11 @@ public class MainWindow extends JFrame {
                 : "Mode démonstration · aucun appareil connecté (bouton MIDI pour se connecter)");
         monitor.log(Direction.INFO, connected ? "Connecté" : "Non connecté : messages OUT simulés");
         keyboardPanel.getKeyboard().releaseAll();
+        if (connected) {
+            syncMissingBanks();
+        } else if (sync != null) {
+            sync.cancel();
+        }
     }
 
     private Optional<WavestationDevice> device() {
@@ -581,6 +706,7 @@ public class MainWindow extends JFrame {
                 reportError("Write", error);
             } else {
                 monitor.log(Direction.INFO, "Écrit dans " + target + " (Write Complete)");
+                readBack(bank, patchNumber, true);
                 modified = false;
                 frontPanel.setLed(FrontPanel.Button.WRITE_COMPARE, false);
                 updateStatus();
