@@ -392,6 +392,7 @@ On fait la migration **maintenant** : avant d'ajouter des dépendances (FlatLaf,
 
 ### Phase 4 – Librarian *(v0.4 – premier jalon vraiment utile)*
 
+- [x] **Copie locale de la mémoire du SR** (avancée à la demande, après les premiers essais) : lecture de toutes les banques en arrière-plan à la première connexion (`LibrarySync`, RAM d'abord, carte absente détectée), sauvegarde en `.syx` par banque dans `~/.harmonia/library` (`LibraryStore`), rechargement immédiat au démarrage, relecture après Write, boutons « Relire » et « Tout relire ». Progression discrète dans la barre d'état (texte et points animés).
 - [ ] Lire et envoyer des banques entières (patchs, performances, wave sequences) avec progression et accusé de réception.
 - [ ] Vue liste par banque, recherche (nom, description, tags), favoris, glisser-déposer pour réorganiser.
 - [ ] Ouvrir et sauver `.syx` (patch seul ou banque), **bibliothèque locale** (dossier + index).

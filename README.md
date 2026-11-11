@@ -56,11 +56,13 @@ What works with the device today:
 | Turn a knob | The parameter is sent to the SR edit buffer in real time (SysEx parameter change), for the part whose patch is open |
 | Select a performance or a patch | Read from the SR and shown: the 8 parts and the effects of a performance, the values of a patch |
 | Edit a part (Performance page) | Level, effect bus, transposition, detune, delay, key and velocity zones, voice and play modes: sent to the SR in real time (the part is selected first with CURRENT_PART) |
-| **Lire la banque** (Librarian) | Reads the performances, patches and wave sequences of the bank: real names in the list (about 20 s) |
+| First connection | Harmonia reads the whole memory of the SR in the background (about 4 min; RAM banks first), with a discreet progress text in the status bar. Each bank is saved on disk as soon as it is read |
+| Next starts | The copy saved on disk (`~/.harmonia/library/`, one standard `.syx` file per bank) is loaded at once: browsing performances and patches no longer asks the SR anything |
+| **Relire** / **Tout relire** (Librarian) | Reads the current bank, or every bank, again from the SR: useful if the SR was changed without Harmonia |
 | Double-click a part | Opens the patch it plays, like EDIT on the device |
 | **Get** | Reads the current patch again from the SR |
 | **Send** | Sends the last patch read back to the SR edit buffer and waits for its acknowledgement |
-| **Write** | Stores the SR edit buffer in the selected RAM location, after confirmation |
+| **Write** | Stores the SR edit buffer in the selected RAM location, after confirmation; the location is then read back to keep the local copy aligned |
 | On-screen keyboard | Plays notes on the SR |
 
 Without a device, Harmonia runs in demonstration mode and the MIDI monitor shows the messages that would be sent.

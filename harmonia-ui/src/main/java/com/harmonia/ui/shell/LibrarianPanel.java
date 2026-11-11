@@ -70,21 +70,31 @@ public class LibrarianPanel extends SectionPanel {
     private final JLabel footer = new JLabel();
     private final List<JToggleButton> bankButtons = new java.util.ArrayList<>();
     private final java.util.Map<Kind, JToggleButton> kindButtons = new java.util.EnumMap<>(Kind.class);
-    private final JButton readButton = new JButton("\u27F2 Lire la banque");
+    private final JButton readButton = new JButton("\u27F2 Relire");
+    private final JButton syncButton = new JButton("Tout relire");
     private BiFunction<String, Kind, Optional<List<String>>> nameSource = (b, k) -> Optional.empty();
     private boolean realNames;
 
     /**
      * @param onSelect called with the kind and the entry when the user selects a sound
      */
-    public LibrarianPanel(BiConsumer<Kind, Entry> onSelect, Consumer<String> onReadBank) {
+    public LibrarianPanel(BiConsumer<Kind, Entry> onSelect, Consumer<String> onReadBank, Runnable onReadAll) {
         super("Librarian");
-        readButton.setToolTipText("Lire les performances, patchs et wave sequences de la banque depuis l'appareil"
-                + " (environ 20 secondes)");
-        readButton.setFocusable(false);
-        readButton.putClientProperty("FlatLaf.style", "margin: 1,8,1,8; font: -1");
+        readButton.setToolTipText("Relire depuis le SR les performances, patchs et wave sequences de cette banque"
+                + " (environ 20 secondes, en arrière-plan)");
+        syncButton.setToolTipText("Relire toutes les banques du SR, si elles ont été modifiées sans Harmonia"
+                + " (environ 4 minutes, en arrière-plan)");
+        for (JButton b : List.of(readButton, syncButton)) {
+            b.setFocusable(false);
+            b.putClientProperty("FlatLaf.style", "margin: 1,6,1,6; font: -1");
+        }
         readButton.addActionListener(e -> onReadBank.accept(bank));
-        setHeaderRight(readButton);
+        syncButton.addActionListener(e -> onReadAll.run());
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 4, 0));
+        buttons.setOpaque(false);
+        buttons.add(readButton);
+        buttons.add(syncButton);
+        setHeaderRight(buttons);
         JPanel top = new JPanel();
         top.setOpaque(false);
         top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
@@ -181,6 +191,19 @@ public class LibrarianPanel extends SectionPanel {
     }
 
     private void reload() {
+        List<String> names = currentNames();
+        String filter = search.getText().trim().toLowerCase(Locale.ROOT);
+        model.clear();
+        for (int i = 0; i < names.size(); i++) {
+            if (filter.isEmpty() || names.get(i).toLowerCase(Locale.ROOT).contains(filter)) {
+                model.addElement(new Entry(bank, i, names.get(i)));
+            }
+        }
+        updateFooter(names.size());
+    }
+
+    /** Names of the current bank and kind: real ones where known, mock ones otherwise. */
+    private List<String> currentNames() {
         Optional<List<String>> known = nameSource.apply(bank, kind);
         realNames = known.isPresent();
         List<String> mock = switch (kind) {
@@ -195,19 +218,16 @@ public class LibrarianPanel extends SectionPanel {
                 names.set(i, real.get(i) != null ? real.get(i) : "?");
             }
         }
-        String filter = search.getText().trim().toLowerCase(Locale.ROOT);
-        model.clear();
-        for (int i = 0; i < names.size(); i++) {
-            if (filter.isEmpty() || names.get(i).toLowerCase(Locale.ROOT).contains(filter)) {
-                model.addElement(new Entry(bank, i, names.get(i)));
-            }
-        }
+        return names;
+    }
+
+    private void updateFooter(int count) {
         String what = switch (kind) {
             case PERF -> "performances";
             case PATCH -> "patchs";
             case WAVESEQ -> "wave sequences";
         };
-        footer.setText(names.size() + " " + what + " · banque " + bank
+        footer.setText(count + " " + what + " · banque " + bank
                 + (bank.startsWith("ROM") ? " · lecture seule" : "")
                 + (realNames ? "" : " · noms factices"));
     }
@@ -221,13 +241,29 @@ public class LibrarianPanel extends SectionPanel {
         reload();
     }
 
-    /** Reloads the names, keeping the selection (after a bank has been read). */
+    /**
+     * Updates the names in place after the library has changed: the list is not rebuilt, so the
+     * selection is kept and no selection event is sent (a sound being read stays selected).
+     */
     public void refresh() {
-        int selected = list.getSelectedIndex() >= 0 ? list.getSelectedValue().number() : -1;
-        reload();
-        if (selected >= 0) {
-            selectNumber(selected);
+        List<String> names = currentNames();
+        for (int i = 0; i < model.size(); i++) {
+            Entry e = model.get(i);
+            if (e.number() < names.size() && !names.get(e.number()).equals(e.name())) {
+                model.set(i, new Entry(e.bank(), e.number(), names.get(e.number())));
+            }
         }
+        updateFooter(names.size());
+    }
+
+    /** Name shown for an entry (for tests). */
+    String nameAt(int number) {
+        for (int i = 0; i < model.size(); i++) {
+            if (model.get(i).number() == number) {
+                return model.get(i).name();
+            }
+        }
+        return null;
     }
 
     public Kind getKind() {
@@ -245,6 +281,7 @@ public class LibrarianPanel extends SectionPanel {
 
     public void setReadEnabled(boolean enabled) {
         readButton.setEnabled(enabled);
+        syncButton.setEnabled(enabled);
     }
 
     /** Selects an entry by number (used by the BANK and +1/-1 front panel buttons). */

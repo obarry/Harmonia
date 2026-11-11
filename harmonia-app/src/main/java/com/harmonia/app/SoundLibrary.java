@@ -1,5 +1,7 @@
 package com.harmonia.app;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -14,7 +16,9 @@ import com.harmonia.wavestation.model.Dumps;
 import com.harmonia.wavestation.model.Patch;
 import com.harmonia.wavestation.model.Performance;
 import com.harmonia.wavestation.model.WaveSequenceBank;
+import com.harmonia.wavestation.sysex.MessageType;
 import com.harmonia.wavestation.sysex.WavestationBank;
+import com.harmonia.wavestation.sysex.WavestationSysex;
 
 /**
  * The sounds read from the device, bank by bank: performances, patches and wave sequences.
@@ -105,6 +109,108 @@ public class SoundLibrary {
 
     private void fire(WavestationBank bank) {
         listeners.forEach(l -> l.accept(bank));
+    }
+
+    /** True if the performances, patches and wave sequences of the bank are all known. */
+    public synchronized boolean isComplete(WavestationBank bank) {
+        return full(performances.get(bank)) && full(patches.get(bank)) && waveSequences.containsKey(bank);
+    }
+
+    /** True if something is known about the bank. */
+    public synchronized boolean hasAny(WavestationBank bank) {
+        return performances.containsKey(bank) || patches.containsKey(bank) || waveSequences.containsKey(bank);
+    }
+
+    private static boolean full(Object[] list) {
+        return list != null && Arrays.stream(list).allMatch(e -> e != null);
+    }
+
+    // ------------------------------------------------------------------ .syx export / import
+
+    /**
+     * Everything known about a bank as SysEx messages (a .syx file): a bank dump for each kind
+     * that is complete, single dumps otherwise. Sending the file to the device restores the bank.
+     */
+    public synchronized byte[] exportBank(WavestationBank bank) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Performance[] perfs = performances.get(bank);
+        if (full(perfs)) {
+            out.writeBytes(Dumps.encodePerformanceBank(Arrays.asList(perfs), 0, bank));
+        } else if (perfs != null) {
+            for (int i = 0; i < perfs.length; i++) {
+                if (perfs[i] != null) {
+                    out.writeBytes(Dumps.encodePerformance(perfs[i], 0, bank, i));
+                }
+            }
+        }
+        Patch[] list = patches.get(bank);
+        if (full(list)) {
+            out.writeBytes(Dumps.encodePatchBank(Arrays.asList(list), 0, bank));
+        } else if (list != null) {
+            for (int i = 0; i < list.length; i++) {
+                if (list[i] != null) {
+                    out.writeBytes(Dumps.encodePatch(list[i], 0, bank, i));
+                }
+            }
+        }
+        WaveSequenceBank ws = waveSequences.get(bank);
+        if (ws != null) {
+            out.writeBytes(Dumps.encodeWaveSequenceBank(ws, 0, bank));
+        }
+        return out.toByteArray();
+    }
+
+    /**
+     * Reads the Wavestation dumps contained in SysEx data (a .syx file): bank dumps and single
+     * dumps of patches and performances. Invalid or unknown messages are ignored.
+     *
+     * @return the number of dumps imported
+     */
+    public int importSyx(byte[] data) {
+        int count = 0;
+        for (byte[] m : splitSysex(data)) {
+            if (!WavestationSysex.isValidDump(m)) {
+                continue;
+            }
+            Optional<MessageType> type = WavestationSysex.type(m);
+            Optional<WavestationBank> bank = WavestationSysex.bank(m);
+            if (type.isEmpty() || bank.isEmpty()) {
+                continue;
+            }
+            WavestationBank b = bank.get();
+            try {
+                switch (type.get()) {
+                    case PERFORMANCE_BANK_DUMP -> putPerformances(b, Dumps.decodePerformanceBank(m));
+                    case PATCH_BANK_DUMP -> putPatches(b, Dumps.decodePatchBank(m));
+                    case WAVE_SEQUENCE_BANK_DUMP -> putWaveSequences(b, Dumps.decodeWaveSequenceBank(m));
+                    case PERFORMANCE_DUMP -> putPerformance(b, WavestationSysex.number(m), Dumps.decodePerformance(m));
+                    case PATCH_DUMP -> putPatch(b, WavestationSysex.number(m), Dumps.decodePatch(m));
+                    default -> {
+                        continue;
+                    }
+                }
+                count++;
+            } catch (RuntimeException e) {
+                // a damaged message: ignored, the bank will be read again from the device
+            }
+        }
+        return count;
+    }
+
+    /** Splits a byte stream into the SysEx messages it contains (F0 ... F7). */
+    static List<byte[]> splitSysex(byte[] data) {
+        List<byte[]> messages = new ArrayList<>();
+        int start = -1;
+        for (int i = 0; i < data.length; i++) {
+            int b = data[i] & 0xFF;
+            if (b == 0xF0) {
+                start = i;
+            } else if (b == 0xF7 && start >= 0) {
+                messages.add(Arrays.copyOfRange(data, start, i + 1));
+                start = -1;
+            }
+        }
+        return messages;
     }
 
     // ------------------------------------------------------------------ reading from the device
